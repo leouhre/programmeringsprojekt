@@ -6,6 +6,6 @@ int main(void)
 
 	uart_init( 9600 );
 	printf("hey allesammen:)");
-
+	printf("ye");
 	while(1){}
 }

@@ -145,4 +145,5 @@ full_project.elay
 readme.txt
 stm32f302r8_flash.ld
 stm32f302r8_sram.ld
+programmeringsprojekt Debug.launch
 
