@@ -47,6 +47,7 @@ Thumbs.db
 */target
 /build
 */build
+/Debug
 
 # IntelliJ specific files/directories #
 #######################################
@@ -134,3 +135,13 @@ atlassian-ide-plugin.xml
 *.app
 
 STM32F302R8TX_FLASH.ld
+
+ Src/startup_stm32f30x.S
+        bin/
+        full_project.depend
+        full_project.ebp
+        full_project.elay
+        readme.txt
+        stm32f302r8_flash.ld
+        stm32f302r8_sram.ld
+
