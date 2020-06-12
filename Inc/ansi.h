@@ -1,6 +1,6 @@
-#include <stdio.h>; // Whatever needs to be included
-#include <stdint.h>;
-#include <string.h>;
+#include <stdio.h> // Whatever needs to be included
+#include <stdint.h>
+#include <string.h>
 
 #ifndef _ANSI_H_
 #define _ANSI_H_
