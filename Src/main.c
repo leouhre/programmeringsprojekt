@@ -3,11 +3,9 @@
 
 int main(void)
 {
-<<<<<<< HEAD
 
-=======
 	uart_init( 9600 );
-	printf("hey allesammen");
->>>>>>> f2b42c087c4771a1e176ab8d46c2eab63efa0602
+	printf("hey allesammen:)");
+
 	while(1){}
 }
