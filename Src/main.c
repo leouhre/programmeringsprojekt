@@ -3,5 +3,7 @@
 
 int main(void)
 {
+	uart_init( 9600 );
+	printf("hey allesammen");
 	while(1){}
 }
