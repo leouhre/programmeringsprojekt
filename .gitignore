@@ -132,3 +132,5 @@ atlassian-ide-plugin.xml
 *.out
 
 *.app
+
+STM32F302R8TX_FLASH.ld
