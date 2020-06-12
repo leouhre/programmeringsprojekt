@@ -6,6 +6,7 @@
  */
 
 #include "ADC1.h"
+#include "30010_io.h"
 
 
 void ADC1_config() {
