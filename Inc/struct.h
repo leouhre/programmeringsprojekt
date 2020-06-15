@@ -17,7 +17,7 @@ typedef struct {
 } spaceship_t;
 
 void spaceshipinit(spaceship_t *sh, vector_t direction, int32_t x, int32_t y);
-void update_spaceship(spaceship_t *sh);
+void update_spaceship(int in, spaceship_t *sh);
 void render_spaceship(spaceship_t sh);
 
 

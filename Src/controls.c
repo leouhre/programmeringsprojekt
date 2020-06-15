@@ -1,6 +1,5 @@
 #include "controls.h"
 
-
 void readUART(char *buffer){
 	uint8_t i;
 	for(i = 0; i < 256; i++) {
@@ -9,9 +8,9 @@ void readUART(char *buffer){
 	}
 }
 
-void storeBuffer(char *buffer) {
+uint8_t readControls() {
     uint8_t i, pos = 0;
-    char txt_input[256];
+    char txt_input[256], buffer[256];
     readUART(buffer);
 
     for(i = 0; i < strlen(buffer); i++) {
@@ -23,30 +22,26 @@ void storeBuffer(char *buffer) {
         switch (txt_input[i])
         {
             case('w'):
-                printf("up");
                 return 0x01;
                 //spaceship moves up
                 break;
              case('a'):
-                printf("left");
                 return 0x02;
                 //spaceship moves left
                 break;
              case('d'):
-                printf("right");
                 return 0x04;
                 //spaceship moves right
                 break;
              case('s'):
-                printf("down");
                 return 0x08;
                 //spaceship moves down
                 break;
             case(' '):
-                printf("shoot");
                 return 0x10;
                 //shoot
                 break;
+            default: return 0x00;
         }
     }
         memset(buffer,0x00,256);

@@ -2,6 +2,7 @@
 #include "30010_io.h" 		// Input/output library for this course
 #include "ADC1.h"
 #include "struct.h"
+#include "controls.h"
 int main(void)
 {
 
@@ -10,6 +11,7 @@ int main(void)
 	printf("ye");
 
 	//change
+	int in=1;
     spaceship_t sh;
     vector_t v;
     vectorinit(&v,300);
@@ -18,7 +20,7 @@ int main(void)
 
 	while(1){
 
-        update_spaceship(&sh);
+        update_spaceship(readControls(),&sh);
         render_spaceship(sh);
 
 	}

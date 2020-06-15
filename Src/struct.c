@@ -16,7 +16,7 @@ void spaceshipinit(spaceship_t *sh, vector_t direction, int32_t x, int32_t y){
     sh->direction=direction;
 }
 
-void update_spaceship(spaceship_t *sh){
+void update_spaceship(int input,spaceship_t *sh){
 
     if (0x01 & input){
         gotoxy(sh->x>>14,sh->y>>14);
