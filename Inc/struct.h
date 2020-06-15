@@ -12,7 +12,7 @@ typedef struct {
     vector_t direction;
     //future updates;
     /*
-    int32_t hp, dmg, spd, sht_spd, acceleration,
+    int32_t hp, dmg, spd, sht_spd, acceleration, bullet style
     */
 } spaceship_t;
 
