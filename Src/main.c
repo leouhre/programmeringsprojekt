@@ -1,5 +1,6 @@
 #include "stm32f30x_conf.h" // STM32 config
 #include "30010_io.h" 		// Input/output library for this course
+#include "ADC1.h"
 
 int main(void)
 {
@@ -7,5 +8,6 @@ int main(void)
 	uart_init( 9600 );
 	printf("hey allesammen:)");
 	printf("ye");
+	//change
 	while(1){}
 }
