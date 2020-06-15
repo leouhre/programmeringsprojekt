@@ -3,25 +3,32 @@
 #include "ADC1.h"
 #include "struct.h"
 #include "controls.h"
+#include "ansi.h"
 int main(void)
 {
 
 	uart_init( 9600 );
-	printf("hey allesammen:)");
-	printf("ye");
+    clrscr();
+
 
 	//change
-	int in=1;
-    spaceship_t sh;
-    vector_t v;
-    vectorinit(&v,300);
 
-    spaceshipinit(&sh, v, 5, 5);
+    spaceship_t sh;
+
+    spaceshipinit(&sh, 0, 15, 15);
 
 	while(1){
 
         update_spaceship(readControls(),&sh);
         render_spaceship(sh);
+
+        gotoxy(1,1);
+         printFix(expand(calccos(sh.direction)));
+                                        clreol();
+                                        printf("\n");
+        printFix(expand(calcsin(sh.direction)));
+                                        clreol();
+                                        printf("\n");
 
 	}
 }

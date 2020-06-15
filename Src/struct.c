@@ -1,12 +1,10 @@
 #include "struct.h"
 #include "math.h"
+#include "ansi.h"
 
-void vectorinit(vector_t *v, int32_t a){
-    v->x=calccos(a);
-    v->y=calcsin(a);
-}
 
-void spaceshipinit(spaceship_t *sh, vector_t direction, int32_t x, int32_t y){
+
+void spaceshipinit(spaceship_t *sh, int32_t direction, int32_t x, int32_t y){
     sh->x=x;
     sh->y=y;
 
@@ -22,24 +20,26 @@ void update_spaceship(int input,spaceship_t *sh){
         gotoxy(sh->x>>14,sh->y>>14);
         printf(" ");
 
-        sh->x += sh->direction.x;
-        sh->y += sh->direction.y;
+        sh->x += calccos(sh->direction);
+        sh->y += calcsin(sh->direction);
     }
 
     if (0x02 & input){
         gotoxy(sh->x>>14,sh->y>>14);
         printf(" ");
 
-        sh->x -= sh->direction.x;
-        sh->y -= sh->direction.y;
+        sh->x -= calccos(sh->direction);
+        sh->y -= calcsin(sh->direction);
     }
 
     if (0x04 & input){
-        rotateVector(&sh->direction, 1);
+        sh->direction++;
+        //rotateVector(&sh->direction, 1);
     }
 
     if (0x08 & input){
-        rotateVector(&sh->direction, -1);
+        sh->direction--;
+        //rotateVector(&sh->direction, -1);
     }
 
 }

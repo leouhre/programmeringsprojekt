@@ -25,15 +25,15 @@ uint8_t readControls() {
                 return 0x01;
                 //spaceship moves up
                 break;
-             case('a'):
+             case('s'):
                 return 0x02;
                 //spaceship moves left
                 break;
-             case('d'):
+             case('a'):
                 return 0x04;
                 //spaceship moves right
                 break;
-             case('s'):
+             case('d'):
                 return 0x08;
                 //spaceship moves down
                 break;
