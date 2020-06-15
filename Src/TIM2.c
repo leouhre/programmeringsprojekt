@@ -31,9 +31,3 @@ void TIM2_config() {
 		TIM2->CR1 |= (0x0001 << (0 * 1)); // Configure timer 2
 }
 
-void TIM2_IRQHandler(void) {
-	//Do whatever you want here, but make sure it doesn’t take too much time!
-	//Kopier evt. den her ind i main og brug et globalt flag
-	TIM2->SR &= ~0x0001; // Clear interrupt bit}
-}
-
