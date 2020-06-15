@@ -1,4 +1,3 @@
-/*
 #include "struct.h"
 #include "math.h"
 
@@ -17,7 +16,7 @@ void spaceshipinit(spaceship_t *sh, vector_t direction, int32_t x, int32_t y){
     sh->direction=direction;
 }
 
-void update_spaceship(spaceship_t *sh, uint16_t input){
+void update_spaceship(int input,spaceship_t *sh){
 
     if (0x01 & input){
         gotoxy(sh->x>>14,sh->y>>14);
@@ -36,11 +35,11 @@ void update_spaceship(spaceship_t *sh, uint16_t input){
     }
 
     if (0x04 & input){
-        sh->direction=rotateVector(sh->direction, 1);
+        rotateVector(&sh->direction, 1);
     }
 
     if (0x08 & input){
-        sh->direction=rotateVector(sh->direction, -1);
+        rotateVector(&sh->direction, -1);
     }
 
 }
@@ -48,4 +47,4 @@ void update_spaceship(spaceship_t *sh, uint16_t input){
 void render_spaceship(spaceship_t sh){
     gotoxy(sh.x>>14,sh.y>>14);
     printf("o");
-} */
+}
