@@ -4,6 +4,7 @@
 #include "struct.h"
 #include "controls.h"
 #include "ansi.h"
+#include "bullet.h"
 
 int main(void)
 {
@@ -16,11 +17,15 @@ int main(void)
 
 	//change
 	int in=1;
+	uint8_t entities[512][512];
     spaceship_t sh;
+    bullet_t bullet[20];
     vector_t v;
     vectorinit(&v,0);
 
     spaceshipinit(&sh, v, 5, 5);
+
+    bullet_init(&bullet, sh); // skal køres når der affyres en kugle
 
 	while(1){
 
