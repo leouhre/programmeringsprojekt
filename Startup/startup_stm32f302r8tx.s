@@ -182,7 +182,8 @@ g_pfnVectors:
   .word	SPI1_IRQHandler              			/* SPI1 global interrupt                              */
   .word	SPI2_IRQHandler              			/* SPI2 global interrupt                              */
   .word	USART1_EXTI25_IRQHandler     			/* USART1 global interrupt and EXTI Line 25 interrupt */
-  .word	USART2_EXTI26_IRQHandler     			/* USART2 global interrupt and EXTI Line 26 interrupt */
+  /* Renamed IRQ vector table entry from USART2_EXTI26_IRQHandler to USART2_IRQHandler. */
+  .word	USART2_IRQHandler						/* USART2 global interrupt and EXTI Line 26 interrupt */
   .word	USART3_EXTI28_IRQHandler     			/* USART3 global interrupt and EXTI Line 28 interrupt */
   .word	EXTI15_10_IRQHandler         			/* EXTI Line15 to Line10 interrupts                   */
   .word	RTCAlarm_IRQHandler          			/* RTC alarm interrupt                                */

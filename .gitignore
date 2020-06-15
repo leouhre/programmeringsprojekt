@@ -136,6 +136,8 @@ atlassian-ide-plugin.xml
 
 STM32F302R8TX_FLASH.ld
 
+Startup/startup_stm32f302r8tx.s
+
 Src/startup_stm32f30x.S
         
 bin/
@@ -149,3 +151,4 @@ programmeringsprojekt Debug.launch
 
 kjhgkj.ebp
 kjhgkj.depend
+kjhgkj.elay

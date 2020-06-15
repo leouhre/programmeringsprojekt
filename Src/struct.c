@@ -5,6 +5,7 @@
 
 
 void spaceshipinit(spaceship_t *sh, int32_t direction, int32_t x, int32_t y){
+
     sh->x=x;
     sh->y=y;
 

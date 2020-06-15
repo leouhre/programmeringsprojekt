@@ -4,6 +4,7 @@
 #include "struct.h"
 #include "controls.h"
 #include "ansi.h"
+
 int main(void)
 {
 
@@ -11,9 +12,13 @@ int main(void)
     clrscr();
 
 
+	clrscr();
+
 	//change
 
     spaceship_t sh;
+    vector_t v;
+    vectorinit(&v,0);
 
     spaceshipinit(&sh, 0, 15, 15);
 
