@@ -35,3 +35,8 @@ void rotateVector(vector_t *vec, int32_t v) {
     vec->y = FIX14_MULT(vec->x, calcsin(v)) + FIX14_MULT(vec->y, calccos(v));
     vec->x = tempx;
 }
+
+void vectorinit(vector_t *v, int32_t a){
+    v->x=calccos(a);
+    v->y=calcsin(a);
+}

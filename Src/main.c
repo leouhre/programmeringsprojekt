@@ -9,27 +9,31 @@ int main(void)
 {
 
 	uart_init( 9600 );
-	printf("hey allesammen:)");
-	printf("ye");
+    clrscr();
+
 
 	clrscr();
 
 	//change
-	int in=1;
+
     spaceship_t sh;
     vector_t v;
     vectorinit(&v,0);
 
-    spaceshipinit(&sh, v, 5, 5);
+    spaceshipinit(&sh, 0, 15, 15);
 
 	while(1){
 		//comment empty
         update_spaceship(readControls(),&sh);
         render_spaceship(sh);
+
         gotoxy(1,1);
-        printFix(expand(sh.direction.x));
-        gotoxy(1,3);
-		printFix(expand(sh.direction.y));
+         printFix(expand(calccos(sh.direction)));
+                                        clreol();
+                                        printf("\n");
+        printFix(expand(calcsin(sh.direction)));
+                                        clreol();
+                                        printf("\n");
 
 	}
 }
