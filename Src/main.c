@@ -4,37 +4,36 @@
 #include "struct.h"
 #include "controls.h"
 #include "ansi.h"
-#include "bullet.h"
 
 int main(void)
 {
 
 	uart_init( 9600 );
-	printf("hey allesammen:)");
-	printf("ye");
+    clrscr();
+
 
 	clrscr();
 
 	//change
-	int in=1;
-	uint8_t entities[512][512];
+
     spaceship_t sh;
-    bullet_t bullet[20];
     vector_t v;
     vectorinit(&v,0);
 
-    spaceshipinit(&sh, v, 5, 5);
-
-    bullet_init(&bullet, sh); // skal køres når der affyres en kugle
+    spaceshipinit(&sh, 0, 15, 15);
 
 	while(1){
 
         update_spaceship(readControls(),&sh);
         render_spaceship(sh);
+
         gotoxy(1,1);
-        printFix(expand(sh.direction.x));
-        gotoxy(1,3);
-		printFix(expand(sh.direction.y));
+         printFix(expand(calccos(sh.direction)));
+                                        clreol();
+                                        printf("\n");
+        printFix(expand(calcsin(sh.direction)));
+                                        clreol();
+                                        printf("\n");
 
 	}
 }
