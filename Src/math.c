@@ -17,18 +17,21 @@ int32_t expand(int32_t i) {
 }
 
 int32_t calcsin(int32_t n) {
-    if (n < 0) n += 512 * (n / 512 + 1);
-    n %= 512;
-    return SIN[n];
+    return SIN[n & 0x1FF];
 }
 
 int32_t calccos(int32_t n) {
-    return calcsin(n + (int32_t) 128);
+    return calcsin(n+128);
+}
+
+void vectorinit(vector_t *v, int32_t a){
+    v->x=calccos(a);
+    v->y=calcsin(a);
 }
 
 void rotateVector(vector_t *vec, int32_t v) {
     int32_t tempx;
-    tempx = FIX14_MULT(vec->x << 14, calccos(v)) - FIX14_MULT(vec->y << 14, calcsin(v));
-    vec->y = FIX14_MULT(vec->x << 14, calcsin(v)) + FIX14_MULT(vec->y << 14, calccos(v));
+    tempx = FIX14_MULT(vec->x, calccos(v)) - FIX14_MULT(vec->y, calcsin(v));
+    vec->y = FIX14_MULT(vec->x, calcsin(v)) + FIX14_MULT(vec->y, calccos(v));
     vec->x = tempx;
 }
