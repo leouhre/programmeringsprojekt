@@ -3,6 +3,8 @@
 #include "ADC1.h"
 #include "struct.h"
 #include "controls.h"
+#include "ansi.h"
+
 int main(void)
 {
 
@@ -10,11 +12,13 @@ int main(void)
 	printf("hey allesammen:)");
 	printf("ye");
 
+	clrscr();
+
 	//change
 	int in=1;
     spaceship_t sh;
     vector_t v;
-    vectorinit(&v,300);
+    vectorinit(&v,0);
 
     spaceshipinit(&sh, v, 5, 5);
 
@@ -22,6 +26,10 @@ int main(void)
 
         update_spaceship(readControls(),&sh);
         render_spaceship(sh);
+        gotoxy(1,1);
+        printFix(expand(sh.direction.x));
+        gotoxy(1,3);
+		printFix(expand(sh.direction.y));
 
 	}
 }
