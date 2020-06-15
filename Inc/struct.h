@@ -1,3 +1,4 @@
+/*
 #include <stdio.h> // Whatever needs to be included
 #include <stdint.h>
 #include <string.h>
@@ -14,10 +15,11 @@ typedef struct {
     /*
     int32_t hp, dmg, spd, sht_spd, acceleration, bullet style
     */
+/*
 } spaceship_t;
 
 void spaceshipinit(spaceship_t *sh, vector_t direction, int32_t x, int32_t y);
-void update_spaceship(spaceship_t *sh);
+void update_spaceship(spaceship_t *sh, input);
 void render_spaceship(spaceship_t sh);
 
 
@@ -27,3 +29,4 @@ void render_spaceship(spaceship_t sh);
 
 
 #endif
+*/
