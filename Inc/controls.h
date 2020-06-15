@@ -6,7 +6,7 @@
 #define _CONTROLS_H_
 
 void readUART(char *buffer);
-void storeBuffer();
+uint8_t readControls();
 
 
 #endif
