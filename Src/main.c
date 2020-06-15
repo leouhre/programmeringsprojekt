@@ -23,7 +23,7 @@ int main(void)
     spaceshipinit(&sh, v, 5, 5);
 
 	while(1){
-
+		//comment empty
         update_spaceship(readControls(),&sh);
         render_spaceship(sh);
         gotoxy(1,1);
