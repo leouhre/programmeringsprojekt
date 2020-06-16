@@ -38,7 +38,7 @@ int main(void)
         render_spaceship(sh);
 
 
-	    /*bullet_init(&bullet, sh);
+	    bullet_init(&bullet, sh);
         bullet_update(&bullet);*/
 	}
 }
