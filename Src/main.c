@@ -1,7 +1,7 @@
 #include "stm32f30x_conf.h" // STM32 config
 #include "30010_io.h" 		// Input/output library for this course
 #include "ADC1.h"
-#include "struct.h"
+#include "spaceship.h"
 #include "controls.h"
 #include "ansi.h"
 #include "enemy.h"
@@ -12,14 +12,11 @@
 int main(void)
 {
 
-	uart_init( 9600 );
+	uart_init( 153600 );
     clrscr();
 
 	//change
-    uint8_t i/*entities[512][512]*/;
-
-    bullet_t bullet[5];
-
+    uint8_t i;
 
     spaceship_t sh;
     enemy_t enemy;
@@ -27,18 +24,22 @@ int main(void)
     spaceshipinit(&sh, 0, 20, 20);
 	enemy_init(&enemy, sh, 12, 2);
 
-    for (i = 0; i < 5; i++) {
-            bullet[i].alive = 0;
+    bullet_t bullet[sh.clipsize]; // set clipsize
+    for (i = 0; i < sh.clipsize; i++) {
+        bullet[i].alive = 0;
     }
 
 
 	while(1){
-
+        if(readControls() & 0x10) {
+            bullet_init(&bullet, sh);
+        }
+        bullet_update(&bullet, sh);
         update_spaceship(readControls(),&sh);
         render_spaceship(sh);
 
-
-	    bullet_init(&bullet, sh);
-        bullet_update(&bullet);*/
+        gotoxy(1,1);
+        printf("%d", sh.angle);
+        clreol();
 	}
 }

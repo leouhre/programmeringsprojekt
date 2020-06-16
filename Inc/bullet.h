@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "math.h"
-#include "struct.h"
+#include "spaceship.h"
 
 #ifndef _BULLET_H_
 #define _BULLET_H_
@@ -13,6 +13,6 @@ typedef struct {
 
 } bullet_t;
 void bullet_init(bullet_t *bullet, spaceship_t sh);
-void bullet_update(bullet_t *bullet);
+void bullet_update(bullet_t *bullet, spaceship_t sh);
 
 #endif

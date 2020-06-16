@@ -4,11 +4,12 @@
 
 #include "math.h"
 
-#ifndef _STRUCT_H_
-#define _STRUCT_H_
+#ifndef _SPACESHIP_H_
+#define _SPACESHIP_H_
 
 typedef struct {
     int32_t x, y, angle;
+    uint8_t bullet_type, clipsize;
 
     //vector_t direction;
     //future updates;
