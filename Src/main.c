@@ -4,6 +4,7 @@
 #include "struct.h"
 #include "controls.h"
 #include "ansi.h"
+#include "bullet.h"
 
 int main(void)
 {
@@ -15,12 +16,21 @@ int main(void)
 	clrscr();
 
 	//change
-
+    uint8_t i, clipsize = 20;
     spaceship_t sh;
     vector_t v;
+
+    bullet_t bullet[clipsize]; // initialize empty array of bullets
+    for (i = 0; i < clipsize; i++) {
+            bullet[i].alive = 0;
+    }
+
+
     vectorinit(&v,0);
 
     spaceshipinit(&sh, 0, 15, 15);
+
+    bullet_init(&bullet, sh);
 
 	while(1){
 
