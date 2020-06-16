@@ -15,7 +15,7 @@ int main(void)
 	uart_init( 9600 );
     clrscr();
 
-	//change
+
     uint8_t i/*entities[512][512]*/;
 
     bullet_t bullet[5];
@@ -34,6 +34,8 @@ int main(void)
 
 	while(1){
 
+		enemy_update(&enemy, sh);
+		enemy_render(enemy);
         update_spaceship(readControls(),&sh);
         render_spaceship(sh);
 
