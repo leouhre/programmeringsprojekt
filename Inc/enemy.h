@@ -15,8 +15,10 @@ typedef struct {
     */
 } enemy_t;
 
-void enemy_init(enemy_t *enemy, vector_t direction, int32_t x, int32_t y);
+void enemy_init(enemy_t *enemy, int32_t direction, int32_t x, int32_t y);
+/*
 void enemy_update(int in, spaceship_t *sh);
 void enemy_draw(spaceship_t sh);
+*/
 
 #endif

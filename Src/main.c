@@ -33,7 +33,7 @@ int main(void)
     bullet_init(&bullet, sh);
 
 	while(1){
-
+		//comment empty
         update_spaceship(readControls(),&sh);
         render_spaceship(sh);
 
