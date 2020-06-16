@@ -36,7 +36,7 @@ void bullet_update(bullet_t *bullet) {
         if((bullet[i].x >> 14) > 40 || (bullet[i].y >> 14) > 40 || (bullet[i].x >> 14) < 0 || (bullet[i].y >> 14) < 0) {
             bullet[i].alive = 0;
             for(j = i; j < 4; j++) {
-                bullet[i] = bullet[i+1];
+                bullet[j] = bullet[j+1];
             }
             bullet[4].alive = 0;
             i--;
