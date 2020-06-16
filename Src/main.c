@@ -4,12 +4,49 @@
 #include "struct.h"
 #include "controls.h"
 #include "ansi.h"
+<<<<<<< HEAD
+#include "enemy.h"
+=======
 #include "bullet.h"
+>>>>>>> 11782427c730031df89c55965a16ef679b50a6d8
 
 int main(void)
 {
 
 	uart_init( 9600 );
+<<<<<<< HEAD
+
+	clrscr();
+
+
+    spaceship_t sh;
+
+    spaceshipinit(&sh, 0, 20, 20);
+
+    enemy_t enemy;
+
+	enemy_init(&enemy, sh, 12, 2);
+
+
+
+	//printFix(expand(lengthOfVector(v)));
+    //printFix(((7 << 14) >> 6)*((7 << 14) >> 6) >> 8 << 8);
+    //printFix(	expand(	FIX8_MULT((7 << 14) >> 6,(7 << 14) >> 6) << 6));
+
+
+
+
+	while(1){
+		//comment empty
+		gotoxy(1,1);
+		printFix(expand(enemy.direction.x));
+		gotoxy(1,5);
+		printFix(expand(enemy.direction.y));
+		enemy_update(&enemy, sh);
+		enemy_render(enemy);
+        update_spaceship(readControls(),&sh);
+        render_spaceship(sh);
+=======
 	clrscr();
 	//change
     uint8_t i, clipsize = 5;
@@ -24,5 +61,6 @@ int main(void)
 	while(1){
 	    bullet_init(&bullet, sh);
         bullet_update(&bullet);
+>>>>>>> 11782427c730031df89c55965a16ef679b50a6d8
 	}
 }

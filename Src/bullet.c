@@ -14,6 +14,13 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) {
         bullet[str].x =  2;//sh.x;
         bullet[str].y = 2;//sh.y;
 
+<<<<<<< HEAD
+    bullet[str+1].angle = sh.angle;
+    //bullet[str+1].bullet_type = sh.bullet_type;
+}
+/*
+void bullet_update(bullet_t *bullet, uint8_t entities){
+=======
         bullet[str].x <<= 14;
         bullet[str].y <<= 14;
 
@@ -23,6 +30,7 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) {
 }
 
 void bullet_update(bullet_t *bullet) {
+>>>>>>> 11782427c730031df89c55965a16ef679b50a6d8
     uint8_t i, j;
 
     for(i = 0; i < 5; i++) {
@@ -47,6 +55,7 @@ void bullet_update(bullet_t *bullet) {
 
     }
 }
+*/
 
 void bullet_draw() {
 
