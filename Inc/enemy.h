@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <string.h>
 #include "math.h"
-#include "struct.h"
+#include "spaceship.h"
 #include "ansi.h"
 
 #ifndef _ENEMY_H_
