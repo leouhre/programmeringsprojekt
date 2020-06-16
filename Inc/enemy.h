@@ -7,8 +7,8 @@
 #define _ENEMY_H_
 
 typedef struct {
-    int32_t x, y;
-    vector_t direction;
+    int32_t x, y, angle;
+
     //future updates;
     /*
     int32_t hp, dmg, spd, sht_spd, acceleration, bullet style

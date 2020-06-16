@@ -40,3 +40,4 @@ int32_t abs(int32_t n) {
 	if (n < 0) FIX14_MULT(n, -1);
 	return n;
 }
+
