@@ -14,7 +14,7 @@ typedef struct {
 } bullet_t;
 
 void bullet_init(bullet_t *bullet, spaceship_t sh);
-void bullet_update(bullet_t *bullet, uint8_t **entities);
+void bullet_update(bullet_t *bullet);
 void bullet_draw();
 
 #endif
