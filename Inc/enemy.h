@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include <string.h>
 #include "math.h"
+#include "struct.h"
+#include "ansi.h"
 
 #ifndef _ENEMY_H_
 #define _ENEMY_H_
@@ -15,10 +17,8 @@ typedef struct {
     */
 } enemy_t;
 
-void enemy_init(enemy_t *enemy, int32_t direction, int32_t x, int32_t y);
-/*
-void enemy_update(int in, spaceship_t *sh);
-void enemy_draw(spaceship_t sh);
-*/
+void enemy_init(enemy_t *enemy, spaceship_t sh, int32_t x, int32_t y);
+void enemy_update(enemy_t *enemy, spaceship_t sh);
+void enemy_render(enemy_t e);
 
 #endif
