@@ -10,13 +10,9 @@ int main(void)
 {
 
 	uart_init( 9600 );
-    clrscr();
-
-
-	clrscr();
-
+    printf("her");
 	//change
-    uint8_t i, clipsize = 20;
+    uint8_t i, clipsize = 20, entities[512][512];
     spaceship_t sh;
     vector_t v;
 
@@ -24,26 +20,11 @@ int main(void)
     for (i = 0; i < clipsize; i++) {
             bullet[i].alive = 0;
     }
-
-
-    vectorinit(&v,0);
-
-    spaceshipinit(&sh, 0, 15, 15);
-
-    bullet_init(&bullet, sh);
+    printf("her");
 
 	while(1){
-		//comment empty
-        update_spaceship(readControls(),&sh);
-        render_spaceship(sh);
-
-        gotoxy(1,1);
-         printFix(expand(calccos(sh.direction)));
-                                        clreol();
-                                        printf("\n");
-        printFix(expand(calcsin(sh.direction)));
-                                        clreol();
-                                        printf("\n");
-
+	    bullet_init(&bullet, sh);
+        bullet_update(&bullet, entities);
+        printf("while");
 	}
 }

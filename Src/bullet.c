@@ -17,7 +17,7 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) {
     bullet[str].y <<= 14;
 
     bullet[str].angle = 0.5;//sh.angle;
-   // bullet[str+1].bullet_type = sh.bullet_type;
+   // bullet[str].bullet_type = sh.bullet_type;
 }
 
 void bullet_update(bullet_t *bullet, uint8_t **entities){
