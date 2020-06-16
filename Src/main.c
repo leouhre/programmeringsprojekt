@@ -5,6 +5,7 @@
 #include "controls.h"
 #include "ansi.h"
 
+
 int main(void)
 {
 
@@ -12,7 +13,7 @@ int main(void)
     clrscr();
 
 
-	clrscr();
+    vector_t v;
 
 	//change
 
