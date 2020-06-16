@@ -36,7 +36,7 @@ void rotateVector(vector_t *vec, int32_t v) {
     vec->x = tempx;
 }
 
-void vectorinit(vector_t *v, int32_t a){
-    v->x=calccos(a);
-    v->y=calcsin(a);
+int32_t abs(int32_t n) {
+	if (n < 0) FIX14_MULT(n, -1);
+	return n;
 }

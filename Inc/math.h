@@ -21,4 +21,5 @@ int32_t calcsin(int32_t n);
 int32_t calccos(int32_t n);
 void rotateVector(vector_t *vec, int32_t v);
 void vectorinit(vector_t *v, int32_t a);
+int32_t abs(int32_t n);
 #endif /* _MATH_H_ */
