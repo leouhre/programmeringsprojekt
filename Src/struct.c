@@ -12,7 +12,7 @@ void spaceshipinit(spaceship_t *sh, int32_t direction, int32_t x, int32_t y){
     sh->x <<= 14;
     sh->y <<= 14;
 
-    sh->direction=direction;
+    sh->angle=direction;
 }
 
 void update_spaceship(int input,spaceship_t *sh){
@@ -21,25 +21,25 @@ void update_spaceship(int input,spaceship_t *sh){
         gotoxy(sh->x>>14,sh->y>>14);
         printf(" ");
 
-        sh->x += calccos(sh->direction);
-        sh->y += calcsin(sh->direction);
+        sh->x += calccos(sh->angle);
+        sh->y += calcsin(sh->angle);
     }
 
     if (0x02 & input){
         gotoxy(sh->x>>14,sh->y>>14);
         printf(" ");
 
-        sh->x -= calccos(sh->direction);
-        sh->y -= calcsin(sh->direction);
+        sh->x -= calccos(sh->angle);
+        sh->y -= calcsin(sh->angle);
     }
 
     if (0x04 & input){
-        sh->direction += 4;
+        sh->angle += 4;
         //rotateVector(&sh->direction, 1);
     }
 
     if (0x08 & input){
-        sh->direction -= 4;
+        sh->angle -= 4;
         //rotateVector(&sh->direction, -1);
     }
 
@@ -48,7 +48,7 @@ void update_spaceship(int input,spaceship_t *sh){
 void render_spaceship(spaceship_t sh){
     gotoxy(sh.x>>14,sh.y>>14);
 
-    int32_t n = sh.direction & 0x1FF;
+    int32_t n = sh.angle & 0x1FF;
 
     //printf("cos = %d, sin = %d", cos, sin);
 
@@ -108,12 +108,13 @@ void spaceship_sprite(spaceship_t sh, uint8_t n) {
 		sprite[0][1] = ' ';
 		sprite[0][2] = '/';
 		sprite[1][0] = 'c';
-		sprite[1][1] = 219;
-		sprite[1][2] = ' ';
-		sprite[2][0] = '/';
-		sprite[2][1] = 207;
+		sprite[1][1] = 254;
+		sprite[1][2] = 182;
+		sprite[2][0] = ' ';
+		sprite[2][1] = ' ';
 		sprite[2][2] = '\\';
 
+		/*
 		gotoxy(x + 3, y + 13);
 		printf("/");
 		gotoxy(x + 3, y + 14);
@@ -124,6 +125,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n) {
 		printf("%c", 254);
 		gotoxy(x + 1, y + 14);
 		printf("c");
+		*/
 		break;
 	case 3 :
 

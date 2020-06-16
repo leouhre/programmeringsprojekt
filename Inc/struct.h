@@ -8,7 +8,7 @@
 #define _STRUCT_H_
 
 typedef struct {
-    int32_t x, y, direction;
+    int32_t x, y, angle;
 
     //vector_t direction;
     //future updates;
