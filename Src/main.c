@@ -10,21 +10,19 @@ int main(void)
 {
 
 	uart_init( 9600 );
-    printf("her");
+	clrscr();
 	//change
-    uint8_t i, clipsize = 20, entities[512][512];
+    uint8_t i, clipsize = 5;
+    uint8_t enemies = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     spaceship_t sh;
-    vector_t v;
 
     bullet_t bullet[clipsize]; // initialize empty array of bullets
     for (i = 0; i < clipsize; i++) {
             bullet[i].alive = 0;
     }
-    printf("her");
 
 	while(1){
 	    bullet_init(&bullet, sh);
-        bullet_update(&bullet, entities);
-        printf("while");
+        bullet_update(&bullet);
 	}
 }

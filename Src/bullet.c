@@ -3,52 +3,49 @@
 
 void bullet_init(bullet_t *bullet, spaceship_t sh) {
     uint8_t i, str = 0;
-    for(i = 0; i < 20; i++) { // find number of bullets in array
+    for(i = 0; i < 5; i++) { // find number of bullets in array
         if(bullet[i].alive == 0) break;
         str++;
     }
-    printf("str");
-    bullet[str].alive = 1;
 
-    bullet[str].x =  1;//sh.x;
-    bullet[str].y = 1;//sh.y;
+    if(str <= 5) {
+        bullet[str].alive = 1;
 
-    bullet[str].x <<= 14;
-    bullet[str].y <<= 14;
+        bullet[str].x =  2;//sh.x;
+        bullet[str].y = 2;//sh.y;
 
-    bullet[str].angle = 0.5;//sh.angle;
-   // bullet[str].bullet_type = sh.bullet_type;
+        bullet[str].x <<= 14;
+        bullet[str].y <<= 14;
+
+        bullet[str].angle = 64;//sh.angle;
+       // bullet[str].bullet_type = sh.bullet_type;
+    }
 }
 
-void bullet_update(bullet_t *bullet, uint8_t **entities){
+void bullet_update(bullet_t *bullet) {
     uint8_t i, j;
 
+    for(i = 0; i < 5; i++) {
+        if (bullet[i].alive == 0) break;
 
-	for (i = 0; i < 20; i++ ) { // update all bullets
-        if(bullet[i].alive == 1) {
-            gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
-            printf(" "); //clear current bullet position
+        gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
+        printf(" ");
 
-            bullet[i].x += calccos(bullet[i].angle);
-            bullet[i].y += calcsin(bullet[i].angle);
-
-            gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
-
-            if(entities[bullet[i].x >> 14][bullet[i].y >> 14] != 0) { //if enemy is hit delete bullet
-                //goto xy play animation
-                for (j = i; j < 19; j++){
-                    bullet[j] = bullet[j+1];
-                }
-                bullet[19].alive = 0;
-                i--; // go one position back in the array
-            } else {
-                printf("o");
+        bullet[i].x += calccos(bullet[i].angle);
+        bullet[i].y += calcsin(bullet[i].angle);
+        if((bullet[i].x >> 14) > 40 || (bullet[i].y >> 14) > 40 || (bullet[i].x >> 14) < 0 || (bullet[i].y >> 14) < 0) {
+            bullet[i].alive = 0;
+            for(j = i; j < 4; j++) {
+                bullet[i] = bullet[i+1];
             }
+            bullet[4].alive = 0;
+            i--;
         } else {
-            break;
+            gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
+            printf("o");
         }
 
-	}
+    }
 }
 
 void bullet_draw() {
