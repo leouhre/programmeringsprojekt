@@ -4,44 +4,41 @@
 #include "struct.h"
 #include "controls.h"
 #include "ansi.h"
+#include "enemy.h"
 #include "bullet.h"
+#include "math.h"
 
 
 int main(void)
 {
 
 	uart_init( 9600 );
-<<<<<<< HEAD
-
     clrscr();
 
 	//change
-    uint8_t i, clipsize = 20 /*entities[512][512]*/;
-    //spaceship_t sh;
+    uint8_t i/*entities[512][512]*/;
 
-   // vector_t v;
-=======
-	clrscr();
-	//change
-    uint8_t i, clipsize = 5;
-    uint8_t enemies = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    bullet_t bullet[5];
+
+
     spaceship_t sh;
->>>>>>> 11782427c730031df89c55965a16ef679b50a6d8
+    enemy_t enemy;
 
-    bullet_t bullet[clipsize]; // initialize empty array of bullets
+    spaceshipinit(&sh, 0, 20, 20);
+	enemy_init(&enemy, sh, 12, 2);
 
-    for (i = 0; i < clipsize; i++) {
+    for (i = 0; i < 5; i++) {
             bullet[i].alive = 0;
     }
 
+
 	while(1){
-<<<<<<< HEAD
-	    //bullet_init(&bullet, sh);
-        //bullet_update(&bullet, entities);
-        printf("while");
-=======
-	    bullet_init(&bullet, sh);
-        bullet_update(&bullet);
->>>>>>> 11782427c730031df89c55965a16ef679b50a6d8
+
+        update_spaceship(readControls(),&sh);
+        render_spaceship(sh);
+
+
+	    /*bullet_init(&bullet, sh);
+        bullet_update(&bullet);*/
 	}
 }

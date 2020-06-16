@@ -1,5 +1,4 @@
 #include "bullet.h"
-#include "math.h"
 
 void bullet_init(bullet_t *bullet, spaceship_t sh) {
     uint8_t i, str = 0;
@@ -14,13 +13,11 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) {
         bullet[str].x =  2;//sh.x;
         bullet[str].y = 2;//sh.y;
 
-        bullet[str].x <<= 14;
-        bullet[str].y <<= 14;
-
-        bullet[str].angle = 64;//sh.angle;
-       // bullet[str].bullet_type = sh.bullet_type;
+        bullet[str].angle = 128;
     }
+    //bullet[str+1].bullet_type = sh.bullet_type;
 }
+
 
 void bullet_update(bullet_t *bullet) {
     uint8_t i, j;
@@ -36,7 +33,7 @@ void bullet_update(bullet_t *bullet) {
         if((bullet[i].x >> 14) > 40 || (bullet[i].y >> 14) > 40 || (bullet[i].x >> 14) < 0 || (bullet[i].y >> 14) < 0) {
             bullet[i].alive = 0;
             for(j = i; j < 4; j++) {
-                bullet[i] = bullet[i+1];
+                bullet[j] = bullet[j+1];
             }
             bullet[4].alive = 0;
             i--;
@@ -48,6 +45,3 @@ void bullet_update(bullet_t *bullet) {
     }
 }
 
-void bullet_draw() {
-
-}

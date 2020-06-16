@@ -17,29 +17,32 @@ void spaceshipinit(spaceship_t *sh, int32_t direction, int32_t x, int32_t y){
 
 void update_spaceship(int input,spaceship_t *sh){
 
-    if (0x01 & input){
-        gotoxy(sh->x>>14,sh->y>>14);
-        printf(" ");
+	uint8_t i, j;
 
+	for(i=0; i<3; i++) {
+		for(j=0; j<3; j++) {
+			gotoxy((sh->x>>14) - 1 + i,(sh->y>>14) - 1 + j);
+			printf(" ");
+		}
+	}
+
+    if (0x01 & input){
         sh->x += calccos(sh->angle);
         sh->y += calcsin(sh->angle);
     }
 
     if (0x02 & input){
-        gotoxy(sh->x>>14,sh->y>>14);
-        printf(" ");
-
         sh->x -= calccos(sh->angle);
         sh->y -= calcsin(sh->angle);
     }
 
     if (0x04 & input){
-        sh->angle += 4;
+        sh->angle += 32;
         //rotateVector(&sh->direction, 1);
     }
 
     if (0x08 & input){
-        sh->angle -= 4;
+        sh->angle -= 32;
         //rotateVector(&sh->direction, -1);
     }
 
@@ -79,31 +82,30 @@ void spaceship_sprite(spaceship_t sh, uint8_t n) {
 	char sprite[3][3];
 	switch (n) {
 	case 0 :
-		gotoxy(x + 1, y + 9);
-		printf("\\");
-		gotoxy(x + 1, y + 10);
-		printf("%c", 199);
-		gotoxy(x + 1,y + 11);
-		printf("/");
-		gotoxy(x + 2, y + 10);
-		printf("%c", 254);
-		gotoxy(x + 3, y + 10);
-		printf("D");
+		sprite[0][0] = '\\';
+		sprite[0][1] = ' ';
+		sprite[0][2] = ' ';
+		sprite[1][0] = 199;
+		sprite[1][1] = 254;
+		sprite[1][2] = 'D';
+		sprite[2][0] = '/';
+		sprite[2][1] = ' ';
+		sprite[2][2] = ' ';
+
 		break;
 	case 1 :
-		gotoxy(x + 2, y + 5);
-		printf("\\");
-		gotoxy(x + 3, y + 5);
-		printf("%c", 209);
-		gotoxy(x + 4, y + 5);
-		printf("/");
-		gotoxy(x + 3, y + 6);
-		printf("%c", 219);
-		gotoxy(x + 3, y + 7);
-		printf("u");
+		sprite[0][0] = '\\';
+		sprite[0][1] = 209;
+		sprite[0][2] = '/';
+		sprite[1][0] = ' ';
+		sprite[1][1] = 219;
+		sprite[1][2] = ' ';
+		sprite[2][0] = ' ';
+		sprite[2][1] = 'u';
+		sprite[2][2] = ' ';
+
 		break;
 	case 2 :
-
 		sprite[0][0] = ' ';
 		sprite[0][1] = ' ';
 		sprite[0][2] = '/';
@@ -114,21 +116,8 @@ void spaceship_sprite(spaceship_t sh, uint8_t n) {
 		sprite[2][1] = ' ';
 		sprite[2][2] = '\\';
 
-		/*
-		gotoxy(x + 3, y + 13);
-		printf("/");
-		gotoxy(x + 3, y + 14);
-		printf("%c", 182);
-		gotoxy(x + 3,y + 15);
-		printf("\\");
-		gotoxy(x + 2,y + 14);
-		printf("%c", 254);
-		gotoxy(x + 1, y + 14);
-		printf("c");
-		*/
 		break;
 	case 3 :
-
 		sprite[0][0] = ' ';
 		sprite[0][1] = 239;
 		sprite[0][2] = ' ';
@@ -139,24 +128,6 @@ void spaceship_sprite(spaceship_t sh, uint8_t n) {
 		sprite[2][1] = 207;
 		sprite[2][2] = '\\';
 
-		/*
-		sprite[0][0] = ' ';
-		sprite[0][1] = 'n';
-		sprite[0][2] = ' ';
-		sprite[1][0] = '/';
-		sprite[1][1] = '|';
-		sprite[1][2] = '\\';
-		sprite[2][0] = ' ';
-		sprite[2][1] = 'w';
-		sprite[2][2] = ' ';
-
-
-		char sprite[3][3] = {
-			{' ','n',' ' },
-			{'/','|','\\'},
-			{' ','w',' ' }
-		};
-		*/
 		break;
 	}
 	for(i=0; i<3; i++) {
