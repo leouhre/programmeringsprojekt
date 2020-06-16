@@ -16,9 +16,9 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) {
     bullet[str+1].y <<= 14;
 
     bullet[str+1].angle = sh.angle;
-    bullet[str+1].bullet_type = sh.bullet_type;
+    //bullet[str+1].bullet_type = sh.bullet_type;
 }
-
+/*
 void bullet_update(bullet_t *bullet, uint8_t entities){
     uint8_t i, j;
 
@@ -46,6 +46,7 @@ void bullet_update(bullet_t *bullet, uint8_t entities){
 
 	}
 }
+*/
 
 void bullet_draw() {
 
