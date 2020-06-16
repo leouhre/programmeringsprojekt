@@ -4,17 +4,15 @@
 #include "math.h"
 #include "struct.h"
 
-#ifndef _ENEMY_H_
-#define _ENEMY_H_
+#ifndef _BULLET_H_
+#define _BULLET_H_
 
 typedef struct {
     int32_t x, y, angle;
     uint8_t bullet_type, alive;
 
 } bullet_t;
-
 void bullet_init(bullet_t *bullet, spaceship_t sh);
 void bullet_update(bullet_t *bullet);
-void bullet_draw();
 
 #endif

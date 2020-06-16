@@ -37,12 +37,12 @@ void update_spaceship(int input,spaceship_t *sh){
     }
 
     if (0x04 & input){
-        sh->angle += 50;
+        sh->angle += 32;
         //rotateVector(&sh->direction, 1);
     }
 
     if (0x08 & input){
-        sh->angle -= 50;
+        sh->angle -= 32;
         //rotateVector(&sh->direction, -1);
     }
 
