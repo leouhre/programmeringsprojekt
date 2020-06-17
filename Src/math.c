@@ -55,10 +55,12 @@ vector_t coordsToVector(int32_t x1, int32_t y1, int32_t x2, int32_t y2) {
 	return v;
 }
 
+/*
 int32_t abs(int32_t n) {
 	if (n < 0) FIX14_MULT(n, -1);
 	return n;
 }
+*/
 
 int32_t sqrtF2F (int32_t x) {
 
@@ -81,3 +83,12 @@ int32_t sqrtF2F (int32_t x) {
 
   return( q );
 }
+
+/*
+int32_t rand(uint32_t tick)
+{
+	int32_t next = tick;
+	next = next * 1103515245 + 12345;
+	return (next * 65536) % 32768;
+}
+*/

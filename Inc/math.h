@@ -28,6 +28,7 @@ void vectorAngle(vector_t *v, int32_t a);
 void vector_init(vector_t *v);
 int32_t lengthOfVector(vector_t v);
 vector_t coordsToVector(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
-int32_t abs(int32_t n);
+//int32_t abs(int32_t n);
 int32_t sqrtF2F (int32_t x);
+//int32_t rand(uint32_t tick);
 #endif /* _MATH_H_ */
