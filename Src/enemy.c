@@ -29,6 +29,9 @@ void enemy_update(enemy_t *enemy, spaceship_t sh){
 		}
 	}
 
+	gotoxy(1,1);
+	clreol();
+
 	vector_t temp_dir = coordsToVector(enemy->x, enemy->y, sh.x, sh.y);
     int32_t length = lengthOfVector(temp_dir);
 
@@ -42,7 +45,7 @@ void enemy_update(enemy_t *enemy, spaceship_t sh){
 
     if (spaceshipCollision(*enemy, sh)) {
     	gotoxy(1,1);
-    	printf("%d", spaceshipCollision(*enemy, sh));
+    	printf("crash!");
     }
 }
 
@@ -85,30 +88,30 @@ void enemy_render(enemy_t e) {
 }
 
 void fillEnemiesArray(enemy_t *enemies, uint8_t n) {
+	uint32_t maxX = 200, maxY = 40;
 	uint8_t i;
 	for (i = 0; i < n; i++) {
 		enemy_t e;
-		enemy_init(&e, 2 + (rand() % 40), 2 + (rand() % 40));
+		enemy_init(&e, 2 + (rand() % maxX), 2 + (rand() % maxY));
 		enemies[i] = e;
 	}
 }
 
 uint8_t spaceshipCollision(enemy_t enemy, spaceship_t sh) {
-	uint8_t i, j, message = 0;
+	uint8_t i, j, message;
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
-			message = ((enemy.x << 14) - 1 + i == (sh.x << 14) - 1 + j);
+			message = ((enemy.x >> 14) - 1 + i == (sh.x >> 14) - 1 + j);
+			if (message) break;
 		}
 	}
 	if (message) {
 		for (i = 0; i < 3; i++) {
 			for (j = 0; j < 3; j++) {
-				message = ((enemy.y << 14) - 1 + i == (sh.y << 14) - 1 + j);
+				message = ((enemy.y >> 14) - 1 + i == (sh.y >> 14) - 1 + j);
 			}
 		}
 	}
-	gotoxy(1,2);
-	printf("%d", message);
 	return message;
 }
 
