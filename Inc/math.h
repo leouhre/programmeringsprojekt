@@ -14,6 +14,9 @@
 #define FIX8_MULT(a, b) ( (a)*(b) >> FIX8_SHIFT )
 #define FIX10_DIV(a, b) ( ((a) << 10) / b )
 
+#define MAX(a,b) ((a) > (b) ? a : b)
+#define MIN(a,b) ((a) < (b) ? a : b)
+
 
 typedef struct {
     int32_t x, y;
