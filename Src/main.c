@@ -7,49 +7,53 @@
 #include "enemy.h"
 #include "bullet.h"
 #include "math.h"
+#include "timer.h"
 
+volatile uint8_t flag = 0;
 
 int main(void)
 {
+	uart_init( 150600 );
+	timer_configure();
 
-	uart_init( 153600 );
     clrscr();
 
-<<<<<<< HEAD
-
-    uint8_t i/*entities[512][512]*/;
-
-    bullet_t bullet[5];
-
-=======
-	//change
+	uint32_t tick = 0;
     uint8_t i;
->>>>>>> e5fad626b29b155da05de8abc40361fc503cd73f
 
     spaceship_t sh;
-    enemy_t enemy;
 
-    spaceshipinit(&sh, 0, 20, 20);
-	enemy_init(&enemy, sh, 12, 2);
+    spaceship_init(&sh, 0, 80, 40);
 
     bullet_t bullet[sh.clipsize]; // set clipsize
     for (i = 0; i < sh.clipsize; i++) {
         bullet[i].alive = 0;
     }
 
+    uint8_t numberOfEnemies = 2;
+    enemy_t enemies[numberOfEnemies];
+    fillEnemiesArray(enemies, numberOfEnemies);
+
 
 	while(1){
-<<<<<<< HEAD
-
-		enemy_update(&enemy, sh);
-		enemy_render(enemy);
-=======
-        if(readControls() & 0x10) {
-            bullet_init(&bullet, sh);
-        }
-        bullet_update(&bullet, sh);
->>>>>>> e5fad626b29b155da05de8abc40361fc503cd73f
-        update_spaceship(readControls(),&sh);
-        render_spaceship(sh);
+		if(flag) {
+			tick++;
+			if(tick % 24 == 1) {
+				enemy_update(enemies, numberOfEnemies, sh, bullet);
+				enemy_render(enemies, numberOfEnemies);
+			}
+			if(tick % 2 == 1) {
+		        spaceship_update(readControls(),&sh);
+		        spaceship_render(sh);
+			}
+			if(readControls() & 0x10) {
+				bullet_init(bullet, sh);
+			}
+			if(tick % 2 == 1) {
+		        bullet_update(bullet, sh, enemies, numberOfEnemies);
+			}
+			flag = 0;
+		}
 	}
+
 }
