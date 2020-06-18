@@ -1,6 +1,6 @@
 #include "SPACESHIP.h"
 
-void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y)
+void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y, uint8_t clipsize)
 {
 
     sh->x=x;
@@ -10,7 +10,7 @@ void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y)
     sh->y <<= 14;
 
     sh->angle=direction;
-    sh->clipsize = 10;
+    sh->clipsize = clipsize;
 }
 
 void spaceship_update(int input,spaceship_t *sh)
