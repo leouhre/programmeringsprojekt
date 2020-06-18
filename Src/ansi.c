@@ -70,9 +70,30 @@ void clreol() {
     printf("%c[K", ESC);
 }
 
+void hideCursor(){
+    printf("%c[?25l",ESC);
+}
+
+
 void gotoxy(uint8_t x, uint8_t y) {
 // move cursor to x,y
     printf("%c[%d;%dH", ESC,y,x);
+}
+
+void moveDown(uint8_t y){
+    printf("%c[%dB", ESC,y);
+}
+
+void moveUp(uint8_t y){
+    printf("%c[%dA", ESC,y);
+}
+
+void moveForward(uint8_t x){
+    printf("%c[%dC", ESC,x);
+}
+
+void moveBack(uint8_t x){
+    printf("%c[%dD", ESC,x);
 }
 
 void underline(uint8_t on) {
@@ -101,6 +122,103 @@ void inverse(uint8_t on) {
     }
     printf("%c[%dm", ESC,n);
 }
+
+void box(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t style){
+
+    int cornertl;
+    int cornertr;
+    int cornerbl;
+    int cornerbr;
+
+    int lineh;
+    int linev;
+
+    int width;
+    int height;
+
+    if(style>0){
+        cornertl=201;
+        cornertr=187;
+        cornerbl=200;
+        cornerbr=188;
+
+        linev = 186;
+        lineh = 205;
+    }else{
+        cornertl=218;
+        cornertr=191;
+        cornerbl=192;
+        cornerbr=217;
+
+        linev = 179;
+        lineh = 196;
+    }
+
+    if(x1<1||x2<1||y1<1||y2<1){
+        x1=1;
+        x2=1;
+        y1=1;
+        y2=1;
+    }
+
+    if(x1>x2){
+        int dummy=x1;
+        x1=x2;
+        x2=dummy;
+    }
+    if(y1>y2){
+        int dummy=y1;
+        y1=y2;
+        y2=dummy;
+    }
+
+    width  = x2-x1;
+    height = y2-y1;
+
+
+    //topline print
+    gotoxy(x1,y1);
+    printf("%c", cornertl);
+    for(int i=0; i<=width-2;i++){
+        printf("%c",lineh);
+    }
+    printf("%c",cornertr);
+
+    //bottomline print
+    gotoxy(x1,y2);
+        printf("%c",cornerbl);
+    for(int i=0; i<=width-2;i++)
+        printf("%c",lineh);
+        printf("%c",cornerbr);
+
+    //side print
+    for(int i=1;i<height;i++){
+        gotoxy(x1,y1+i);
+        printf("%c",linev);
+        gotoxy(x2,y1+i);
+        printf("%c",linev);
+    }
+
+
+}
+
+void boxWithText(uint8_t x, uint8_t y, char* s, uint16_t style){
+
+    uint8_t wordLength=strlen(s);
+    box(x, y, x + (wordLength * 8) + 4, y + 8, style );
+    gotoxy(x + 3, y + 2);
+    renderWord(s);
+}
+
+void boxWithTextInTheMiddleOfTheScreen(uint8_t middlex, uint8_t y, char* s, uint16_t style){
+
+    uint8_t wordLength=strlen(s);
+
+    boxWithText(middlex - 1 - wordLength*4,y,s, style);
+}
+
+void arrowpointer();
+
 
 void window(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, char* s, uint8_t style) {
     uint8_t length = strlen(s), sizex = x2 - x1, sizey = y2 - y1, i;
@@ -158,5 +276,335 @@ void window(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, char* s, uint8_t sty
         printf("%c", 205);
         }
         printf("%c", 188);
+        }
+}
+
+//letters
+
+void renderLetter(char x){
+    char b = 219;
+    char letter[7][5];
+    int i, j;
+
+    for(j=0; j<5; j++){
+        for(i=0; i<7;i++){
+            letter[i][j] =' ';
+        }
+    }
+
+
+
+
+    switch(x){
+            case 'p':
+                for(j=0; j<5; j++){
+                    for (i=0;i<3;i++){
+                        letter[i][j]=b;
+                    }
+                }
+                for(j=1; j<4; j++){
+                    for (i=3;i<5;i++){
+                        letter[i][j]=b;
+                    }
+                }
+
+                for (i=5;i<7;i++){
+                    letter[i][2]=b;
+                }
+
+                break;
+            case 'q':
+
+                for(j=0; j<5; j++){
+                    for (i=4;i<7;i++){
+                        letter[i][j]=b;
+                    }
+                }
+                for(j=1; j<4; j++){
+                    for (i=2;i<4;i++){
+                        letter[i][j]=b;
+                    }
+                }
+
+                for (i=0;i<2;i++){
+                    letter[i][2]=b;
+                }
+
+                break;
+
+            case '*':
+                for(j=0; j<5; j++)
+                    for(i = 0; i < 7; i++)
+                        letter[i][j]=b;
+                break;
+            case ' ':
+                break;
+            case 'A':
+                    for(i=1; i<6; i++)
+                        letter[i][0]=b;
+
+                    for(j=1; j<5; j++){
+                        for(i=0; i<2; i++)
+                        letter[i][j]=b;
+
+                        for(i=5; i<7; i++)
+                        letter[i][j]=b;
+                    }
+                    for(i=0; i<7; i++)
+                    letter[i][2]=b;
+                break;
+
+            case 'B':
+
+                for(j=0; j < 5; j += 2){
+                    for(i=0; i<6; i++)
+                        letter[i][j]=b;
+                }
+                for(j=1; j < 4; j += 2){
+                    for(i=0; i<2; i++)
+                        letter[i][j]=b;
+                    for(i=5; i<7; i++)
+                        letter[i][j]=b;
+                }
+                break;
+            case 'C':
+                for(i=1; i<7; i++)
+                    letter[i][0]=b;
+                for(i=1; i<7; i++)
+                    letter[i][4]=b;
+                for(j=1; j<4; j++){
+                    letter[0][j]=b;
+                    letter[1][j]=b;
+                }
+                break;
+
+            case 'D':
+                for(i=0; i<6; i++)
+                    letter[i][0]=b;
+                for(i=0; i<6; i++)
+                    letter[i][4]=b;
+
+                for(j=1; j<4; j++){
+                        for(i=0; i<2; i++)
+                        letter[i][j]=b;
+
+                        for(i=5; i<7; i++)
+                        letter[i][j]=b;
+                }
+
+                break;
+
+            case 'E':
+                for(j=0; j<5; j++){
+                    for(i=0; i<2; i++)
+                    letter[i][j]=b;
+                }
+
+                for(j=0; j<5; j+=2){
+                    for(i=0; i<7; i++)
+                    letter[i][j]=b;
+                }
+                break;
+            case 'F':
+                for(j=0; j<5; j++){
+                    for(i=0; i<2; i++)
+                        letter[i][j]=b;
+                }
+
+                for(i=2; i<7; i++)
+                        letter[i][0]=b;
+
+                for(i=2; i<5; i++)
+                        letter[i][2]=b;
+                break;
+            case 'I':
+                for(j=0; j<5; j++){
+                    for(i=2; i<4; i++)
+                    letter[i][j]=b;
+                }
+                for(i=1; i<6; i++){
+                    letter[i][0]=b;
+                    letter[i][4]=b;
+                }
+                break;
+            case 'K':
+                for(j=0; j<5; j++){
+                    for(i=0; i<2; i++)
+                        letter[i][j]=b;
+                }
+                for(i=2; i<5; i++)
+                        letter[i][2]=b;
+
+                letter[5][0]=b;
+                letter[6][0]=b;
+                letter[4][1]=b;
+                letter[5][1]=b;
+                letter[4][3]=b;
+                letter[5][3]=b;
+                letter[5][4]=b;
+                letter[6][4]=b;
+
+                break;
+            case 'L':
+                for(j=0; j<5; j++){
+                    for(i=0; i<2; i++)
+                        letter[i][j]=b;
+                }
+
+                for(i=2; i<7; i++)
+                        letter[i][4]=b;
+                break;
+            case 'M':
+                for(j=0; j<5; j++){
+                    letter[0][j]=b;
+                    letter[1][j]=b;
+                    letter[5][j]=b;
+                    letter[6][j]=b;
+                }
+
+                letter[2][1]=b;
+                letter[3][2]=b;
+                letter[4][1]=b;
+                break;
+            case 'N':
+                for(j=0; j<5; j++){
+                    for(i=0; i<2; i++)
+                    letter[i][j]=b;
+                    for(i=5; i<7; i++)
+                    letter[i][j]=b;
+                }
+                i=0;
+                while(i<4){
+                    for(j=0; j<3; j++)
+                        letter[2+i][j+i]=b;
+                    i++;
+                }
+                break;
+            case 'O':
+                for(j=1; j<4; j++){
+                    for(i=0; i<2; i++)
+                    letter[i][j]=b;
+                    for(i=5; i<7; i++)
+                    letter[i][j]=b;
+                }
+
+                for(i=1; i<6; i++){
+                    letter[i][0]=b;
+                    letter[i][4]=b;
+                }
+                break;
+
+            case 'P':
+                for(j=0; j<5; j++){
+                    for(i=0; i<2; i++)
+                        letter[i][j]=b;
+                }
+
+                for(i=2; i<6; i++){
+                    letter[i][0]=b;
+                    letter[i][2]=b;
+                }
+
+                    letter[5][1]=b;
+                    letter[6][1]=b;
+                break;
+            case 'R':
+                for(i=1; i<6; i++) //copy of A
+                        letter[i][0]=b;
+
+                    for(j=1; j<5; j++){
+                        for(i=0; i<2; i++)
+                        letter[i][j]=b;
+
+                        for(i=5; i<7; i++)
+                        letter[i][j]=b;
+                    }
+                    for(i=0; i<7; i++)
+                    letter[i][2]=b;
+
+                    letter[6][2]=' ';
+
+                break;
+
+            case 'S':
+
+                for(i=0; i<2; i++){
+                letter[i][1]=b;
+                letter[i+5][3]=b;
+                }
+
+                for(j=0; j<5; j+=2){
+                    for(i=0; i<7; i++)
+                    letter[i][j]=b;
+                }
+
+
+                break;
+
+            case 'T':
+                for(i=0; i<7; i++)
+                    letter[i][0]=b;
+
+                 for(j=0; j<5; j++){
+                    for(i=2; i<4; i++)
+                    letter[i][j]=b;
+                }
+
+
+                break;
+            case 'U':
+                for(j=0; j<4; j++){
+                    letter[0][j]=b;
+                    letter[1][j]=b;
+                    letter[5][j]=b;
+                    letter[6][j]=b;
+                }
+                for(i=1; i<6; i++)
+                    letter[i][4]=b;
+
+                break;
+            case 'Y':
+
+                    letter[0][0]=b;
+                    letter[1][0]=b;
+                    //letter[5][0]=b;
+                    letter[6][0]=b;
+
+                    letter[1][1]=b;
+                    letter[2][1]=b;
+                    letter[6][1]=b;
+                    letter[5][1]=b;
+
+                    letter[2][2]=b;
+                    letter[3][2]=b;
+                    letter[4][2]=b;
+                    letter[5][2]=b;
+                for(j=2; j<5; j++){
+                    letter[3][j]=b;
+                    letter[4][j]=b;
+                }
+
+
+
+                break;
+            default: break;
+    }
+
+    for(j=0; j<5; j++){
+        for(i=0; i<7;i++)
+            printf("%c",letter[i][j]);
+        moveDown(1);
+        moveBack(7);
+    }
+    moveForward(8);
+    moveUp(5);
+
+}
+
+void renderWord(char *x){
+    uint8_t i;
+
+    for(i = 0; i < strlen(x); i++ ){
+        renderLetter(x[i]);
         }
 }
