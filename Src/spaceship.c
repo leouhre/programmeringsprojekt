@@ -1,6 +1,6 @@
 #include "SPACESHIP.h"
 
-void spaceshipinit(spaceship_t *sh, int32_t direction, int32_t x, int32_t y)
+void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y)
 {
 
     sh->x=x;
@@ -13,7 +13,7 @@ void spaceshipinit(spaceship_t *sh, int32_t direction, int32_t x, int32_t y)
     sh->clipsize = 5;
 }
 
-void update_spaceship(int input,spaceship_t *sh)
+void spaceship_update(int input,spaceship_t *sh)
 {
 
     uint8_t i, j;
@@ -41,24 +41,21 @@ void update_spaceship(int input,spaceship_t *sh)
 
     if (0x04 & input)
     {
-        sh->angle -= 10;
+        sh->angle -= 24;
         //rotateVector(&sh->direction, 1);
     }
 
     if (0x08 & input)
     {
-        sh->angle += 10;
+        sh->angle += 24;
         //rotateVector(&sh->direction, -1);
     }
 
 }
 
-void render_spaceship(spaceship_t sh)
+void spaceship_render(spaceship_t sh)
 {
     int32_t n = sh.angle & 0x1FF;
-
-    gotoxy(2,2);
-    printf("%d", n);
 
     gotoxy(sh.x>>14,sh.y>>14);
 
@@ -238,7 +235,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     		sprite[0][0] = '\\';
     		sprite[0][1] = ' ';
     		sprite[0][2] = ' ';
-    		sprite[1][0] = '-';
+    		sprite[1][0] = '<';
     		sprite[1][1] = '-';
     		sprite[1][2] = 'o';
     		sprite[2][0] = '/';
@@ -250,7 +247,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     		sprite[0][0] = '\\';
     		sprite[0][1] = ' ';
     		sprite[0][2] = ' ';
-    		sprite[1][0] = '\\';
+    		sprite[1][0] = '<';
     		sprite[1][1] = '-';
     		sprite[1][2] = 'o';
     		sprite[2][0] = '-';
@@ -259,7 +256,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
 
     		break;
     	case 2 :
-    		sprite[0][0] = '\\';
+    		sprite[0][0] = 'M';
     		sprite[0][1] = ' ';
     		sprite[0][2] = '|';
     		sprite[1][0] = '-';
@@ -272,7 +269,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     		break;
     	case 3 :
     		sprite[0][0] = '\\';
-    		sprite[0][1] = '|';
+    		sprite[0][1] = 'M';
     		sprite[0][2] = '/';
     		sprite[1][0] = ' ';
     		sprite[1][1] = '\\';
@@ -284,7 +281,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     		break;
     	case 4 :
     		sprite[0][0] = '\\';
-    		sprite[0][1] = '|';
+    		sprite[0][1] = 'M';
     		sprite[0][2] = '/';
     		sprite[1][0] = ' ';
     		sprite[1][1] = '|';
@@ -296,7 +293,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     		break;
     	case 5 :
     		sprite[0][0] = '\\';
-    		sprite[0][1] = '|';
+    		sprite[0][1] = 'M';
     		sprite[0][2] = '/';
     		sprite[1][0] = ' ';
     		sprite[1][1] = '/';
@@ -309,7 +306,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     	case 6 :
     		sprite[0][0] = ' ';
     		sprite[0][1] = '|';
-    		sprite[0][2] = '/';
+    		sprite[0][2] = 'M';
     		sprite[1][0] = ' ';
     		sprite[1][1] = '/';
     		sprite[1][2] = '-';
@@ -320,14 +317,14 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     		break;
     	case 7 :
     		sprite[0][0] = ' ';
-    		sprite[0][1] = '|';
+    		sprite[0][1] = ' ';
     		sprite[0][2] = '/';
     		sprite[1][0] = 'o';
     		sprite[1][1] = '-';
-    		sprite[1][2] = '-';
+    		sprite[1][2] = '>';
     		sprite[2][0] = ' ';
     		sprite[2][1] = ' ';
-    		sprite[2][2] = ' ';
+    		sprite[2][2] = '-';
 
     		break;
     	case 8 :
@@ -336,7 +333,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     		sprite[0][2] = '/';
     		sprite[1][0] = 'o';
     		sprite[1][1] = '-';
-    		sprite[1][2] = '-';
+    		sprite[1][2] = '>';
     		sprite[2][0] = ' ';
     		sprite[2][1] = ' ';
     		sprite[2][2] = '\\';
@@ -345,12 +342,12 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     	case 9 :
     		sprite[0][0] = ' ';
     		sprite[0][1] = ' ';
-    		sprite[0][2] = ' ';
+    		sprite[0][2] = '-';
     		sprite[1][0] = 'o';
     		sprite[1][1] = '-';
-    		sprite[1][2] = '-';
+    		sprite[1][2] = '>';
     		sprite[2][0] = ' ';
-    		sprite[2][1] = '|';
+    		sprite[2][1] = ' ';
     		sprite[2][2] = '\\';
 
     		break;
@@ -362,8 +359,8 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     		sprite[1][1] = '\\';
     		sprite[1][2] = '-';
     		sprite[2][0] = ' ';
-    		sprite[2][1] = '|';
-    		sprite[2][2] = '\\';
+    		sprite[2][1] = '\\';
+    		sprite[2][2] = 'W';
 
     		break;
     	case 11 :
@@ -374,7 +371,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     		sprite[1][1] = '\\';
     		sprite[1][2] = ' ';
     		sprite[2][0] = '/';
-    		sprite[2][1] = '|';
+    		sprite[2][1] = 'W';
     		sprite[2][2] = '\\';
 
     		break;
@@ -386,7 +383,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
 			sprite[1][1] = '|';
 			sprite[1][2] = ' ';
 			sprite[2][0] = '/';
-			sprite[2][1] = '|';
+			sprite[2][1] = 'W';
 			sprite[2][2] = '\\';
 
 			break;
@@ -398,7 +395,7 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
 			sprite[1][1] = '/';
 			sprite[1][2] = ' ';
 			sprite[2][0] = '/';
-			sprite[2][1] = '|';
+			sprite[2][1] = 'W';
 			sprite[2][2] = '\\';
 
 			break;
@@ -409,20 +406,20 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
 			sprite[1][0] = '-';
 			sprite[1][1] = '/';
 			sprite[1][2] = ' ';
-			sprite[2][0] = '/';
+			sprite[2][0] = 'W';
 			sprite[2][1] = '|';
 			sprite[2][2] = ' ';
 
 			break;
 		case 15 :
-			sprite[0][0] = ' ';
+			sprite[0][0] = '-';
 			sprite[0][1] = ' ';
 			sprite[0][2] = ' ';
-			sprite[1][0] = '-';
+			sprite[1][0] = '<';
 			sprite[1][1] = '-';
 			sprite[1][2] = 'o';
 			sprite[2][0] = '/';
-			sprite[2][1] = '|';
+			sprite[2][1] = ' ';
 			sprite[2][2] = ' ';
 
 			break;
