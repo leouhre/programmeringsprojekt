@@ -7,7 +7,7 @@ void enemy_init(enemy_t *enemy, int32_t x, int32_t y){
     enemy->direction.x = 0;
     enemy->direction.y = 0;
 
-    enemy->hp = 4;
+    enemy->hp = 20;
     enemy->alive = 1;
 }
 
@@ -89,7 +89,7 @@ void fillEnemiesArray(enemy_t *enemies, uint8_t n) {
 }
 
 uint8_t spaceshipEnemyCollision(enemy_t enemy, spaceship_t sh) {
-	uint8_t i, j, message;
+	uint8_t message;
 	message = MAX((enemy.x >> 14), (sh.x >> 14)) - MIN((enemy.x >> 14), (sh.x >> 14)) <= 3 &&
 		MAX((enemy.y >> 14), (sh.y >> 14)) - MIN((enemy.y >> 14), (sh.y >> 14)) <= 3;
 
@@ -104,7 +104,7 @@ uint8_t bulletEnemyCollision2(enemy_t *enemy, bullet_t bullet) {
 	if (message) {
 		enemy->hp--;
 	}
-
+	return message;
 }
 
 /*

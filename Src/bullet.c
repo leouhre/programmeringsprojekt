@@ -80,7 +80,7 @@ void bullet_update(bullet_t *bullet, spaceship_t sh, enemy_t *enemies, uint8_t n
 
 			for(k = 0; k < numberOfEnemies; k++) {
 				if(boundsCheck(bullet[i]) || (enemies[k].alive != 0 && bulletEnemyCollision2(&enemies[k], bullet[i]))) {
-					printf(" ");
+					bullet[i].alive = 0;
 					//i--;
 				} else {
 					gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);

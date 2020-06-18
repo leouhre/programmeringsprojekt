@@ -10,7 +10,7 @@ void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y)
     sh->y <<= 14;
 
     sh->angle=direction;
-    sh->clipsize = 5;
+    sh->clipsize = 10;
 }
 
 void spaceship_update(int input,spaceship_t *sh)
