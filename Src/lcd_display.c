@@ -14,7 +14,7 @@ void lcd_player_hp_update(uint8_t hp, uint8_t maxHp, uint8_t *buffer) {
 }
 
 void lcd_player_score_update(uint32_t score, uint8_t *buffer) {
-    uint8_t i, j, pos = 0;
+    uint8_t i, j;
     char scoreBuffer [10];
     char printScore [7] = {'S', 'C', 'O', 'R', 'E', ':'};
 
