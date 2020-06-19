@@ -1,6 +1,6 @@
 #include "bullet.h"
 
-/*
+
 void bullet_init(bullet_t *bullet, spaceship_t sh) {
     uint8_t i, str = 0;
     for(i = 0; i < sh.clipsize; i++) { // find number of bullets in array
@@ -18,7 +18,8 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) {
         //bullet[str+1].bullet_type = sh.bullet_type;
     }
 }
-*/
+
+/*
 
 void bullet_init(bullet_t *bullet, spaceship_t sh) {
     uint8_t i, str = 0;
@@ -36,8 +37,9 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) {
         //bullet[str+1].bullet_type = sh.bullet_type;
     }
 }
+*/
 
-/*
+
 void bullet_update(bullet_t *bullet, spaceship_t sh, enemy_t *enemies, uint8_t numberOfEnemies) {
     uint8_t i, j, k;
 
@@ -65,8 +67,9 @@ void bullet_update(bullet_t *bullet, spaceship_t sh, enemy_t *enemies, uint8_t n
         }
     }
 }
-*/
 
+
+/*
 void bullet_update(bullet_t *bullet, spaceship_t sh, enemy_t *enemies, uint8_t numberOfEnemies) {
     uint8_t i, k;
 
@@ -87,6 +90,7 @@ void bullet_update(bullet_t *bullet, spaceship_t sh, enemy_t *enemies, uint8_t n
         }
     }
 }
+*/
 
 uint8_t boundsCheck(bullet_t bullet) {
 	return (bullet.x >> 14) > 150 || (bullet.y >> 14) > 40 || (bullet.x >> 14) < 0 || (bullet.y >> 14) < 0;

@@ -11,6 +11,7 @@ void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y, ui
 
     sh->angle=direction;
     sh->clipsize = clipsize;
+    sh->hp = 100;
 }
 
 void spaceship_update(int input,spaceship_t *sh)
