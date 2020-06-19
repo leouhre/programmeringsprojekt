@@ -1,11 +1,33 @@
 #include "menuScreen.h"
 
+void loadMenu(){
+
+    //each letter is 7 wide + 1 space, making a 4 letter word 32 wide
+    //our longest word is 7 letters so 56
+    uint8_t x = 211, y = 56, boxes=0, firstboxY = 20;
+    clrscr();
+    box(1,1,x,y,1);
+
+    uint8_t middlex = (211 - 1 )/2; //105
+
+    boxWithTextInTheMiddleOfTheScreen(middlex, 5,"       ", 1);
+
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY,"START",1);
+    boxes++;
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"OPTIONS",1);
+    boxes++;
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"HOW TO PLAY",1);
+    boxes++;
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"CREDITS",1);
+    boxes++;
+}
+
 void selectInMenu(){
     uint8_t select=0, flagMenu=1;
     uint8_t op0xv = 105-30, op1xv = 105-38, op2xv = 105-38-16, op3xv = 105-38;
     uint8_t op0xh = 105+26, op1xh = 105+34, op2xh = 105+34+16, op3xh = 105+34;
 
-
+loadMenu();
 
 while(flagMenu==1){
 
@@ -103,16 +125,21 @@ while(flagMenu==1){
                     switch(select){
                         case 0:
                             loadGame();
+                            flagMenu++;
                             break;
                         case 1:
                             loadOptions();
                             selectInOptions();
                             break;
                         case 2:
-                            //loadHowToPlay();
+                            loadHowToPlay();
+                            selectInCreditsAndHowToPlay();
+                            loadMenu();
                             break;
                         case 3:
                             loadCredits();
+                            selectInCreditsAndHowToPlay();
+                            loadMenu();
                             break;
                     }
                     flagMenu++;
@@ -124,30 +151,27 @@ while(flagMenu==1){
     }
 }
 
-void loadMenu(){
-
-    //each letter is 7 wide + 1 space, making a 4 letter word 32 wide
-    //our longest word is 7 letters so 56
-    uint8_t x = 211, y = 56, boxes=0, firstboxY = 20;
+void loadOptions(){
     clrscr();
+    uint8_t x = 211, y = 56, firstboxY = 20, middlex = (211 - 1 )/2;
     box(1,1,x,y,1);
 
-    uint8_t middlex = (211 - 1 )/2; //105
+    boxWithTextInTheMiddleOfTheScreen(middlex, 5,"OPTIONS", 1);
 
-    boxWithTextInTheMiddleOfTheScreen(middlex, 5,"       ", 1);
+    middlex=middlex/2;
 
-    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY,"START",1);
-    boxes++;
-    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"OPTIONS",1);
-    boxes++;
-    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"HOW TO PLAY",1);
-    boxes++;
-    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"CREDITS",1);
-    boxes++;
+    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY, "DIFFICULTY",1);
+    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY+9, "MODE",1);
+    middlex=105;
+    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY+27, "BACK",1);
+
+    middlex=middlex+middlex/2;
+    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY, "*****     ",1); //10
+    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY+9, "LEVELS",1);
 }
 
 void selectInOptions(){
-    uint8_t select=0, flagOptions=1, difficulty=5, mode=1, i;
+    uint8_t select=0, flagOptions=1, difficulty=5, mode=1;
     uint8_t op0v = 2, op1v = 105/2-16-10, op2v = 105-30+4;
     uint8_t op0h = 105-7, op1h = 105-16-15, op2h = 105+26-4;
     while(flagOptions == 1){
@@ -243,10 +267,10 @@ void selectInOptions(){
                         gotoxy(135, 31);
                         if(mode == 1){
                             mode = 0;
-                            renderWord("LEVELS");
+                            renderWord("ENDLES");
                         }else if(mode == 0){
                             mode = 1;
-                            renderWord("ENDLES");
+                            renderWord("LEVELS");
                         }
 
                     }
@@ -259,13 +283,6 @@ void selectInOptions(){
                             difficulty++;
                             gotoxy(111+8*difficulty,22);
                                 renderLetter('*');
-
-                            /*difficulty++;
-                            gotoxy(119,22);
-                            for(i=0; i<difficulty; i++)
-                                renderLetter('*');
-                            for(i=difficulty; i<10; i++)
-                                renderLetter(' ');*/
                         }
 
 
@@ -273,10 +290,10 @@ void selectInOptions(){
                         gotoxy(135, 31);
                         if(mode == 1){
                             mode = 0;
-                            renderWord("LEVELS");
+                            renderWord("ENDLES");
                         }else if(mode == 0){
                             mode = 1;
-                            renderWord("ENDLES");
+                            renderWord("LEVELS");
                         }
                     }
                     break;
@@ -294,28 +311,56 @@ void selectInOptions(){
     }
 }
 
-
-
-void loadOptions(){
+void loadHowToPlay(){
+    uint8_t x = 211, y = 56, boxes=0, firstboxY = 20;
     clrscr();
-    uint8_t x = 211, y = 56, boxes=0, firstboxY = 20, middlex = (211 - 1 )/2;
     box(1,1,x,y,1);
 
-    boxWithTextInTheMiddleOfTheScreen(middlex, 5,"OPTIONS", 1);
+    uint8_t middlex = (211 - 1 )/2; //105
 
-    middlex=middlex/2;
+    boxWithTextInTheMiddleOfTheScreen(middlex, 5,"HOW TO PLAY", 1);
 
-    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY, "DIFFICULTY",1);
-    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY+9, "MODE",1);
-    middlex=105;
-    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY+27, "BACK",1);
-
-    middlex=middlex+middlex/2;
-    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY, "*****     ",1); //10
-    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY+9, "LEVELS",1);
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY,"W MOVE FORWARD",1);
+    boxes++;
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"A AND D TURN",1);
+    boxes++;
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"SPACE TO SHOOT",1);
+    boxes++;
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"BACK",1);
 }
 
-void loadCredits(){}
+void loadCredits(){
+    uint8_t x = 211, y = 56, boxes=0, firstboxY = 20;
+    clrscr();
+    box(1,1,x,y,1);
 
-void loadGame(){}
+    uint8_t middlex = (211 - 1 )/2; //105
+
+    boxWithTextInTheMiddleOfTheScreen(middlex, 5,"THIS GAME WAS MADE BY", 1);
+
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY,"THEODOR NORBY-LASSEN",1);
+    boxes++;
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"LEO UHRE JAKOBSEN",1);
+    boxes++;
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"JACOB HELLUM",1);
+    boxes++;
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+boxes*9,"BACK",1);
+}
+
+void selectInCreditsAndHowToPlay(){
+    uint8_t flagCredits =1;
+    gotoxy(105-30+4,22+27);
+    renderLetter('p');
+    gotoxy(105+26-4,22+27);
+    renderLetter('q');
+    //kan dette gøres med en interrupt?
+
+    while(flagCredits == 1){
+        if(readControls() == 0x10)
+            flagCredits--;
+    }
+
+}
+
+void loadGame(){clrscr(); gotoxy(1,1); printf("Hello World");}
 
