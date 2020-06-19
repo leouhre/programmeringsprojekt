@@ -1,6 +1,6 @@
 #include "enemy.h"
 
-void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t *enemyBullet) {
+void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t enemyBullet) {
     enemy->x = (x << 14);
     enemy->y = (y << 14);
 
@@ -10,7 +10,7 @@ void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t *enemyBullet
     enemy->hp = 20;
     enemy->alive = 1;
     enemy->clipsize = 3;
-    enemy->enemyBullet = enemyBullet;
+    enemy->gun = enemyBullet;
 }
 
 void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t sh, bullet_t *bullet){
@@ -107,6 +107,7 @@ void enemy_render(enemy_t *enemies, uint8_t numberOfEnemies) {
 	fgcolor(15);
 }
 
+/*
 void fillEnemiesArray(enemy_t *enemies, uint8_t n) {
 	uint32_t maxX = 200, maxY = 40;
 	uint8_t i;
@@ -122,7 +123,7 @@ void fillEnemiesArray(enemy_t *enemies, uint8_t n) {
 	gotoxy(5,5);
 	printf("fillEnemiesArray()");
 }
-
+*/
 uint8_t spaceshipEnemyCollision(enemy_t enemy, spaceship_t sh) {
 	uint8_t message;
 	message = MAX((enemy.x >> 14), (sh.x >> 14)) - MIN((enemy.x >> 14), (sh.x >> 14)) <= 10 &&
@@ -218,6 +219,37 @@ void bulletEnemy_update(enemy_t *enemies, uint8_t numberOfEnemies) {
 */
 
 void bulletEnemy_init(enemy_t *enemy) {
+	enemy->gun.x = enemy->x;
+	enemy->gun.y = enemy->y;
+	enemy->gun.direction = rotateVector2(enemy->direction, 8 - rand() % 16);
+	enemy->gun.alive = 1;
+}
+
+void bulletEnemy_update(enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh) {
+	uint8_t i;
+	for (i = 0; i < numEnemies; i++) {
+		if (enemies[i].gun.alive) {
+			gotoxy(enemies[i].gun.x >> 14, enemies[i].gun.y >> 14);
+			printf(" ");
+
+			enemies[i].gun.x += enemies[i].gun.direction.x;
+			enemies[i].gun.y += enemies[i].gun.direction.y;
+
+			if (enemyBullet_boundsCheck(enemies[i].gun) || playerHit(enemies[i].gun, sh)) {
+				gotoxy(enemies[i].gun.x >> 14, enemies[i].gun.y >> 14);
+				printf(" ");
+				enemies[i].gun.alive = 0;
+			} else {
+				gotoxy(enemies[i].gun.x >> 14, enemies[i].gun.y >> 14);
+				printf("o");
+			}
+
+		}
+	}
+}
+
+/*
+void bulletEnemyClip_init(enemy_t *enemy) {
     uint8_t i, str = 0;
     for(i = 0; i < enemy->clipsize; i++) { // find number of bullets in array
         if(enemy->enemyBullet[i].alive != 0) str++;
@@ -234,7 +266,7 @@ void bulletEnemy_init(enemy_t *enemy) {
     }
 }
 
-void bulletEnemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh) {
+void bulletEnemyClip_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh) {
     uint8_t i, k;
 
     for (k = 0; k < numberOfEnemies; k++) {
@@ -258,7 +290,7 @@ void bulletEnemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *
 		}
     }
 }
-
+*/
 uint8_t enemyBullet_boundsCheck(enemyBullet_t bullet) {
 	return (bullet.x >> 14) > 200 || (bullet.y >> 14) > 40 || (bullet.x >> 14) < 0 || (bullet.y >> 14) < 0;
 }

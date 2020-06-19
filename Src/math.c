@@ -41,6 +41,13 @@ void rotateVector(vector_t *vec, int32_t v) {
     vec->x = tempx;
 }
 
+vector_t rotateVector2(vector_t vec, int32_t v) {
+    vector_t temp;
+    temp.x = FIX14_MULT(vec.x, calccos(v)) - FIX14_MULT(vec.x, calcsin(v));
+    temp.y = FIX14_MULT(vec.x, calcsin(v)) + FIX14_MULT(vec.y, calccos(v));
+    return temp;
+}
+
 int32_t lengthOfVector(vector_t v) { //takes and returns in fixed point 18.14
 	int32_t x2, y2;
 	x2 = FIX8_MULT(v.x >> 6, v.x >> 6);
