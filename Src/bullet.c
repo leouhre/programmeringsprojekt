@@ -81,12 +81,9 @@ void bullet_update(bullet_t *bullet, spaceship_t sh, enemy_t *enemies, uint8_t n
 			for(k = 0; k < numberOfEnemies; k++) {
 				if(boundsCheck(bullet[i]) || (enemies[k].alive != 0 && bulletEnemyCollision2(&enemies[k], bullet[i]))) {
 					bullet[i].alive = 0;
-					//i--;
-				} else {
-					gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
-					printf("o");
 				}
 			}
+			bullet_render(bullet[i]);
         }
     }
 }
@@ -95,3 +92,7 @@ uint8_t boundsCheck(bullet_t bullet) {
 	return (bullet.x >> 14) > 150 || (bullet.y >> 14) > 40 || (bullet.x >> 14) < 0 || (bullet.y >> 14) < 0;
 }
 
+void bullet_render(bullet_t bullet) {
+	gotoxy(bullet.x >> 14, bullet.y >> 14);
+	printf("-");
+}
