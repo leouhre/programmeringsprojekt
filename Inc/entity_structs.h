@@ -5,6 +5,12 @@
 #define _ENTITY_STRUCTS_H_
 
 typedef struct {
+    uint8_t difficulty, mode, currentScore, currentLevel;
+} gameHandler_t;
+
+
+
+typedef struct {
     int32_t x, y, angle;
     uint8_t bullet_type, clipsize;
 

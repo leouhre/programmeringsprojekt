@@ -3,23 +3,27 @@
 #include <string.h>
 #include "ansi.h"
 #include "controls.h"
-
+#include "entity_structs.h"
 #ifndef _MENUSCREEN_H_
 #define _MENUSCREEN_H_
 
 void loadMenu();
 
-void selectInMenu();
+void selectInMenu(gameHandler_t *game);
 
-void loadOptions();
+void loadOptions(gameHandler_t *game);
 
-void selectInOptions();
+void selectInOptions(gameHandler_t *game);
 
 void loadHowToPlay();
 
 void loadCredits();
 
 void selectInCreditsAndHowToPlay();
+
+void loadPause();
+
+void selectInPause();
 
 void loadGame();
 
