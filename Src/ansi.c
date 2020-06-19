@@ -292,9 +292,6 @@ void renderLetter(char x){
         }
     }
 
-
-
-
     switch(x){
             case 'p':
                 for(j=0; j<5; j++){
@@ -338,6 +335,11 @@ void renderLetter(char x){
                         letter[i][j]=b;
                 break;
             case ' ':
+                break;
+
+            case '-':
+                    for(i = 1; i < 6; i++)
+                        letter[i][2]=b;
                 break;
             case 'A':
                     for(i=1; i<6; i++)
@@ -417,6 +419,33 @@ void renderLetter(char x){
                 for(i=2; i<5; i++)
                         letter[i][2]=b;
                 break;
+            case 'G':
+                for(j=1; j<4; j++)
+                    for(i=0; i<2; i++)
+                        letter[i][j]=b;
+
+                for(j=2; j<4; j++)
+                    for(i=5; i<7; i++)
+                        letter[i][j]=b;
+
+                for(i=1; i<6; i++){
+                    letter[i][0]=b;
+                    letter[i][4]=b;
+                }
+                letter[4][2]=b;
+                break;
+
+            case 'H':
+                for(j=0; j<5; j++){
+                    for(i=0; i<2; i++){
+                        letter[i][j]=b;
+                        letter[i+5][j]=b;
+                    }
+                }
+                for(i=2; i<5; i++)
+                    letter[i][2]=b;
+
+                break;
             case 'I':
                 for(j=0; j<5; j++){
                     for(i=2; i<4; i++)
@@ -426,6 +455,16 @@ void renderLetter(char x){
                     letter[i][0]=b;
                     letter[i][4]=b;
                 }
+                break;
+            case 'J':
+                for(j=0; j<4; j++){
+                    letter[5][j]=b;
+                    letter[6][j]=b;
+                }
+                for(i=1; i<6; i++)
+                    letter[i][4]=b;
+                letter[0][3]=b;
+                letter[1][3]=b;
                 break;
             case 'K':
                 for(j=0; j<5; j++){
@@ -561,6 +600,42 @@ void renderLetter(char x){
                 }
                 for(i=1; i<6; i++)
                     letter[i][4]=b;
+
+                break;
+            case 'V':
+                for(j=0; j<3; j++){
+                    for(i=0; i<2; i++){
+                        letter[i][j]=b;
+                        letter[i+5][j]=b;
+                    }
+                }
+
+                    letter[1][3]=b;
+                    letter[2][3]=b;
+                    letter[4][3]=b;
+                    letter[5][3]=b;
+
+                    letter[2][4]=b;
+                    letter[3][4]=b;
+                    letter[4][4]=b;
+
+
+                break;
+
+            case 'W':
+                for(j=0; j<4; j++){
+                    for(i=0; i<2; i++){
+                        letter[i][j]=b;
+                        letter[i+5][j]=b;
+                    }
+                }
+
+                    letter[3][3]=b;
+
+                    letter[1][4]=b;
+                    letter[2][4]=b;
+                    letter[4][4]=b;
+                    letter[5][4]=b;
 
                 break;
             case 'Y':

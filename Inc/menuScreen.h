@@ -2,18 +2,24 @@
 #include <stdint.h>
 #include <string.h>
 #include "ansi.h"
-
+#include "controls.h"
 
 #ifndef _MENUSCREEN_H_
 #define _MENUSCREEN_H_
 
+void loadMenu();
+
 void selectInMenu();
 
-void loadMenu();
+void loadOptions();
+
+void selectInOptions();
+
+void loadHowToPlay();
 
 void loadCredits();
 
-void loadOptions();
+void selectInCreditsAndHowToPlay();
 
 void loadGame();
 
