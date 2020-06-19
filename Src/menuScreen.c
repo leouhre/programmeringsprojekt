@@ -1,5 +1,14 @@
 #include "menuScreen.h"
 
+void gameInit(gameHandler_t *game){
+    game->difficulty = 5;
+    game->mode = 1;
+    game->currentLevel = 0;
+    game->currentScore = 0;
+}
+
+
+
 void loadMenu(){
 
     //each letter is 7 wide + 1 space, making a 4 letter word 32 wide
@@ -22,12 +31,12 @@ void loadMenu(){
     boxes++;
 }
 
-void selectInMenu(){
+void selectInMenu(gameHandler_t *game){
     uint8_t select=0, flagMenu=1;
     uint8_t op0xv = 105-30, op1xv = 105-38, op2xv = 105-38-16, op3xv = 105-38;
     uint8_t op0xh = 105+26, op1xh = 105+34, op2xh = 105+34+16, op3xh = 105+34;
 
-loadMenu();
+    loadMenu();
 
 while(flagMenu==1){
 
@@ -128,8 +137,8 @@ while(flagMenu==1){
                             flagMenu++;
                             break;
                         case 1:
-                            loadOptions();
-                            selectInOptions();
+                            loadOptions(game);
+                            selectInOptions(game);
                             break;
                         case 2:
                             loadHowToPlay();
@@ -151,10 +160,25 @@ while(flagMenu==1){
     }
 }
 
-void loadOptions(){
+void loadOptions(gameHandler_t *game){
     clrscr();
-    uint8_t x = 211, y = 56, firstboxY = 20, middlex = (211 - 1 )/2;
+    uint8_t x = 211, y = 56, firstboxY = 20, middlex = (211 - 1 )/2, i;
     box(1,1,x,y,1);
+
+    char strDifficulty[11] = "          ";
+    char strMode[7] = "LEVELS";
+
+    for(i = 0; i <game->difficulty; i++)
+        strDifficulty[i]='*';
+
+    if(game->mode == 0){
+        strMode[0] = 'E';
+        strMode[1] = 'N';
+        strMode[2] = 'D';
+        strMode[3] = 'L';
+        strMode[4] = 'E';
+        strMode[5] = 'S';
+    }
 
     boxWithTextInTheMiddleOfTheScreen(middlex, 5,"OPTIONS", 1);
 
@@ -166,12 +190,12 @@ void loadOptions(){
     boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY+27, "BACK",1);
 
     middlex=middlex+middlex/2;
-    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY, "*****     ",1); //10
-    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY+9, "LEVELS",1);
+    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY, strDifficulty,1); //10
+    boxWithTextInTheMiddleOfTheScreen(middlex, firstboxY+9, strMode,1);
 }
 
-void selectInOptions(){
-    uint8_t select=0, flagOptions=1, difficulty=5, mode=1;
+void selectInOptions(gameHandler_t *game){
+    uint8_t select=0, flagOptions=1 /*difficulty=5, mode=1*/;
     uint8_t op0v = 2, op1v = 105/2-16-10, op2v = 105-30+4;
     uint8_t op0h = 105-7, op1h = 105-16-15, op2h = 105+26-4;
     while(flagOptions == 1){
@@ -255,21 +279,21 @@ void selectInOptions(){
                 case 0x04:                  //a
                     if(select == 0){
 
-                        if(difficulty > 1){
-                            gotoxy(111+8*difficulty,22);
+                        if(game->difficulty > 1){
+                            gotoxy(111+8*game->difficulty,22);
                             renderLetter(' ');
-                            difficulty--;
+                            game->difficulty--;
 
                         }
 
 
                     }else if(select == 1){
                         gotoxy(135, 31);
-                        if(mode == 1){
-                            mode = 0;
+                        if(game->mode == 1){
+                            game->mode = 0;
                             renderWord("ENDLES");
-                        }else if(mode == 0){
-                            mode = 1;
+                        }else if(game->mode == 0){
+                            game->mode = 1;
                             renderWord("LEVELS");
                         }
 
@@ -279,20 +303,20 @@ void selectInOptions(){
                 case 0x08:                  //d
                     if(select == 0){
 
-                        if(difficulty < 10){
-                            difficulty++;
-                            gotoxy(111+8*difficulty,22);
+                        if(game->difficulty < 10){
+                            game->difficulty++;
+                            gotoxy(111+8*game->difficulty,22);
                                 renderLetter('*');
                         }
 
 
                     }else if(select == 1){
                         gotoxy(135, 31);
-                        if(mode == 1){
-                            mode = 0;
+                        if(game->mode == 1){
+                            game->mode = 0;
                             renderWord("ENDLES");
-                        }else if(mode == 0){
-                            mode = 1;
+                        }else if(game->mode == 0){
+                            game->mode = 1;
                             renderWord("LEVELS");
                         }
                     }
@@ -361,6 +385,106 @@ void selectInCreditsAndHowToPlay(){
     }
 
 }
+
+
+void loadPause(){
+    uint8_t x = 211, y = 56, firstboxY = 20;
+    clrscr();
+    box(1,1,x,y,1);
+
+    uint8_t middlex = (211 - 1 )/2; //105
+
+    boxWithTextInTheMiddleOfTheScreen(middlex, 5,"GAME PAUSED", 1);
+
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY,"RESUME GAME",1);
+    boxWithTextInTheMiddleOfTheScreen(middlex,firstboxY+2*9,"MAIN MENU",1);
+}
+
+void selectInPause(gameHandler_t *game){
+    uint8_t select=0, flagPause=1;
+    uint8_t op0v = 105-54, op1v = 105-46;
+    uint8_t op0h = 105+50, op1h = 105+42;
+
+    loadPause();
+
+    while(flagPause == 1){
+
+        if(flagPause==1){
+
+            //option 0: difficulty
+            //option 1: mode
+            //option 2: back
+            switch(select){
+                case 0:
+                    //clear option 1
+                    gotoxy(op1v,22+18);
+                    renderLetter(' ');
+                    gotoxy(op1h,22+18);
+                    renderLetter(' ');
+
+                    //move to option 0
+                    gotoxy(op0v,22);
+                    renderLetter('q');
+                    gotoxy(op0h,22);
+                    renderLetter('p');
+                    flagPause--;
+                break;
+
+                case 1:
+                    //clear option 0
+                    gotoxy(op0v,22);
+                    renderLetter(' ');
+                    gotoxy(op0h,22);
+                    renderLetter(' ');
+
+                    //move to option 1
+                    gotoxy(op1v,22+18);
+                    renderLetter('q');
+                    gotoxy(op1h,22+18);
+                    renderLetter('p');
+                    flagPause--;
+                break;
+            }
+        }
+        while(flagPause==0){
+
+            switch(readControls()){
+                case 0x01:                  //w
+                    if(select == 1){
+                        select--;
+                        flagPause++;
+                    }
+                    break;
+
+                case 0x02:                  //s
+                    if(select == 0){
+                        select++;
+                        flagPause++;
+                    }
+                    break;
+
+                case 0x10:                  //' '
+                    if(select == 0){
+                        //loadMenu();
+                        clrscr();
+
+                    }else if(select == 1){
+                        selectInMenu(game);
+                    }
+                    flagPause+=2;
+                    break;
+
+                case 0x20:                  //'p'
+                    clrscr();
+                    flagPause+=2;
+                    break;
+
+                default: break;
+            }
+        }
+    }
+}
+
 
 void loadGame(){clrscr(); gotoxy(1,1); printf("Hello World");}
 
