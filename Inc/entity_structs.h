@@ -11,7 +11,8 @@ typedef struct {
 
 
 typedef struct {
-    int32_t x, y, angle;
+   
+    int32_t x, y, angle, hp;
     uint8_t bullet_type, clipsize;
 
     //vector_t direction;
@@ -22,9 +23,17 @@ typedef struct {
 } spaceship_t;
 
 typedef struct {
-    int32_t x, y, hp;
-    uint8_t alive;
+    int32_t x, y;
+    uint8_t bullet_type, alive;
     vector_t direction;
+
+} enemyBullet_t;
+
+typedef struct {
+    int32_t x, y, hp;
+    uint8_t alive, clipsize;
+    vector_t direction;
+    enemyBullet_t *enemyBullet;
     //future updates;
     /*
     int32_t dmg, spd, sht_spd, acceleration, bullet style
@@ -36,5 +45,7 @@ typedef struct {
     uint8_t bullet_type, alive;
 
 } bullet_t;
+
+
 
 #endif
