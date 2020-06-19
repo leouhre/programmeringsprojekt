@@ -88,7 +88,7 @@ void enemy_render(enemy_t *enemies, uint8_t numberOfEnemies) {
 
 	int i, j, k;
 	char face[3][3] = {{218, 196, 191},
-						{179, 0 , 179},
+						{179, 'O' , 179},
 						{192, 196, 217}
 										};
 	for (k = 0; k < numberOfEnemies; k++) {
