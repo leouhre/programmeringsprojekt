@@ -44,25 +44,25 @@ void bullet_update(bullet_t *bullet, spaceship_t sh, enemy_t *enemies, uint8_t n
     uint8_t i, j, k;
 
     for(i = 0; i < sh.clipsize; i++) {
-        if (bullet[i].alive == 0) break;
+        if (bullet[i].alive) {
+        	gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
+			printf(" ");
 
-        gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
-        printf(" ");
+			bullet[i].x += calccos(bullet[i].angle);
+			bullet[i].y += calcsin(bullet[i].angle);
 
-        bullet[i].x += calccos(bullet[i].angle);
-        bullet[i].y += calcsin(bullet[i].angle);
-
-        for(k = 0; k < numberOfEnemies; k++) {
-        	if(boundsCheck(bullet[i]) || (enemies[k].alive != 0 && bulletEnemyCollision2(&enemies[k], bullet[i]))) {
-				bullet[i].alive = 0;
-				for(j = i; j < sh.clipsize-1; j++) {
-					bullet[j] = bullet[j+1];
+			for(k = 0; k < numberOfEnemies; k++) {
+				if(boundsCheck(bullet[i]) || (enemies[k].alive != 0 && bulletEnemyCollision(&enemies[k], bullet[i]))) {
+					bullet[i].alive = 0;
+					for(j = i; j < sh.clipsize-1; j++) {
+						bullet[j] = bullet[j+1];
+					}
+					bullet[sh.clipsize-1].alive = 0;
+					//i--;
+				} else {
+					gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
+					printf("o");
 				}
-				bullet[sh.clipsize-1].alive = 0;
-				//i--;
-			} else {
-				gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
-				printf("o");
 			}
         }
     }
