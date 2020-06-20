@@ -11,6 +11,7 @@ void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t enemyBullet)
     enemy->alive = 1;
     enemy->clipsize = 3;
     enemy->gun = enemyBullet;
+    enemy->stuck = 0;
 }
 
 void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t sh, bullet_t *bullet){
@@ -25,22 +26,23 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t sh, bul
 				}
 			}
 
-			/*
-
 			if (enemies[k].hp < 1) enemies[k].alive = 0;
 
-			if(enemyEnemyCollision(&enemies[k], enemies, numberOfEnemies) && !enemies[k].stuck) {
-				vector_t temp_dir;
-				vector_init(&temp_dir);
-				temp_dir.x += FIX10_DIV(((rand() % 100) << 10), (100 << 10)) << 4;
-				temp_dir.y += FIX10_DIV(((rand() % 100) << 10), (100 << 10)) << 4;
-				enemies[k].direction = temp_dir;
-				enemies[k].stuck = 5;
-			} else if (enemies[k].stuck) {
+			if(enemyEnemyCollision2(&enemies[k], k, enemies, numberOfEnemies)) {
+				//vector_t temp_dir;
+				//vector_init(&temp_dir);
+				//temp_dir.x += FIX10_DIV(((rand() % 100) << 10), (100 << 10)) << 4;
+				//temp_dir.y += FIX10_DIV(((rand() % 100) << 10), (100 << 10)) << 4;
+				//enemies[k].direction = temp_dir;
+				//enemies[k].stuck = 2;
+				enemies[k].x += enemies[k].direction.x;
+				enemies[k].y += enemies[k].direction.y;
+			} else if (enemies[k].stuck && !enemyBoundsCheck(enemies[k])) {
 				enemies[k].x += enemies[k].direction.x;
 				enemies[k].y += enemies[k].direction.y;
 				enemies[k].stuck--;
 			} else {
+				enemies[k].stuck = 0;
 				vector_t temp_dir = coordsToVector(enemies[k].x, enemies[k].y, sh.x, sh.y);
 				int32_t length = lengthOfVector(temp_dir);
 				temp_dir.x = FIX10_DIV((temp_dir.x >> 4), (length >> 4)) << 4;
@@ -58,18 +60,18 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t sh, bul
 			gotoxy(1,k + 1);
 			printf("%d", enemies[k].stuck);
 
-			*/
+			/*
 			if (enemies[k].hp < 1) enemies[k].alive = 0;
 
 			vector_t temp_dir = coordsToVector(enemies[k].x, enemies[k].y, sh.x, sh.y);
 			int32_t length = lengthOfVector(temp_dir);
 			temp_dir.x = FIX10_DIV((temp_dir.x >> 4), (length >> 4)) << 4;
 			temp_dir.y = FIX10_DIV((temp_dir.y >> 4), (length >> 4)) << 4;
-			/*
-			if(enemyEnemyCollision(&enemies[k], enemies, numberOfEnemies)) {
-				rotateVector(&temp_dir, 256);
-			}
-			*/
+
+			//if(enemyEnemyCollision(&enemies[k], enemies, numberOfEnemies)) {
+			//	rotateVector(&temp_dir, 256);
+			//}
+
 			enemies[k].direction = temp_dir;
 			if(spaceshipEnemyCollision(enemies[k], sh) || enemyBoundsCheck(enemies[k])) {
 				enemies[k].x -= enemies[k].direction.x;
@@ -80,6 +82,7 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t sh, bul
 			enemies[k].x += enemies[k].direction.x;
 			enemies[k].y += enemies[k].direction.y;
 			}
+			*/
 		}
 	}
 }
@@ -156,6 +159,26 @@ uint8_t enemyEnemyCollision(enemy_t *enemy, enemy_t *enemies, int8_t numberOfEne
 	return count > 1;
 }
 
+uint8_t enemyEnemyCollision2(enemy_t *enemy, uint8_t n, enemy_t *enemies, int8_t numberOfEnemies) {
+	uint8_t k, count = 0;
+	for(k = 0; k < numberOfEnemies; k++) {
+		if(k != n && enemies[k].alive && !enemies[k].stuck) {
+			if(MAX((enemy->x >> 14), (enemies[k].x >> 14)) - MIN((enemy->x >> 14), (enemies[k].x >> 14)) <= 15 &&
+					MAX((enemy->y >> 14), (enemies[k].y >> 14)) - MIN((enemy->y >> 14), (enemies[k].y >> 14)) <= 15) {
+				enemy->direction = rotateVector2(enemies[k].direction, 64);
+				enemy->stuck = 3;
+				count++;
+			}
+		}
+	}
+	return count > 0;
+}
+
+uint8_t enemyBoundsCheck(enemy_t enemy) {
+	uint16_t maxX = 200, maxY = 50;
+	return (enemy.x >> 14) > maxX || (enemy.y >> 14) > maxY || (enemy.x >> 14) < 0 || (enemy.y >> 14) < 0;
+}
+
 
 /*
 uint8_t bulletEnemyCollision(enemy_t *enemy, bullet_t *bullet, spaceship_t sh) {
@@ -173,11 +196,6 @@ uint8_t bulletEnemyCollision(enemy_t *enemy, bullet_t *bullet, spaceship_t sh) {
 	return message;
 }
 */
-
-uint8_t enemyBoundsCheck(enemy_t enemy) {
-	uint16_t maxX = 200, maxY = 50;
-	return (enemy.x >> 14) > maxX || (enemy.y >> 14) > maxY || (enemy.x >> 14) < 0 || (enemy.y >> 14) < 0;
-}
 
 /*
 void bulletEnemy_init(enemy_t *enemy) {
@@ -248,6 +266,22 @@ void bulletEnemy_update(enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh) {
 	}
 }
 
+uint8_t enemyBullet_boundsCheck(enemyBullet_t bullet) {
+	return (bullet.x >> 14) > 200 || (bullet.y >> 14) > 40 || (bullet.x >> 14) < 0 || (bullet.y >> 14) < 0;
+}
+
+uint8_t playerHit(enemyBullet_t bullet, spaceship_t *sh) {
+	uint8_t message;
+	message = MAX((sh->x >> 14), (bullet.x >> 14)) - MIN((sh->x >> 14), (bullet.x >> 14)) <= 1 &&
+					MAX((sh->y >> 14), (bullet.y >> 14)) - MIN((sh->y >> 14), (bullet.y >> 14)) <= 1;
+
+	if (message) {
+		sh->hp--;
+	}
+	return message;
+}
+
+
 /*
 void bulletEnemyClip_init(enemy_t *enemy) {
     uint8_t i, str = 0;
@@ -291,17 +325,3 @@ void bulletEnemyClip_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship
     }
 }
 */
-uint8_t enemyBullet_boundsCheck(enemyBullet_t bullet) {
-	return (bullet.x >> 14) > 200 || (bullet.y >> 14) > 40 || (bullet.x >> 14) < 0 || (bullet.y >> 14) < 0;
-}
-
-uint8_t playerHit(enemyBullet_t bullet, spaceship_t *sh) {
-	uint8_t message;
-	message = MAX((sh->x >> 14), (bullet.x >> 14)) - MIN((sh->x >> 14), (bullet.x >> 14)) <= 1 &&
-					MAX((sh->y >> 14), (bullet.y >> 14)) - MIN((sh->y >> 14), (bullet.y >> 14)) <= 1;
-
-	if (message) {
-		sh->hp--;
-	}
-	return message;
-}
