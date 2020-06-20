@@ -11,8 +11,8 @@
 #define _ENEMY_H_
 
 void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t enemyBullet, uint8_t hp);
-void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t sh, bullet_t *bullet);
-void enemy_render(enemy_t enemy);
+void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t sh, bullet_t *bullet, uint8_t maxHp);
+void enemy_render(enemy_t enemy, uint8_t maxHp);
 void fillEnemiesArray(enemy_t *enemies, uint8_t n);
 uint8_t spaceshipEnemyCollision(enemy_t enemy, spaceship_t sh);
 uint8_t bulletEnemyCollision(enemy_t *enemy, bullet_t bullet);
