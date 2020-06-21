@@ -23,10 +23,9 @@ void selectInCreditsAndHowToPlay();
 
 void loadPause();
 
-void selectInPause();
+void selectInPause(gameHandler_t *game);
 
 void loadGame();
 
 
 #endif
-
