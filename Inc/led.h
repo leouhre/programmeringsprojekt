@@ -11,6 +11,6 @@
 
 void led_enable();
 void led_init();
-void led_hp_update();
+void led_hp_update(uint32_t tick, uint8_t hp);
 
 #endif

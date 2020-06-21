@@ -33,10 +33,57 @@ void led_init() {
     led_enable(); //enable pins to led for output
     //turn off all led's
     GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
-    //GPIOB->ODR |= (0x0001 << 4); //Set pin PB4 to high color: red
+    GPIOB->ODR |= (0x0001 << 4); //Set pin PB4 to high color: red
     GPIOC->ODR |= (0x0001 << 7); //Set pin PC7 to high color: green
 }
 
-void led_hp_update() {
+void led_hp_update(uint32_t tick, uint8_t hp) {
+    switch (hp) {
+        case 0:
+            GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
+            GPIOB->ODR |= (0x0001 << 4); //Set pin PB4 to high color: red
+            GPIOC->ODR |= (0x0001 << 7); //Set pin PC7 to high color: green
+            break;
 
+        case 1:
+            GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
+            GPIOB->ODR &= ~(0x0001 << 4); //Set pin PB4 to low color: red
+            GPIOC->ODR |= (0x0001 << 7); //Set pin PC7 to high color: green
+                        printf("1");
+            break;
+
+        case 2:
+            GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
+            GPIOB->ODR &= ~(0x0001 << 4); //Set pin PB4 to low color: red
+            if(tick % 2 == 1) {
+                GPIOC->ODR &= ~(0x0001 << 7); //Set pin PC7 to low color: green
+            } else {
+                GPIOC->ODR |= (0x0001 << 7); //Set pin PC7 to high color: green
+                            printf("2");
+            }
+            break;
+
+        case 3:
+            GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
+            GPIOB->ODR &= ~(0x0001 << 4); //Set pin PB4 to low color: red
+            GPIOC->ODR &= ~(0x0001 << 7); //Set pin PC7 to high color: green
+            printf("3");
+            break;
+
+        case 4:
+            GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
+            GPIOC->ODR &= ~(0x0001 << 7); //Set pin PB4 to low color: green
+            if(tick % 2 == 1) {
+                GPIOB->ODR &= ~(0x0001 << 4); //Set pin PC7 to low color: red
+            } else {
+                GPIOB->ODR |= (0x0001 << 4); //Set pin PC7 to high color: red
+            }
+            printf("4");
+            break;
+
+        case 5:
+            GPIOC->ODR &= ~(0x0001 << 7); //Set pin PC7 to low color: green
+            printf("5");
+            break;
+    }
 }
