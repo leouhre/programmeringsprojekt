@@ -27,6 +27,7 @@ int32_t expand(int32_t i);
 int32_t calcsin(int32_t n);
 int32_t calccos(int32_t n);
 void rotateVector(vector_t *vec, int32_t v);
+vector_t rotateVector2(vector_t vec, int32_t v);
 void vectorAngle(vector_t *v, int32_t a);
 void vector_init(vector_t *v);
 int32_t lengthOfVector(vector_t v);

@@ -11,6 +11,8 @@ void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y, ui
 
     sh->angle=direction;
     sh->clipsize = clipsize;
+    sh->hp = 100;
+    sh->aim = direction;
 }
 
 void spaceship_update(int input,spaceship_t *sh)
@@ -27,30 +29,44 @@ void spaceship_update(int input,spaceship_t *sh)
         }
     }
 
+	gotoxy((sh->x + (calccos(sh->aim) << 3)) >> 14, (sh->y + (calcsin(sh->aim) << 3)) >> 14);
+	printf(" ");
+
     if (0x01 & input)
     {
-        sh->x += calccos(sh->angle);
-        sh->y += calcsin(sh->angle);
+        sh->x += calccos(sh->angle) << 1;
+        sh->y += calcsin(sh->angle) << 1;
     }
 
     if (0x02 & input)
     {
-        sh->x -= calccos(sh->angle);
-        sh->y -= calcsin(sh->angle);
+        //sh->x -= calccos(sh->angle);
+        //sh->y -= calcsin(sh->angle);
+    	sh->aim += 16;
     }
 
     if (0x04 & input)
     {
-        sh->angle -= 24;
+        sh->angle -= 64;
         //rotateVector(&sh->direction, 1);
     }
 
     if (0x08 & input)
     {
-        sh->angle += 24;
+        sh->angle += 64;
         //rotateVector(&sh->direction, -1);
     }
+    spaceshipAim_render(sh);
+}
 
+void spaceshipAim_render(spaceship_t *sh) {
+	//gotoxy(1,2);
+	gotoxy((sh->x + (calccos(sh->aim) << 3)) >> 14, (sh->y + (calcsin(sh->aim) << 3)) >> 14);
+	fgcolor(1);
+	//printFix(expand(calccos(sh->angle)));
+	//printf("%d, %d", (calccos(sh->angle) << 3 >> 14), (calcsin(sh->angle) << 3 >> 14));
+	printf("x");
+	fgcolor(15);
 }
 
 void spaceship_render(spaceship_t sh)
