@@ -7,7 +7,11 @@
 #include "enemy.h"
 #include "bullet.h"
 #include "math.h"
+#include "led.h"
+#include "TIM2.h"
+#include "timer.h"
 
+volatile uint8_t flag = 0;
 
 int main(void)
 {
@@ -16,12 +20,13 @@ int main(void)
     clrscr();
 
     uint8_t i;
+    uint32_t tick = 0;
+    uint8_t hp = 5;
 
     spaceship_t sh;
     enemy_t enemy;
 
-    spaceshipinit(&sh, 0, 20, 20);
-	enemy_init(&enemy, sh, 12, 2);
+    //spaceship_init(&sh, 0, 20, 20, 8);
 
     bullet_t bullet[sh.clipsize]; // set clipsize
     for (i = 0; i < sh.clipsize; i++) {
@@ -29,16 +34,19 @@ int main(void)
     }
 
 
-	while(1){
-		enemy_update(&enemy, sh);
-		enemy_render(enemy);
+    timer_configure();
 
-        if(readControls() & 0x10) {
-            bullet_init(&bullet, sh);
+    led_init();
+
+
+	while(1) {
+        if(flag) {
+            flag = 0;
+            led_hp_update(tick, hp);
+            tick++;
+            if(tick % 100 == 99) {
+                hp--;
+            }
         }
-        bullet_update(&bullet, sh);
-        update_spaceship(readControls(), &sh);
-        render_spaceship(sh);
-
 	}
 }
