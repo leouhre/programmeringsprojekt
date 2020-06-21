@@ -46,6 +46,11 @@ typedef struct {
 
 } bullet_t;
 
+typedef struct {
+	int32_t x, y, angle;
+	uint8_t locked, alive, count, exploded;
+	vector_t direction;
+}homing_t;
 
 
 #endif

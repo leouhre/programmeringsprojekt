@@ -52,7 +52,7 @@ void bullet_update(bullet_t *bullet, spaceship_t sh, enemy_t *enemies, uint8_t n
 			bullet[i].y += calcsin(bullet[i].angle);
 
 			for(k = 0; k < numberOfEnemies; k++) {
-				if(boundsCheck(bullet[i]) || (enemies[k].alive != 0 && bulletEnemyCollision(&enemies[k], bullet[i]))) {
+				if(boundsCheck(bullet[i]) || (enemies[k].alive && bulletEnemyCollision(&enemies[k], bullet[i]))) {
 					bullet[i].alive = 0;
 					for(j = i; j < sh.clipsize-1; j++) {
 						bullet[j] = bullet[j+1];

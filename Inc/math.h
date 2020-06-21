@@ -12,6 +12,8 @@
 #define FIX14_MULT(a, b) ( (a)*(b) >> FIX14_SHIFT )
 #define FIX14_DIV(a, b)  ( ((a) << FIX14_SHIFT) / b )
 #define FIX8_MULT(a, b) ( (a)*(b) >> FIX8_SHIFT )
+#define FIX8_DIV(a, b) ( ((a) << FIX8_SHIFT) / b )
+
 #define FIX10_DIV(a, b) ( ((a) << 10) / b )
 
 #define MAX(a,b) ((a) > (b) ? a : b)
