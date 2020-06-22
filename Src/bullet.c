@@ -8,7 +8,7 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) {
         str++;
     }
 
-    if(str <= CLIP_SIZE) {
+    if(str < CLIP_SIZE) {
         bullet[str].alive = 1;
 
         bullet[str].x =  sh.x;

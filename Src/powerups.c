@@ -56,11 +56,6 @@ void powerup_spawn_random(uint32_t x, uint32_t y,powerup_t *powerups, uint32_t t
     powerup_init(x, y, tick%3, powerups);
 }
 
-
-void powerup_spawn_random_place(powerup_t *powerups, uint32_t tick){ //can spawn random weapon with random place factor in front of random decides window size
-    powerup_init(tick%40, tick%40, rand()%3, powerups);
-}
-
 uint8_t playerPowerupCollision(powerup_t powerup, spaceship_t *sh) {
 	//returns true if player is on top of a powerup, also changed player bullet type and increases score.
 	uint8_t message;

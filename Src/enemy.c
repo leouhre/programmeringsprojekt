@@ -14,7 +14,7 @@ void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t enemyBullet,
     enemy->stuck = 0;
 }
 
-void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh, bullet_t *bullet, uint8_t maxHp){
+void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh, bullet_t *bullet, uint8_t maxHp, powerup_t *powerups, uint32_t tick){
 	//updates every enemy i the 'enemies' array
 	uint8_t i, j, k;
 	for (k = 0; k < numberOfEnemies; k++) {
@@ -29,6 +29,9 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh, bu
 			if (enemies[k].hp < 1) {	//Dead enemies enter the if-statement one time to remove their 'corpse'.
 				enemies[k].alive = 0; 	//Health points are decreased in bulletEnemy_update() to avoid 'killing'
 				sh->score += 100;		//the bullet before hp is decreased. Score is increased when an enemy is killed.
+				if(tick % 4 == 1) {
+                    powerup_spawn_random((enemies[k].x >> 14), (enemies[k].y >> 14), powerups, tick);
+				}
 			}
 
 
