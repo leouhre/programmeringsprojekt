@@ -20,7 +20,6 @@ void homing_update(homing_t *h, enemy_t *enemies, uint8_t numEnemies) {
 		gotoxy(h->x >> 14, h->y >> 14);
 		printf(" ");
 
-
 		if(!h->locked) {
 			h->locked = homingEnemyDetection(h, enemies, numEnemies);
 

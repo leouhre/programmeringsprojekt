@@ -9,55 +9,32 @@ void readUART(char *buffer){
 }
 
 uint8_t readControls() {
-    uint8_t i, pos = 0;
+    uint8_t i;
     char txt_input[256], buffer[256];
     readUART(buffer);
 
     for(i = 0; i < strlen(buffer); i++) {
-        txt_input[i + pos] = buffer[i];
-        pos++;
+        txt_input[i] = buffer[i];
     }
 
-    for(i = 0; i < strlen(txt_input); i++) {
-        switch (txt_input[i])
-        {
-            case('w'):
-                return 0x01;
-                //spaceship moves up
-                break;
-             case('s'):
-                return 0x02;
-                //spaceship moves left
-                break;
-             case('a'):
-                return 0x04;
-                //spaceship moves right
-                break;
-             case('d'):
-                return 0x08;
-                //spaceship moves down
-                break;
-            case(' '):
-                return 0x10;
-                //shoot
-                break;
-            case('p'):
-                return 0x20;
-                //pause
-                break;
-             case('q'):
-                return 0x40;
-                //pause
-                break;
-            case('e'):
-                return 0x80;
-                //pause
-                break;
-
-            default: return 0x00;
-        }
-    }
-        memset(buffer,0x00,256);
-        memset(txt_input,0x00,256);
-        pos = 0;
+	switch (txt_input[0])
+	{
+		case('w'):
+			return 0x01;
+		case('s'):
+			return 0x02;
+		case('a'):
+			return 0x04;
+		case('d'):
+			return 0x08;
+		case(' '):
+			return 0x10;
+		case('p'):
+			return 0x20;
+		case('q'):
+			return 0x40;
+		case('e'):
+			return 0x80;
+		default: return 0x00;
+	}
 }

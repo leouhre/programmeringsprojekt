@@ -1,10 +1,10 @@
 #include "lcd_display.h"
 
-void lcd_player_hp_update(uint8_t hp, uint8_t maxHp, uint8_t *buffer) {
-    uint8_t i, j;
+void lcd_player_hp_update(spaceship_t sh, uint8_t *buffer) {
+    uint8_t i, j, maxHp = 5;
 	for(i = 0; i < maxHp; i++) {
         for(j = 0; j < 7; j++) { // this loop is for each individual character
-            if(i < hp) {
+            if(i < sh.hp) {
                 buffer[i*8+j] = full_heart[j];
             } else {
                 buffer[i*8+j] = empty_heart[j];
@@ -57,7 +57,7 @@ void lcd_weapons_draw(uint8_t *buffer) {
 
 }
 
-void lcd_weapons_select(uint8_t bulletType, uint8_t *buffer) {
+void lcd_weapons_select(spaceship_t sh, uint8_t *buffer) {
     uint8_t i, j, k;
 
     for(k = 0; k < 3; k++) {  // remove marking
@@ -72,13 +72,13 @@ void lcd_weapons_select(uint8_t bulletType, uint8_t *buffer) {
         buffer[256+128+128/3+k*128/3] &= ~0xFF;
     }
 
-    buffer[256+bulletType*128/3] |= 0xFF; // mark the equipped weapon
-    buffer[256+128+bulletType*128/3] |= 0xFF;
+    buffer[256+sh.bullet_type*128/3] |= 0xFF; // mark the equipped weapon
+    buffer[256+128+sh.bullet_type*128/3] |= 0xFF;
     for(i = 0; i < 128/3; i++) {
         for(j = 0; j < 2; j++) {
-            buffer[256+j*128+i+bulletType*128/3] |= 0x01 << j*7;
+            buffer[256+j*128+i+sh.bullet_type*128/3] |= 0x01 << j*7;
         }
     }
-    buffer[256+128/3+bulletType*128/3] |= 0xFF;
-    buffer[256+128+128/3+bulletType*128/3] |= 0xFF;
+    buffer[256+128/3+sh.bullet_type*128/3] |= 0xFF;
+    buffer[256+128+128/3+sh.bullet_type*128/3] |= 0xFF;
 }

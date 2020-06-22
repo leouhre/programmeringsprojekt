@@ -12,6 +12,6 @@ void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y, ui
 void spaceship_update(uint8_t in, spaceship_t *sh);
 void spaceship_render(spaceship_t sh);
 void spaceship_sprite(spaceship_t sh, uint8_t n);
-void spaceshipAim_render(spaceship_t *sh);
+void spaceshipAim_render(spaceship_t sh);
 
 #endif
