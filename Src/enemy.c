@@ -29,9 +29,9 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh, bu
 			if (enemies[k].hp < 1) {	//Dead enemies enter the if-statement one time to remove their 'corpse'.
 				enemies[k].alive = 0; 	//Health points are decreased in bulletEnemy_update() to avoid 'killing'
 				sh->score += 100;		//the bullet before hp is decreased. Score is increased when an enemy is killed.
-				if(tick % 4 == 1) {
+                if(tick % 2 == 1){
                     powerup_spawn_random((enemies[k].x >> 14), (enemies[k].y >> 14), powerups, tick);
-				}
+                }
 			}
 
 
@@ -125,7 +125,7 @@ uint8_t enemyEnemyCollision(enemy_t *enemy, uint8_t n, enemy_t *enemies, int8_t 
 uint8_t enemyBoundsCheck(enemy_t enemy) {
 	//returns true if the enemy is out of bounds.
 	uint16_t maxX = 200, maxY = 50;
-	return (enemy.x >> 14) > maxX || (enemy.y >> 14) > maxY || (enemy.x >> 14) < 0 || (enemy.y >> 14) < 0;
+	return (enemy.x >> 14) > maxX || (enemy.y >> 14) > maxY || (enemy.x >> 14) < 3 || (enemy.y >> 14) < 3;
 }
 
 void bulletEnemy_init(enemy_t *enemy) {
@@ -162,7 +162,7 @@ void bulletEnemy_update(enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh) {
 
 uint8_t bulletEnemy_boundsCheck(enemyBullet_t bullet) {
 	//returns true if bullet leaves the area.
-	return (bullet.x >> 14) > 200 || (bullet.y >> 14) > 40 || (bullet.x >> 14) < 0 || (bullet.y >> 14) < 0;
+	return (bullet.x >> 14) > 209 || (bullet.y >> 14) > 54 || (bullet.x >> 14) < 3|| (bullet.y >> 14) < 3;
 }
 
 uint8_t playerHit(enemyBullet_t bullet, spaceship_t *sh) {

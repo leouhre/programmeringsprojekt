@@ -6,6 +6,7 @@
 #include "math.h"
 #include "entity_structs.h"
 #include "spaceship.h"
+#include "powerups.h"
 
 #ifndef _ENEMY_H_
 #define _ENEMY_H_
