@@ -28,7 +28,7 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh, bu
 
 			if (enemies[k].hp < 1) {	//Dead enemies enter the if-statement one time to remove their 'corpse'.
 				enemies[k].alive = 0; 	//Health points are decreased in bulletEnemy_update() to avoid 'killing'
-				sh->score ++;			//the bullet before hp is decreased.
+				sh->score += 100;		//the bullet before hp is decreased. Score is increased when an enemy is killed.
 			}
 
 
@@ -90,7 +90,7 @@ uint8_t spaceshipEnemyCollision(enemy_t enemy, spaceship_t *sh) {
 	return message;
 }
 
-uint8_t bulletEnemyCollision(enemy_t *enemy, bullet_t bullet) {
+uint8_t bulletEnemyCollision(enemy_t *enemy, bullet_t bullet, spaceship_t *sh) {
 	//returns true if bullet hits the enemy, decreasing enemy hp by 1.
 	uint8_t message;
 	message = MAX((enemy->x >> 14), (bullet.x >> 14)) - MIN((enemy->x >> 14), (bullet.x >> 14)) <= 1 &&
@@ -98,6 +98,7 @@ uint8_t bulletEnemyCollision(enemy_t *enemy, bullet_t bullet) {
 
 	if (message) {
 		enemy->hp--; //Enemy hp decreasing is done here to avoid confusion when updating bullets and enemies at different paces.
+		sh->score += 10;
 	}
 	return message;
 }

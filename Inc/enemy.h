@@ -15,7 +15,7 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh, bu
 void enemy_render(enemy_t enemy, uint8_t maxHp);
 void fillEnemiesArray(enemy_t *enemies, uint8_t n);
 uint8_t spaceshipEnemyCollision(enemy_t enemy, spaceship_t *sh);
-uint8_t bulletEnemyCollision(enemy_t *enemy, bullet_t bullet);
+uint8_t bulletEnemyCollision(enemy_t *enemy, bullet_t bullet, spaceship_t *sh);
 uint8_t enemyEnemyCollision(enemy_t *enemy, uint8_t n, enemy_t *enemies, int8_t numberOfEnemies);
 uint8_t enemyBoundsCheck(enemy_t enemy);
 void bulletEnemyClip_init(enemy_t *enemy);

@@ -13,7 +13,7 @@ typedef struct {
 typedef struct {
 
     int32_t x, y, angle, hp, aim, score;
-    uint8_t bullet_type, clipsize;
+    uint8_t bullet_type;
 
     //vector_t direction;
     //future updates;

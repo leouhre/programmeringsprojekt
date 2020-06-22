@@ -10,7 +10,7 @@ void homing_init(homing_t *h, spaceship_t sh) {
 	h->exploded = 0;
 }
 
-void homing_update(homing_t *h, enemy_t *enemies, uint8_t numEnemies) {
+void homing_update(homing_t *h, enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh) {
 	if(h->exploded > 0) {
 		h->exploded--;
 		if(!h->exploded) homingExplode_render2(h);
@@ -41,7 +41,7 @@ void homing_update(homing_t *h, enemy_t *enemies, uint8_t numEnemies) {
 		if(homingBoundsCheck(h) || homingHit(h, enemies[h->locked - 1])) {
 			h->alive = 0;
 			h->exploded = 20;
-			homingExplode(h, enemies, numEnemies);
+			homingExplode(h, enemies, numEnemies, sh);
 		} else homing_render(h);
 	}
 
@@ -99,13 +99,14 @@ uint8_t homingHit(homing_t *h, enemy_t e) {
 		MAX((h->y >> 14), (e.y >> 14)) - MIN((h->y >> 14), (e.y >> 14)) <= 1;
 }
 
-void homingExplode(homing_t *h, enemy_t *enemies, uint8_t numEnemies) {
+void homingExplode(homing_t *h, enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh) {
 	uint8_t i;
 	for (i = 0; i < numEnemies; i++) {
 		if(enemies[i].alive) {
 			if(MAX((h->x >> 14), (enemies[i].x >> 14)) - MIN((h->x >> 14), (enemies[i].x >> 14)) <= 5 &&
 					MAX((h->y >> 14), (enemies[i].y >> 14)) - MIN((h->y >> 14), (enemies[i].y >> 14)) <= 5) {
 				enemies[i].hp -= 10;
+				sh->score += 20;
 			}
 		}
 	}
