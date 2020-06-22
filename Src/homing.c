@@ -41,7 +41,7 @@ void homing_update(homing_t *h, enemy_t *enemies, uint8_t numEnemies) {
 		}
 		if(homingBoundsCheck(h) || homingHit(h, enemies[h->locked - 1])) {
 			h->alive = 0;
-			h->exploded = 10;
+			h->exploded = 20;
 			homingExplode(h, enemies, numEnemies);
 		} else homing_render(h);
 	}
@@ -50,7 +50,22 @@ void homing_update(homing_t *h, enemy_t *enemies, uint8_t numEnemies) {
 
 void homing_render(homing_t *h) {
 	gotoxy(h->x >> 14, h->y >> 14);
-	printf(">");
+	if (!h->locked) {
+		fgcolor(11);
+		if((h->angle & 0x1FF) > 512 - 64 || (h->angle & 0x1FF) <= 64) {
+			printf(">");
+		} else if((h->angle & 0x1FF) > 64 && (h->angle & 0x1FF) <= 128 + 64) {
+			printf("v");
+		} else if((h->angle & 0x1FF) > 128 + 64 && (h->angle & 0x1FF) <= 256 + 64) {
+			printf("<");
+		} else {
+			printf("^");
+		}
+	} else {
+		fgcolor(2);
+		printf("x");
+	}
+	fgcolor(15);
 }
 
 uint8_t homingEnemyDetection(homing_t *h, enemy_t *enemies, uint8_t numEnemies) {
