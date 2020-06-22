@@ -1,20 +1,20 @@
 #include "bullet.h"
 
 
-void bullet_init(bullet_t *bullet, spaceship_t sh) {
-    uint8_t i, str = 0;
+void bullet_init(bullet_t *bullet, spaceship_t sh) { //creates a bullet and places it into an empty space in the bullet array
+    uint8_t i, pos = 0;
     for(i = 0; i < CLIP_SIZE; i++) { // find number of bullets in array
         if(bullet[i].alive == 0) break;
-        str++;
+        pos++;
     }
 
-    if(str < CLIP_SIZE) {
-        bullet[str].alive = 1;
+    if(pos < CLIP_SIZE) { // stop creating bullets when the is full
+        bullet[pos].alive = 1;
 
-        bullet[str].x =  sh.x;
-        bullet[str].y = sh.y;
+        bullet[pos].x =  sh.x;
+        bullet[pos].y = sh.y;
 
-        bullet[str].angle = sh.aim;
+        bullet[pos].angle = sh.aim;
         //bullet[str+1].bullet_type = sh.bullet_type;
     }
 }
