@@ -53,7 +53,13 @@ void powerup_render(powerup_t *powerups, spaceship_t *sh) { //draws the powerup 
 }
 
 void powerup_spawn_random(uint32_t x, uint32_t y,powerup_t *powerups, uint32_t tick){//can spawn a random weapon or nothing
-    powerup_init(x, y, tick%3, powerups);
+    uint8_t type;
+    if(tick%9 1) {
+        type = 1;
+    } else {
+        type = 2;
+    }
+    powerup_init(x, y, type, powerups);
 }
 
 
