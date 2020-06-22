@@ -7,6 +7,8 @@
 #ifndef _MENUSCREEN_H_
 #define _MENUSCREEN_H_
 
+void gameInit(gameHandler_t *game);
+
 void loadMenu();
 
 void selectInMenu(gameHandler_t *game);

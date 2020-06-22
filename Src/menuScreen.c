@@ -503,6 +503,7 @@ void nextLevel(gameHandler_t *game){
             clrscr();
         }
     }
+    box(1,1,211,56,1);
 
     //gotoxy(1,1);
     //printf("your current level is %d", game->currentLevel);

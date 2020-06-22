@@ -8,7 +8,7 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) {
         str++;
     }
 
-    if(str <= CLIP_SIZE) {
+    if(str < CLIP_SIZE) {
         bullet[str].alive = 1;
 
         bullet[str].x =  sh.x;
@@ -93,7 +93,7 @@ void bullet_update(bullet_t *bullet, spaceship_t sh, enemy_t *enemies, uint8_t n
 */
 
 uint8_t boundsCheck(bullet_t bullet) {
-	return (bullet.x >> 14) > 150 || (bullet.y >> 14) > 40 || (bullet.x >> 14) < 0 || (bullet.y >> 14) < 0;
+	return (bullet.x >> 14) > 209+1 || (bullet.y >> 14) > 54+1 || (bullet.x >> 14) < 2 || (bullet.y >> 14) < 2;
 }
 
 void bullet_render(bullet_t bullet) {
