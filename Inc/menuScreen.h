@@ -25,7 +25,9 @@ void loadPause();
 
 void selectInPause(gameHandler_t *game);
 
-void loadGame();
+void nextLevel(gameHandler_t *game);
+
+//void loadGame();
 
 
 #endif
