@@ -11,7 +11,7 @@ typedef struct {
 
 
 typedef struct {
-   
+
     int32_t x, y, angle, hp, aim;
     uint8_t bullet_type, clipsize;
 
@@ -45,6 +45,13 @@ typedef struct {
     uint8_t bullet_type, alive;
 
 } bullet_t;
+
+typedef struct {
+    int32_t x, y;
+    uint8_t type, alive;
+
+
+} powerup_t;
 
 
 

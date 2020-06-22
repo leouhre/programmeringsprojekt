@@ -49,7 +49,6 @@ void led_hp_update(uint32_t tick, uint8_t hp) {
             GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
             GPIOB->ODR &= ~(0x0001 << 4); //Set pin PB4 to low color: red
             GPIOC->ODR |= (0x0001 << 7); //Set pin PC7 to high color: green
-                        printf("1");
             break;
 
         case 2:
@@ -59,7 +58,6 @@ void led_hp_update(uint32_t tick, uint8_t hp) {
                 GPIOC->ODR &= ~(0x0001 << 7); //Set pin PC7 to low color: green
             } else {
                 GPIOC->ODR |= (0x0001 << 7); //Set pin PC7 to high color: green
-                            printf("2");
             }
             break;
 
@@ -67,7 +65,6 @@ void led_hp_update(uint32_t tick, uint8_t hp) {
             GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
             GPIOB->ODR &= ~(0x0001 << 4); //Set pin PB4 to low color: red
             GPIOC->ODR &= ~(0x0001 << 7); //Set pin PC7 to high color: green
-            printf("3");
             break;
 
         case 4:
@@ -78,12 +75,10 @@ void led_hp_update(uint32_t tick, uint8_t hp) {
             } else {
                 GPIOB->ODR |= (0x0001 << 4); //Set pin PC7 to high color: red
             }
-            printf("4");
             break;
 
         case 5:
             GPIOC->ODR &= ~(0x0001 << 7); //Set pin PC7 to low color: green
-            printf("5");
             break;
     }
 }
