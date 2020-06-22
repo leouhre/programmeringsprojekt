@@ -134,7 +134,7 @@ while(flagMenu==1){
                     switch(select){
                         case 0:
                             //loadGame();
-                            game->status = 1;
+                            //game->status = 1;
                             clrscr();
                             flagMenu++;
                             break;
@@ -469,9 +469,9 @@ void selectInPause(gameHandler_t *game){
                         //loadMenu();
                         clrscr();
 
-                    }else if(select == 1){
+                    }else if(select == 1){ //go back to main menu
                         game->status = 0;
-                       // selectInMenu(game);
+                        game->currentLevel = 0;
                     }
                     flagPause+=2;
                     break;
@@ -487,6 +487,28 @@ void selectInPause(gameHandler_t *game){
     }
 }
 
+void nextLevel(gameHandler_t *game){
+    uint8_t nextLevelFlag = 1;
+    clrscr();
+    game->currentLevel++;
+    game->status = 0;
+
+    char str[] = "YOUR CURRENT LEVEL  ";
+    str[19] = 64+game->currentLevel;    //converts 1,2,3... to A,B,C...
+
+    boxWithTextInTheMiddleOfTheScreen(105, 22, str, 1);
+    while(nextLevelFlag == 1){
+        if(readControls() == 0x10){
+            nextLevelFlag++;
+            clrscr();
+        }
+    }
+
+    //gotoxy(1,1);
+    //printf("your current level is %d", game->currentLevel);
+}
+
+/*
 void loadGame(){
 
-    clrscr(); gotoxy(1,1); printf("Hello World");}
+    clrscr(); gotoxy(1,1); printf("Hello World");}*/
