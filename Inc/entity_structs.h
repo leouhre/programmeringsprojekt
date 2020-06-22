@@ -57,4 +57,9 @@ typedef struct {
     uint8_t type, alive;
 } powerup_t;
 
+typedef struct {
+	int32_t x, y, angle;
+	uint8_t alive, count, exploded;
+} nuke_t;
+
 #endif
