@@ -45,6 +45,15 @@ uint8_t readControls() {
                 return 0x20;
                 //pause
                 break;
+             case('q'):
+                return 0x40;
+                //pause
+                break;
+            case('e'):
+                return 0x80;
+                //pause
+                break;
+
             default: return 0x00;
         }
     }

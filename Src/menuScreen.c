@@ -5,6 +5,7 @@ void gameInit(gameHandler_t *game){
     game->mode = 1;
     game->currentLevel = 0;
     game->currentScore = 0;
+    game->status = 0;
 }
 
 
@@ -35,7 +36,6 @@ void selectInMenu(gameHandler_t *game){
     uint8_t select=0, flagMenu=1;
     uint8_t op0xv = 105-30, op1xv = 105-38, op2xv = 105-38-16, op3xv = 105-38;
     uint8_t op0xh = 105+26, op1xh = 105+34, op2xh = 105+34+16, op3xh = 105+34;
-
     loadMenu();
 
 while(flagMenu==1){
@@ -133,7 +133,9 @@ while(flagMenu==1){
                 case 0x10:
                     switch(select){
                         case 0:
-                            loadGame();
+                            //loadGame();
+                            game->status = 1;
+                            clrscr();
                             flagMenu++;
                             break;
                         case 1:
@@ -386,7 +388,6 @@ void selectInCreditsAndHowToPlay(){
 
 }
 
-
 void loadPause(){
     uint8_t x = 211, y = 56, firstboxY = 20;
     clrscr();
@@ -469,7 +470,8 @@ void selectInPause(gameHandler_t *game){
                         clrscr();
 
                     }else if(select == 1){
-                        selectInMenu(game);
+                        game->status = 0;
+                       // selectInMenu(game);
                     }
                     flagPause+=2;
                     break;
@@ -485,6 +487,6 @@ void selectInPause(gameHandler_t *game){
     }
 }
 
+void loadGame(){
 
-void loadGame(){clrscr(); gotoxy(1,1); printf("Hello World");}
-
+    clrscr(); gotoxy(1,1); printf("Hello World");}

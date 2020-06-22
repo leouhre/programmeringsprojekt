@@ -5,7 +5,7 @@
 #define _ENTITY_STRUCTS_H_
 
 typedef struct {
-    uint8_t difficulty, mode, currentScore, currentLevel;
+    uint8_t difficulty, mode, currentScore, currentLevel, status;
 } gameHandler_t;
 
 
@@ -47,12 +47,10 @@ typedef struct {
 } bullet_t;
 
 typedef struct {
-    int32_t x, y;
-    uint8_t type, alive;
-
-
-} powerup_t;
-
+	int32_t x, y, angle;
+	uint8_t locked, alive, count, exploded;
+	vector_t direction;
+}homing_t;
 
 
 #endif
