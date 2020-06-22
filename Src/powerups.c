@@ -1,17 +1,17 @@
 #include "powerups.h"
 
 void powerup_init(uint32_t x, uint32_t y, uint8_t type, powerup_t *powerups){ //initialisere poweruppen
-    uint8_t i, str = 0;
-    for(i = 0; i < 5; i++) { // find number of powerups in array
+    uint8_t i, pos = 0;
+    for(i = 0; i < 5; i++) { //finds a empty place in the array if available
         if(powerups[i].alive == 0) break;
-        str++;
+        pos++;
     }
 
-    if(str < 5) {
-        powerups[str].alive = 1;
-        powerups[str].x = (x << 14);
-        powerups[str].y = (y << 14);
-        powerups[str].type = type;
+    if(pos < 5) {
+        powerups[pos].alive = 1;
+        powerups[pos].x = (x << 14);
+        powerups[pos].y = (y << 14);
+        powerups[pos].type = type;
     }
 }
 
@@ -19,7 +19,7 @@ void powerup_render(powerup_t *powerups, spaceship_t *sh) { //draws the powerup 
     char missleArray[6] = {'>','=','=','x','>'};
     char nukeArray[9] = {'|','|','=','(','0','0','0',')'};
     char deleteArray[9] = {' ',' ',' ',' ',' ',' ',' ',' '};
-    uint8_t i, j;
+    uint8_t i;
     for(i = 0; i < 5; i++) {
         if(powerups[i].alive == 1) { // only draw existing powerups
             if(!playerPowerupCollision(powerups[i], sh)) {
@@ -52,14 +52,16 @@ void powerup_render(powerup_t *powerups, spaceship_t *sh) { //draws the powerup 
     }
 }
 
-void powerup_spawn_random(uint32_t x, uint32_t y,powerup_t *powerups, uint32_t tick){//can spawn a random weapon or nothing
-    powerup_init(x, y, tick%3, powerups);
+void powerup_spawn_random(uint32_t x, uint32_t y,powerup_t *powerups, uint32_t tick){//spawn a random weapon
+    uint8_t type;
+    if(tick%10 > 3) { //this decides the chance. when called with tick%24 == 1 and 9% == 1 this becomes 3/5 for missile and 2/5 for nuke
+        type = 1; //missile
+    } else {
+        type = 2; //nuke
+    }
+    powerup_init(x, y, type, powerups);
 }
 
-
-void powerup_spawn_random_place(powerup_t *powerups, uint32_t tick){ //can spawn random weapon with random place factor in front of random decides window size
-    powerup_init(tick%40, tick%40, rand()%3, powerups);
-}
 
 uint8_t playerPowerupCollision(powerup_t powerup, spaceship_t *sh) {
 	//returns true if player is on top of a powerup, also changed player bullet type and increases score.

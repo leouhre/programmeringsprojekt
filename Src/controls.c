@@ -1,19 +1,19 @@
 #include "controls.h"
 
-void readUART(char *buffer){
+void readUART(char *buffer){ //copies input from keyboard into the buffer array
 	uint8_t i;
 	for(i = 0; i < 256; i++) {
 		buffer[i] = uart_get_char();
-		if(buffer[i] == '\0') break;
+		if(buffer[i] == '\0') break; // if no input is detected stop copying
 	}
 }
 
-uint8_t readControls() {
+uint8_t readControls() { //returns a value depending on what the input is
     uint8_t i;
     char txt_input[256], buffer[256];
     readUART(buffer);
 
-    for(i = 0; i < strlen(buffer); i++) {
+    for(i = 0; i < strlen(buffer); i++) { //copies members of buffer into txt_input
         txt_input[i] = buffer[i];
     }
 

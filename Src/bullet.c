@@ -1,21 +1,20 @@
 #include "bullet.h"
 
 
-void bullet_init(bullet_t *bullet, spaceship_t sh) {
-    uint8_t i, str = 0;
+void bullet_init(bullet_t *bullet, spaceship_t sh) { //creates a bullet and places it into an empty space in the bullet array
+    uint8_t i, pos = 0;
     for(i = 0; i < CLIP_SIZE; i++) { // find number of bullets in array
         if(bullet[i].alive == 0) break;
-        str++;
+        pos++;
     }
 
-    if(str <= CLIP_SIZE) {
-        bullet[str].alive = 1;
+    if(pos < CLIP_SIZE) { // stop creating bullets when the is full
+        bullet[pos].alive = 1;
 
-        bullet[str].x =  sh.x;
-        bullet[str].y = sh.y;
+        bullet[pos].x =  sh.x;
+        bullet[pos].y = sh.y;
 
-        bullet[str].angle = sh.aim;
-        //bullet[str+1].bullet_type = sh.bullet_type;
+        bullet[pos].angle = sh.aim;
     }
 }
 
@@ -40,13 +39,13 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) {
 */
 
 
-void bullet_update(bullet_t *bullet, spaceship_t *sh, enemy_t *enemies, uint8_t numberOfEnemies) {
+void bullet_update(bullet_t *bullet, spaceship_t *sh, enemy_t *enemies, uint8_t numberOfEnemies) { //deletes all each bullet, moves them, and prints them unless they hit and enemy or is out of bounds
     uint8_t i, j, k;
 
     for(i = 0; i < CLIP_SIZE; i++) {
         if (bullet[i].alive) {
         	gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
-			printf(" ");
+			printf(" "); //deletes bullet
 
 			bullet[i].x += calccos(bullet[i].angle);
 			bullet[i].y += calcsin(bullet[i].angle);
@@ -61,7 +60,7 @@ void bullet_update(bullet_t *bullet, spaceship_t *sh, enemy_t *enemies, uint8_t 
 					//i--;
 				} else {
 					gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
-					printf("o");
+					printf("o"); //reprints bullet
 				}
 			}
         }
@@ -93,7 +92,7 @@ void bullet_update(bullet_t *bullet, spaceship_t sh, enemy_t *enemies, uint8_t n
 */
 
 uint8_t boundsCheck(bullet_t bullet) {
-	return (bullet.x >> 14) > 150 || (bullet.y >> 14) > 40 || (bullet.x >> 14) < 0 || (bullet.y >> 14) < 0;
+	return (bullet.x >> 14) > 209+1 || (bullet.y >> 14) > 54+1 || (bullet.x >> 14) < 2 || (bullet.y >> 14) < 2;
 }
 
 void bullet_render(bullet_t bullet) {
