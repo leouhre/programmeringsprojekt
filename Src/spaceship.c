@@ -15,7 +15,7 @@ void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y, ui
     sh->aim = direction;
 }
 
-void spaceship_update(int input,spaceship_t *sh)
+void spaceship_update(uint8_t input,spaceship_t *sh)
 {
 
     uint8_t i, j;
@@ -38,13 +38,6 @@ void spaceship_update(int input,spaceship_t *sh)
         sh->y += calcsin(sh->angle) << 1;
     }
 
-    if (0x02 & input)
-    {
-        //sh->x -= calccos(sh->angle);
-        //sh->y -= calcsin(sh->angle);
-    	sh->aim += 16;
-    }
-
     if (0x04 & input)
     {
         sh->angle -= 64;
@@ -54,6 +47,16 @@ void spaceship_update(int input,spaceship_t *sh)
     if (0x08 & input)
     {
         sh->angle += 64;
+        //rotateVector(&sh->direction, -1);
+    }
+     if (0x40 & input)
+    {
+        sh->aim += 16;
+        //rotateVector(&sh->direction, -1);
+    }
+     if (0x80 & input)
+    {
+        sh->aim -= 16;
         //rotateVector(&sh->direction, -1);
     }
     spaceshipAim_render(sh);
