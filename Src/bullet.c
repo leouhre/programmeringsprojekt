@@ -15,7 +15,6 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) { //creates a bullet and plac
         bullet[pos].y = sh.y;
 
         bullet[pos].angle = sh.aim;
-        //bullet[str+1].bullet_type = sh.bullet_type;
     }
 }
 
@@ -40,13 +39,13 @@ void bullet_init(bullet_t *bullet, spaceship_t sh) {
 */
 
 
-void bullet_update(bullet_t *bullet, spaceship_t *sh, enemy_t *enemies, uint8_t numberOfEnemies) {
+void bullet_update(bullet_t *bullet, spaceship_t *sh, enemy_t *enemies, uint8_t numberOfEnemies) { //deletes all each bullet, moves them, and prints them unless they hit and enemy or is out of bounds
     uint8_t i, j, k;
 
     for(i = 0; i < CLIP_SIZE; i++) {
         if (bullet[i].alive) {
         	gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
-			printf(" ");
+			printf(" "); //deletes bullet
 
 			bullet[i].x += calccos(bullet[i].angle);
 			bullet[i].y += calcsin(bullet[i].angle);
@@ -61,7 +60,7 @@ void bullet_update(bullet_t *bullet, spaceship_t *sh, enemy_t *enemies, uint8_t 
 					//i--;
 				} else {
 					gotoxy(bullet[i].x >> 14, bullet[i].y >> 14);
-					printf("o");
+					printf("o"); //reprints bullet
 				}
 			}
         }
