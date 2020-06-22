@@ -10,7 +10,7 @@
 #define _LCD_DISPLAY_H_
 
 void lcd_player_hp_update(spaceship_t sh, uint8_t *buffer);
-void lcd_player_score_update(uint32_t score, uint8_t *buffer);
+void lcd_player_score_update(spaceship_t sh, uint8_t *buffer);
 void lcd_weapons_draw(uint8_t *buffer);
 void lcd_weapons_select(spaceship_t sh, uint8_t *buffer);
 

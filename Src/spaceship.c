@@ -2,17 +2,14 @@
 
 void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y, uint8_t clipsize)
 {
-
-    sh->x=x;
-    sh->y=y;
-
-    sh->x <<= 14;
-    sh->y <<= 14;
-
+    sh->x = (x << 14);
+    sh->y = (y << 14);
     sh->angle=direction;
     sh->clipsize = clipsize;
-    sh->hp = 5;
+    sh->hp = 15;
     sh->aim = direction;
+    sh->bullet_type = 0;
+    sh->score = 0;
 }
 
 void spaceship_update(uint8_t input,spaceship_t *sh)
@@ -58,7 +55,8 @@ void spaceship_update(uint8_t input,spaceship_t *sh)
      if (0x80 & input)
     {
     	//rotate aim clockwise
-        sh->aim += 16;
+        //sh->aim += 16;
+    	 sh->bullet_type ++;
     }
 }
 

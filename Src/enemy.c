@@ -14,7 +14,7 @@ void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t enemyBullet,
     enemy->stuck = 0;
 }
 
-void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t sh, bullet_t *bullet, uint8_t maxHp){
+void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh, bullet_t *bullet, uint8_t maxHp){
 	//updates every enemy i the 'enemies' array
 	uint8_t i, j, k;
 	for (k = 0; k < numberOfEnemies; k++) {
@@ -26,9 +26,13 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t sh, bul
 				}
 			}
 
-			if (enemies[k].hp < 1) enemies[k].alive = 0; //Dead enemies enter the if-statement one time to remove their 'corpse'.
-														 //Health points are decreased in bulletEnemy_update() to avoid 'killing'
-														 //the bullet before hp is decreased.
+			if (enemies[k].hp < 1) {	//Dead enemies enter the if-statement one time to remove their 'corpse'.
+				enemies[k].alive = 0; 	//Health points are decreased in bulletEnemy_update() to avoid 'killing'
+				sh->score ++;			//the bullet before hp is decreased.
+			}
+
+
+
 
 			if(enemyEnemyCollision(&enemies[k], k, enemies, numberOfEnemies)) { //'Stucks' current enemy if two enemies are too close to each other.
 				enemies[k].x += enemies[k].direction.x;							//New direction is given in enemyEnemyCollision().
@@ -39,7 +43,7 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t sh, bul
 				enemies[k].stuck--;
 			} else {	//The enemy is given the direction of the spaceship as a unity vector.
 				enemies[k].stuck = 0;
-				vector_t temp_dir = coordsToVector(enemies[k].x, enemies[k].y, sh.x, sh.y);
+				vector_t temp_dir = coordsToVector(enemies[k].x, enemies[k].y, sh->x, sh->y);
 				int32_t length = lengthOfVector(temp_dir);
 				temp_dir.x = FIX10_DIV((temp_dir.x >> 4), (length >> 4)) << 4;
 				temp_dir.y = FIX10_DIV((temp_dir.y >> 4), (length >> 4)) << 4;
@@ -77,11 +81,11 @@ void enemy_render(enemy_t enemy, uint8_t maxHp) {
 	fgcolor(15);
 }
 
-uint8_t spaceshipEnemyCollision(enemy_t enemy, spaceship_t sh) {
+uint8_t spaceshipEnemyCollision(enemy_t enemy, spaceship_t *sh) {
 	//returns true if spaceship and enemy distance is 10 'pixels' or less
 	uint8_t message;
-	message = MAX((enemy.x >> 14), (sh.x >> 14)) - MIN((enemy.x >> 14), (sh.x >> 14)) <= 10 &&
-		MAX((enemy.y >> 14), (sh.y >> 14)) - MIN((enemy.y >> 14), (sh.y >> 14)) <= 10;
+	message = MAX((enemy.x >> 14), (sh->x >> 14)) - MIN((enemy.x >> 14), (sh->x >> 14)) <= 10 &&
+		MAX((enemy.y >> 14), (sh->y >> 14)) - MIN((enemy.y >> 14), (sh->y >> 14)) <= 10;
 
 	return message;
 }

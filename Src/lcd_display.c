@@ -4,7 +4,7 @@ void lcd_player_hp_update(spaceship_t sh, uint8_t *buffer) {
     uint8_t i, j, maxHp = 5;
 	for(i = 0; i < maxHp; i++) {
         for(j = 0; j < 7; j++) { // this loop is for each individual character
-            if(i < sh.hp) {
+            if(i < (sh.hp + 2) / 3) {
                 buffer[i*8+j] = full_heart[j];
             } else {
                 buffer[i*8+j] = empty_heart[j];
@@ -13,12 +13,12 @@ void lcd_player_hp_update(spaceship_t sh, uint8_t *buffer) {
 	}
 }
 
-void lcd_player_score_update(uint32_t score, uint8_t *buffer) {
+void lcd_player_score_update(spaceship_t sh, uint8_t *buffer) {
     uint8_t i, j;
     char scoreBuffer [10];
     char printScore [7] = {'S', 'C', 'O', 'R', 'E', ':'};
 
-    sprintf(scoreBuffer,"%d",score);  // convert score to integer
+    sprintf(scoreBuffer,"%d",sh.score);  // convert score to integer
     fflush(stdout);
 
     for(i = 0; i < strlen(printScore); i++) { //print "SCORE:"
