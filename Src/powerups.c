@@ -1,17 +1,17 @@
 #include "powerups.h"
 
 void powerup_init(uint32_t x, uint32_t y, uint8_t type, powerup_t *powerups){ //initialisere poweruppen
-    uint8_t i, str = 0;
-    for(i = 0; i < 5; i++) { // find number of powerups in array
+    uint8_t i, pos = 0;
+    for(i = 0; i < 5; i++) { //finds a empty place in the array if available
         if(powerups[i].alive == 0) break;
-        str++;
+        pos++;
     }
 
-    if(str < 5) {
-        powerups[str].alive = 1;
-        powerups[str].x = (x << 14);
-        powerups[str].y = (y << 14);
-        powerups[str].type = type;
+    if(pos < 5) {
+        powerups[pos].alive = 1;
+        powerups[pos].x = (x << 14);
+        powerups[pos].y = (y << 14);
+        powerups[pos].type = type;
     }
 }
 
