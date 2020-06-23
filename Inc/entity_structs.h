@@ -33,7 +33,7 @@ typedef struct {
     int32_t x, y, hp;
     uint8_t alive, stuck;
     vector_t direction;
-    enemyBullet_t gun;
+    enemyBullet_t *gun;
     //future updates;
     /*
     int32_t dmg, spd, sht_spd, acceleration, bullet style

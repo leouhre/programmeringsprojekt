@@ -2,21 +2,42 @@
 
 void nuke_init(nuke_t *nuke, spaceship_t sh) {
 	//initializes a nuke in the spaceship aim direction
-	nuke->x = sh.x;
-	nuke->y = sh.y;
+
+	nuke->x = (ADC1_1_read() / 23 + 2) << 14;
+	nuke->y = (ADC1_2_read() / 78 + 2) << 14;
 	nuke->alive = 1;
-	nuke->angle = sh.aim;
-	nuke->count = 40;
+	//nuke->angle = sh.aim;
+	//nuke->count = 3;
 	nuke->exploded = 0;
 }
 
-void nuke_update(nuke_t *nuke, enemy_t *enemies, uint8_t numEnemies, uint8_t trig) {
+void nuke_update(nuke_t *nuke, enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh, uint8_t *nukeCount) {
 	//updates nuke's coordinates and explodes if time
+	gotoxy(3,5);
+	printf("%d", nuke->exploded);
 	if(nuke->exploded > 0) { //wait some time before removing 'dust'
 		nuke->exploded--;
 		if(!nuke->exploded) nukeExplosion_render(*nuke, 1);
 		return;
 	}
+	if(!nuke->alive) {
+		gotoxy(nuke->x >> 14, nuke->y >> 14);
+		printf(" ");
+		nuke->x = (ADC1_1_read() / 23 + 2) << 14;
+		nuke->y = (ADC1_2_read() / 78 + 2) << 14;
+		gotoxy(nuke->x >> 14, nuke->y >> 14);
+		fgcolor(1);//red
+		printf("+");
+		fgcolor(15);//white
+	}
+	if (nuke->alive && *nukeCount) {
+		nuke->alive = 0;
+		nuke->exploded = 30;
+		nukeExplode(*nuke, enemies, numEnemies); //enemy hp is decreased in nukeExplode()
+		*nukeCount -= 1;
+		if (*nukeCount < 1) sh->bullet_type = 0;
+	}
+	/*
 	if (nuke->alive && nuke->count) { //remove previous render and update coords
 		uint8_t i, j;
 		for (i = 0; i < 3; i++) {
@@ -42,6 +63,7 @@ void nuke_update(nuke_t *nuke, enemy_t *enemies, uint8_t numEnemies, uint8_t tri
 			nukeExplode(*nuke, enemies, numEnemies); //enemy hp is decreased in nukeExplode()
 		} else nuke_render(*nuke); //draw nuke on screen
 	}
+	*/
 }
 
 void nuke_render(nuke_t nuke) {

@@ -1,6 +1,6 @@
 #include "enemy.h"
 
-void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t enemyBullet, uint8_t hp) {
+void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t *enemyBullet, uint8_t hp) {
 	//initializes an enemy according to level difficulty
     enemy->x = (x << 14);
     enemy->y = (y << 14);
@@ -128,6 +128,7 @@ uint8_t enemyBoundsCheck(enemy_t enemy) {
 	return (enemy.x >> 14) > maxX || (enemy.y >> 14) > maxY || (enemy.x >> 14) < 3 || (enemy.y >> 14) < 3;
 }
 
+/*
 void bulletEnemy_init(enemy_t *enemy) {
 	//initializes an enemy's bullet
 	enemy->gun.x = enemy->x;
@@ -135,29 +136,76 @@ void bulletEnemy_init(enemy_t *enemy) {
 	enemy->gun.direction = rotateVector2(enemy->direction, 8 - rand() % 16);
 	enemy->gun.alive = 1;
 }
+*/
 
+void bulletEnemy_init(enemy_t *enemy) {
+	//initializes an enemy's bullet
+    uint8_t i, pos = 0;
+    for(i = 0; i < CLIP_SIZE; i++) { // find an empty space in array of bullets
+        if(enemy->gun[i].alive) pos++;
+    }
+
+    if(pos < CLIP_SIZE) {
+    	enemy->gun[pos].alive = 1;
+
+    	enemy->gun[pos].x =  enemy->x;
+    	enemy->gun[pos].y = enemy->y;
+
+    	enemy->gun[pos].direction = rotateVector2(enemy->direction, 8 - rand() % 16);
+    }
+}
+
+/*
 void bulletEnemy_update(enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh) {
 	//moves the enemy's bullet forward and checks for hits.
-	uint8_t i;
+	uint8_t i, j;
 	for (i = 0; i < numEnemies; i++) {
-		if (enemies[i].gun.alive) {
-			gotoxy(enemies[i].gun.x >> 14, enemies[i].gun.y >> 14);
-			printf(" ");
-
-			enemies[i].gun.x += enemies[i].gun.direction.x;
-			enemies[i].gun.y += enemies[i].gun.direction.y;
-
-			if (bulletEnemy_boundsCheck(enemies[i].gun) || playerHit(enemies[i].gun, sh)) {
+		for(j = 0; j < enemies[i].clipsize; j++) {
+			if (enemies[i].gun.alive) {
 				gotoxy(enemies[i].gun.x >> 14, enemies[i].gun.y >> 14);
 				printf(" ");
-				enemies[i].gun.alive = 0;
-			} else {
-				gotoxy(enemies[i].gun.x >> 14, enemies[i].gun.y >> 14);
-				printf("o");
-			}
 
+				enemies[i].gun.x += enemies[i].gun.direction.x;
+				enemies[i].gun.y += enemies[i].gun.direction.y;
+
+				if (bulletEnemy_boundsCheck(enemies[i].gun) || playerHit(enemies[i].gun, sh)) {
+					gotoxy(enemies[i].gun.x >> 14, enemies[i].gun.y >> 14);
+					printf(" ");
+					enemies[i].gun.alive = 0;
+				} else {
+					gotoxy(enemies[i].gun.x >> 14, enemies[i].gun.y >> 14);
+					printf("o");
+				}
+
+			}
 		}
 	}
+}
+*/
+
+void bulletEnemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh) {
+	//moves the enemy's bullet forward and checks for hits.
+    uint8_t i, j;
+    for (i = 0; i < numberOfEnemies; i++) {
+    	for(j = 0; j < CLIP_SIZE; j++) {
+			if (enemies[i].gun[j].alive) {
+				gotoxy(enemies[i].gun[j].x >> 14, enemies[i].gun[j].y >> 14);
+				printf(" ");
+
+				enemies[i].gun[j].x += enemies[i].gun[j].direction.x;
+				enemies[i].gun[j].y += enemies[i].gun[j].direction.y;
+
+				if (bulletEnemy_boundsCheck(enemies[i].gun[j]) || playerHit(enemies[i].gun[j], sh)) {
+					gotoxy(enemies[i].gun[j].x >> 14, enemies[i].gun[j].y >> 14);
+					printf(" ");
+					enemies[i].gun[j].alive = 0;
+				} else {
+					gotoxy(enemies[i].gun[j].x >> 14, enemies[i].gun[j].y >> 14);
+					printf("o");
+				}
+			}
+		}
+    }
 }
 
 uint8_t bulletEnemy_boundsCheck(enemyBullet_t bullet) {
