@@ -7,7 +7,7 @@ void homing_init(homing_t *h, spaceship_t sh) {
 	h->angle = sh.aim;
 	h->locked = 0;
 	h->alive = 1;
-	h->count = 30;
+	h->cnt = 30;
 	h->exploded = 0;
 }
 
@@ -35,12 +35,12 @@ void homing_update(homing_t *h, enemy_t *enemies, uint8_t numEnemies, spaceship_
 			temp_dir.x = FIX10_DIV((temp_dir.x >> 4), (length >> 4)) << 4;
 			temp_dir.y = FIX10_DIV((temp_dir.y >> 4), (length >> 4)) << 4;
 			h->direction = temp_dir;
-			h->x += FIX14_MULT((FIX8_DIV((h->count << 8), (30 << 8)) << 6), calccos(h->angle))			//mix old and new direction
-					+ FIX14_MULT((FIX8_DIV(((30 - h->count) << 8), (30 << 8)) << 6), h->direction.x);	//for some time to simulate
-			h->y += FIX14_MULT((FIX8_DIV((h->count << 8), (30 << 8)) << 6), calcsin(h->angle))			//forces in different
-					+ FIX14_MULT((FIX8_DIV(((30 - h->count) << 8), (30 << 8)) << 6), h->direction.y);	//directions
+			h->x += FIX14_MULT((FIX8_DIV((h->cnt << 8), (30 << 8)) << 6), calccos(h->angle))			//mix old and new direction
+					+ FIX14_MULT((FIX8_DIV(((30 - h->cnt) << 8), (30 << 8)) << 6), h->direction.x);	//for some time to simulate
+			h->y += FIX14_MULT((FIX8_DIV((h->cnt << 8), (30 << 8)) << 6), calcsin(h->angle))			//forces in different
+					+ FIX14_MULT((FIX8_DIV(((30 - h->cnt) << 8), (30 << 8)) << 6), h->direction.y);	//directions
 
-			if (h->count > 0) h->count--;
+			if (h->cnt > 0) h->cnt--;
 		}
 		if(homingBoundsCheck(h)) { //too bad if your missile left the battleground
 			h->alive = 0;
@@ -82,8 +82,8 @@ uint8_t homingEnemyDetection(homing_t *h, enemy_t *enemies, uint8_t numEnemies) 
 	vector_t temp_dir;
 	for(i = 0; i < numEnemies; i++) {
 		if(enemies[i].alive) {
-			if(MAX((h->x >> 14), (enemies[i].x >> 14)) - MIN((h->x >> 14), (enemies[i].x >> 14)) <= 5 &&
-					MAX((h->y >> 14), (enemies[i].y >> 14)) - MIN((h->y >> 14), (enemies[i].y >> 14)) <= 5) {
+			if(MAX((h->x >> 14), (enemies[i].x >> 14)) - MIN((h->x >> 14), (enemies[i].x >> 14)) <= HOMING_DIAMETER &&
+					MAX((h->y >> 14), (enemies[i].y >> 14)) - MIN((h->y >> 14), (enemies[i].y >> 14)) <= HOMING_DIAMETER) {
 				temp_dir = coordsToVector(h->x, h->y, enemies[i].x, enemies[i].y); 	//this calculation secures that the missile
 				length1 = lengthOfVector(temp_dir);									//will lock on to the nearest enemy and not
 				if(length1 > length0) {												//enemies[0] before enemies[1] and so on.
@@ -98,7 +98,7 @@ uint8_t homingEnemyDetection(homing_t *h, enemy_t *enemies, uint8_t numEnemies) 
 
 uint8_t homingBoundsCheck(homing_t *h) {
 	//returns true if the homing missile leaves the battleground
-	return (h->x >> 14) > 200 || (h->y >> 14) > 40 || (h->x >> 14) < 0 || (h->y >> 14) < 0;
+	return (h->x >> 14) > SCREEN_WIDTH-2 || (h->y >> 14) > SCREEN_HEIGHT-2|| (h->x >> 14) < 3 || (h->y >> 14) < 3;
 }
 
 uint8_t homingHit(homing_t *h, enemy_t e) {
@@ -112,8 +112,8 @@ void homingExplode(homing_t *h, enemy_t *enemies, uint8_t numEnemies, spaceship_
 	uint8_t i;
 	for (i = 0; i < numEnemies; i++) {
 		if(enemies[i].alive) {
-			if(MAX((h->x >> 14), (enemies[i].x >> 14)) - MIN((h->x >> 14), (enemies[i].x >> 14)) <= 5 &&
-					MAX((h->y >> 14), (enemies[i].y >> 14)) - MIN((h->y >> 14), (enemies[i].y >> 14)) <= 5) {
+			if(MAX((h->x >> 14), (enemies[i].x >> 14)) - MIN((h->x >> 14), (enemies[i].x >> 14)) <= HOMING_DIAMETER &&
+					MAX((h->y >> 14), (enemies[i].y >> 14)) - MIN((h->y >> 14), (enemies[i].y >> 14)) <= HOMING_DIAMETER) {
 				enemies[i].hp -= 10;
 				sh->score += 20;
 			}
@@ -122,13 +122,13 @@ void homingExplode(homing_t *h, enemy_t *enemies, uint8_t numEnemies, spaceship_
 	homingExplode_render(h, 0);
 }
 
-void homingExplode_render(homing_t *h, uint8_t remove) {
+void homingExplode_render(homing_t *h, uint8_t rm) {
 	//draws the explosion or removes it
 	uint8_t i, j;
-	for (i = 0; i < 5; i++) {
-		for (j = 0; j < 5; j++) {
-			gotoxy((h->x >> 14) - 2 + i, (h->y >> 14) - 2 + j);
-			if (!remove) printf("x");
+	for (i = 0; i < HOMING_DIAMETER; i++) {
+		for (j = 0; j < HOMING_DIAMETER; j++) {
+			gotoxy((h->x >> 14) - HOMING_DIAMETER/2 + i, (h->y >> 14) - HOMING_DIAMETER/2 + j);
+			if (!rm) printf("x");
 			else printf(" ");
 		}
 	}

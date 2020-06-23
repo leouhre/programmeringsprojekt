@@ -15,7 +15,7 @@ void loadMenu(){ //draws the menu
 
     box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
 
-    boxWithTextCenterAligned(MIDDLE_OF_SCREEN, 5,"       ", 1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN, 5,"RUNAWAY:THE GAME", 1);
 
     boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX,"START",1);
     boxes++;
@@ -325,15 +325,18 @@ void selectInOptions(gameHandler_t *game){
 }
 
 void loadHowToPlay(){   //draws the how to play section
-    uint8_t boxes=0;
+    uint8_t boxes=-1;
     clrscr();
     box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
-    boxWithTextCenterAligned(MIDDLE_OF_SCREEN, 5,"HOW TO PLAY", 1);
-    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX,"W MOVE FORWARD",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN, 2,"POTMETERS:NUKE AIM", 1);
+
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"W:MOVE FORWARD",1);
     boxes++;
-    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"A AND D TURN",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX,"Q AND E:AIM",1);
     boxes++;
-    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"SPACE TO SHOOT",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"A AND D:TURN",1);
+    boxes++;
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"SPACE:SHOOT",1);
     boxes++;
     boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"BACK",1);
 }

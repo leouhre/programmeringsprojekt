@@ -48,7 +48,7 @@ typedef struct {
 
 typedef struct {
 	int32_t x, y, angle;
-	uint8_t locked, alive, count, exploded;
+	uint8_t locked, alive, cnt, exploded;
 	vector_t direction;
 }homing_t;
 
@@ -58,8 +58,8 @@ typedef struct {
 } powerup_t;
 
 typedef struct {
-	int32_t x, y, angle;
-	uint8_t alive, count, exploded;
+	int32_t x, y;
+	uint8_t alive, exploded;
 } nuke_t;
 
 #endif

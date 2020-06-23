@@ -330,6 +330,13 @@ void renderLetter(char x){ //takes an upper case letter or char and draws it on 
                     for(i = 0; i < 7; i++)
                         letter[i][j]=b;
                 break;
+            case ':':
+                letter[2][1]=b;
+                letter[3][1]=b;
+                letter[2][3]=b;
+                letter[3][3]=b;
+
+                break;
             case ' ':
                 break;
 
@@ -543,7 +550,26 @@ void renderLetter(char x){ //takes an upper case letter or char and draws it on 
                     letter[5][1]=b;
                     letter[6][1]=b;
                 break;
-            //case Q has been left out as it is not used in this project
+
+            case 'Q':
+                for(j=1; j<3; j++){
+                    for(i=0; i<2; i++)
+                    letter[i][j]=b;
+                    for(i=5; i<7; i++)
+                    letter[i][j]=b;
+                }
+
+                for(i=1; i<5; i++){
+                    letter[i][0]=b;
+                    letter[i][3]=b;
+                }
+
+                letter[3][3]=b;
+                letter[4][2]=b;
+                letter[5][4]=b;
+                letter[6][4]=b;
+
+                break;
 
             case 'R':
                 for(i=1; i<6; i++) //copy of A

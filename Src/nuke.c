@@ -13,11 +13,9 @@ void nuke_init(nuke_t *nuke, spaceship_t sh) {
 
 void nuke_update(nuke_t *nuke, enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh, uint8_t *nukeCount) {
 	//updates nuke's coordinates and explodes if time
-	gotoxy(3,5);
-	printf("%d", nuke->exploded);
 	if(nuke->exploded > 0) { //wait some time before removing 'dust'
 		nuke->exploded--;
-		if(!nuke->exploded) nukeExplosion_render(*nuke, 1);
+		if(!nuke->exploded) nukeExplosion_render(*nuke, *nukeCount, 1, sh);
 		return;
 	}
 	if(!nuke->alive) {
@@ -34,8 +32,8 @@ void nuke_update(nuke_t *nuke, enemy_t *enemies, uint8_t numEnemies, spaceship_t
 		nuke->alive = 0;
 		nuke->exploded = 30;
 		nukeExplode(*nuke, enemies, numEnemies); //enemy hp is decreased in nukeExplode()
+        nukeExplosion_render(*nuke, *nukeCount, 0, sh);
 		*nukeCount -= 1;
-		if (*nukeCount < 1) sh->bullet_type = 0;
 	}
 	/*
 	if (nuke->alive && nuke->count) { //remove previous render and update coords
@@ -109,20 +107,22 @@ void nukeExplode(nuke_t nuke, enemy_t *enemies, uint8_t numEnemies) {
 			}
 		}
 	}
-	nukeExplosion_render(nuke, 0);
 }
 
-void nukeExplosion_render(nuke_t nuke, uint8_t remove) {
+void nukeExplosion_render(nuke_t nuke, uint8_t nukeCount, uint8_t rm, spaceship_t *sh) {
 	//draws or removes the nuke dust on/from the screen
 	uint8_t i, j;
-	for (i = 0; i < 25; i++) {
-		for (j = 0; j < 25; j++) {
-			if(!((nuke.x >> 14) - 6 + i > 210) && !((nuke.x >> 14) - 6 + i < 2)
-					&& !((nuke.y >> 14) - 8 + j > 54) && !((nuke.y >> 14) - 8 + j < 2)) {
-				gotoxy((nuke.x >> 14) - 12 + i, (nuke.y >> 14) - 12 + j);
-				if(!remove && i % 2 && j % 2) {
+	for (i = 0; i < NUKE_DIAMETER; i++) {
+		for (j = 0; j < NUKE_DIAMETER; j++) {
+			if(!((nuke.x >> 14) - NUKE_DIAMETER/2 + i > SCREEN_WIDTH-1) && !((nuke.x >> 14) - NUKE_DIAMETER/2 + i < 2)
+					&& !((nuke.y >> 14) - NUKE_DIAMETER/2 + j > SCREEN_HEIGHT-2) && !((nuke.y >> 14) - NUKE_DIAMETER/2 + j < 2)) {
+				gotoxy((nuke.x >> 14) - NUKE_DIAMETER/2 + i, (nuke.y >> 14) - NUKE_DIAMETER/2 + j);
+				if(!rm && i % 2 && j % 2) {
 					printf("@");
-				} else printf(" ");
+				} else {
+				    printf(" ");
+				    if (nukeCount < 1) sh->bullet_type = 0;
+				}
 			}
 		}
 	}

@@ -6,6 +6,8 @@
 #include "entity_structs.h"
 #include "ADC1.h"
 
+#define NUKE_DIAMETER 25
+
 #ifndef _NUKE_H_
 #define _NUKE_H_
 
@@ -15,6 +17,6 @@ void nuke_render(nuke_t nuke);
 uint8_t nukeHit(nuke_t nuke, enemy_t *enemies, uint8_t numEnemies);
 uint8_t nukeBoundsCheck(nuke_t nuke);
 void nukeExplode(nuke_t nuke, enemy_t *enemies, uint8_t numEnemies);
-void nukeExplosion_render(nuke_t nuke, uint8_t remove);
+void nukeExplosion_render(nuke_t nuke, uint8_t nukeCount, uint8_t rm, spaceship_t *sh);
 
 #endif

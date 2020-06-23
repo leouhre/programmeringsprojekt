@@ -2,6 +2,7 @@
 
 void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t *enemyBullet, uint8_t hp) {
 	//initializes an enemy according to level difficulty
+	uint8_t i;
     enemy->x = (x << 14);
     enemy->y = (y << 14);
 
@@ -11,6 +12,9 @@ void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t *enemyBullet
     enemy->hp = hp;
     enemy->alive = 1;
     enemy->gun = enemyBullet;
+    for(i=0; i < CLIP_SIZE; i++)
+        enemy->gun[i].alive= 0;
+
     enemy->stuck = 0;
 }
 
@@ -140,18 +144,18 @@ void bulletEnemy_init(enemy_t *enemy) {
 
 void bulletEnemy_init(enemy_t *enemy) {
 	//initializes an enemy's bullet
-    uint8_t i, pos = 0;
+    uint8_t i;
     for(i = 0; i < CLIP_SIZE; i++) { // find an empty space in array of bullets
-        if(enemy->gun[i].alive) pos++;
-    }
+        if(!enemy->gun[i].alive){
+            enemy->gun[i].alive = 1;
 
-    if(pos < CLIP_SIZE) {
-    	enemy->gun[pos].alive = 1;
+            enemy->gun[i].x =  enemy->x;
+            enemy->gun[i].y = enemy->y;
 
-    	enemy->gun[pos].x =  enemy->x;
-    	enemy->gun[pos].y = enemy->y;
+            enemy->gun[i].direction = rotateVector2(enemy->direction, 8 - rand() % 16);
+            return;
+        }
 
-    	enemy->gun[pos].direction = rotateVector2(enemy->direction, 8 - rand() % 16);
     }
 }
 
