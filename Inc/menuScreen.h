@@ -7,6 +7,7 @@
 #ifndef _MENUSCREEN_H_
 #define _MENUSCREEN_H_
 
+
 void gameInit(gameHandler_t *game);
 
 void loadMenu();
@@ -29,7 +30,7 @@ void selectInPause(gameHandler_t *game);
 
 void nextLevel(gameHandler_t *game);
 
-//void loadGame();
+void gameOver(gameHandler_t *game);
 
 
 #endif

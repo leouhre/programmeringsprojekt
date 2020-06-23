@@ -74,7 +74,6 @@ void hideCursor(){
     printf("%c[?25l",ESC);
 }
 
-
 void gotoxy(uint8_t x, uint8_t y) {
 // move cursor to x,y
     printf("%c[%d;%dH", ESC,y,x);
@@ -210,15 +209,12 @@ void boxWithText(uint8_t x, uint8_t y, char* s, uint16_t style){
     renderWord(s);
 }
 
-void boxWithTextInTheMiddleOfTheScreen(uint8_t middlex, uint8_t y, char* s, uint16_t style){
+void boxWithTextCenterAligned(uint8_t middlex, uint8_t y, char* s, uint16_t style){
 
     uint8_t wordLength=strlen(s);
 
     boxWithText(middlex - 1 - wordLength*4,y,s, style);
 }
-
-void arrowpointer();
-
 
 void window(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, char* s, uint8_t style) {
     uint8_t length = strlen(s), sizex = x2 - x1, sizey = y2 - y1, i;
@@ -281,19 +277,19 @@ void window(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, char* s, uint8_t sty
 
 //letters
 
-void renderLetter(char x){
+void renderLetter(char x){ //takes an upper case letter or char and draws it on a 5*7 square in putty
     char b = 219;
     char letter[7][5];
     int i, j;
 
-    for(j=0; j<5; j++){
+    for(j=0; j<5; j++){     //a blank square is created in the 2d array.
         for(i=0; i<7;i++){
             letter[i][j] =' ';
         }
     }
 
-    switch(x){
-            case 'p':
+    switch(x){              //in each case, a letter is drawn in the 2d array
+            case 'p': // the letter p represents a right-pointing arrow
                 for(j=0; j<5; j++){
                     for (i=0;i<3;i++){
                         letter[i][j]=b;
@@ -310,7 +306,7 @@ void renderLetter(char x){
                 }
 
                 break;
-            case 'q':
+            case 'q': //the letter q represents a left-pointing arrow
 
                 for(j=0; j<5; j++){
                     for (i=4;i<7;i++){
@@ -329,7 +325,7 @@ void renderLetter(char x){
 
                 break;
 
-            case '*':
+            case '*':   //the char '*' represents a black square
                 for(j=0; j<5; j++)
                     for(i = 0; i < 7; i++)
                         letter[i][j]=b;
@@ -547,6 +543,8 @@ void renderLetter(char x){
                     letter[5][1]=b;
                     letter[6][1]=b;
                 break;
+            //case Q has been left out as it is not used in this project
+
             case 'R':
                 for(i=1; i<6; i++) //copy of A
                         letter[i][0]=b;
@@ -638,6 +636,7 @@ void renderLetter(char x){
                     letter[5][4]=b;
 
                 break;
+            //the letter Z has been left out since it is not used in this project
             case 'Y':
 
                     letter[0][0]=b;
@@ -665,7 +664,7 @@ void renderLetter(char x){
             default: break;
     }
 
-    for(j=0; j<5; j++){
+    for(j=0; j<5; j++){ //the letter is drawn on a 5*7 square
         for(i=0; i<7;i++)
             printf("%c",letter[i][j]);
         moveDown(1);
@@ -676,7 +675,7 @@ void renderLetter(char x){
 
 }
 
-void renderWord(char *x){
+void renderWord(char *x){ //each letter in the string is drawn after eachother
     uint8_t i;
 
     for(i = 0; i < strlen(x); i++ ){
