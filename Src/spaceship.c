@@ -70,12 +70,12 @@ void spaceship_update(uint8_t input,spaceship_t *sh)
     	//turn spaceship clockwise
         sh->angle += 32;
     }
-     if (0x40 & input)
+    if (0x40 & input)
     {
     	//rotate aim counter clockwise
         sh->aim -= 16;
     }
-     if (0x80 & input)
+    if (0x80 & input)
     {
     	//rotate aim clockwise
         sh->aim += 16;

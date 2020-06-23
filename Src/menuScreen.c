@@ -1,8 +1,5 @@
 #include "menuScreen.h"
 
-#define MIDDLE_OF_SCREEN SCREEN_WIDTH/2
-#define Y_OF_FIRST_BOX 20
-
 void gameInit(gameHandler_t *game){
     game->difficulty = 5;
     game->mode = 1;
@@ -11,24 +8,22 @@ void gameInit(gameHandler_t *game){
     game->status = 0;
 }
 
+void loadMenu(){ //draws the menu
 
-
-void loadMenu(){
-
-    uint8_t boxes=0, firstboxY = 20;
+    uint8_t boxes=0;
     clrscr();
 
     box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
 
     boxWithTextCenterAligned(MIDDLE_OF_SCREEN, 5,"       ", 1);
 
-    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,firstboxY,"START",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX,"START",1);
     boxes++;
-    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,firstboxY+boxes*9,"OPTIONS",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"OPTIONS",1);
     boxes++;
-    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,firstboxY+boxes*9,"HOW TO PLAY",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"HOW TO PLAY",1);
     boxes++;
-    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,firstboxY+boxes*9,"CREDITS",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"CREDITS",1);
     boxes++;
 }
 
@@ -41,7 +36,7 @@ void selectInMenu(gameHandler_t *game){
 while(flagMenu==1){
 
     if(flagMenu==1){
-        switch(select){
+        switch(select){ //draws arrows pointing at the selected option
             case 0:
                 //clear option 1
                 gotoxy(op1xv, 22+9);
@@ -117,7 +112,7 @@ while(flagMenu==1){
 
         while(flagMenu==0){
             switch(readControls()){
-              /*w*/ case 0x01:
+               case 0x01:
                     if(select > 0){
                         select--;
                         flagMenu++;
@@ -133,8 +128,6 @@ while(flagMenu==1){
                 case 0x10:
                     switch(select){
                         case 0:
-                            //loadGame();
-                            //game->status = 1;
                             clrscr();
                             flagMenu++;
                             break;
@@ -162,10 +155,10 @@ while(flagMenu==1){
     }
 }
 
-void loadOptions(gameHandler_t *game){
+void loadOptions(gameHandler_t *game){ //draws the options
     clrscr();
-    uint8_t x = 211, y = 56, firstboxY = 20, middlex = (211 - 1 )/2, i;
-    box(1,1,x,y,1);
+    uint8_t i;
+    box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
 
     char strDifficulty[11] = "          ";
     char strMode[7] = "LEVELS";
@@ -182,18 +175,12 @@ void loadOptions(gameHandler_t *game){
         strMode[5] = 'S';
     }
 
-    boxWithTextCenterAligned(middlex, 5,"OPTIONS", 1);
-
-    middlex=middlex/2;
-
-    boxWithTextCenterAligned(middlex, firstboxY, "DIFFICULTY",1);
-    boxWithTextCenterAligned(middlex, firstboxY+9, "MODE",1);
-    middlex=105;
-    boxWithTextCenterAligned(middlex, firstboxY+27, "BACK",1);
-
-    middlex=middlex+middlex/2;
-    boxWithTextCenterAligned(middlex, firstboxY, strDifficulty,1); //10
-    boxWithTextCenterAligned(middlex, firstboxY+9, strMode,1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN, 5,"OPTIONS", 1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN/2, Y_OF_FIRST_BOX, "DIFFICULTY",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN/2, Y_OF_FIRST_BOX+9, "MODE",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN, Y_OF_FIRST_BOX+27, "BACK",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN+MIDDLE_OF_SCREEN/2, Y_OF_FIRST_BOX, strDifficulty,1); //10
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN+MIDDLE_OF_SCREEN/2, Y_OF_FIRST_BOX+9, strMode,1);
 }
 
 void selectInOptions(gameHandler_t *game){
@@ -337,40 +324,33 @@ void selectInOptions(gameHandler_t *game){
     }
 }
 
-void loadHowToPlay(){
-    uint8_t x = 211, y = 56, boxes=0, firstboxY = 20;
+void loadHowToPlay(){   //draws the how to play section
+    uint8_t boxes=0;
     clrscr();
-    box(1,1,x,y,1);
-
-    uint8_t middlex = (211 - 1 )/2; //105
-
-    boxWithTextCenterAligned(middlex, 5,"HOW TO PLAY", 1);
-
-    boxWithTextCenterAligned(middlex,firstboxY,"W MOVE FORWARD",1);
+    box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN, 5,"HOW TO PLAY", 1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX,"W MOVE FORWARD",1);
     boxes++;
-    boxWithTextCenterAligned(middlex,firstboxY+boxes*9,"A AND D TURN",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"A AND D TURN",1);
     boxes++;
-    boxWithTextCenterAligned(middlex,firstboxY+boxes*9,"SPACE TO SHOOT",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"SPACE TO SHOOT",1);
     boxes++;
-    boxWithTextCenterAligned(middlex,firstboxY+boxes*9,"BACK",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"BACK",1);
 }
 
-void loadCredits(){
-    uint8_t x = 211, y = 56, boxes=0, firstboxY = 20;
+void loadCredits(){     //draws the credits
+    uint8_t boxes=0;
     clrscr();
-    box(1,1,x,y,1);
+    box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
 
-    uint8_t middlex = (211 - 1 )/2; //105
-
-    boxWithTextCenterAligned(middlex, 5,"THIS GAME WAS MADE BY", 1);
-
-    boxWithTextCenterAligned(middlex,firstboxY,"THEODOR NORBY-LASSEN",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN, 5,"THIS GAME WAS MADE BY", 1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX,"THEODOR NORBY-LASSEN",1);
     boxes++;
-    boxWithTextCenterAligned(middlex,firstboxY+boxes*9,"LEO UHRE JAKOBSEN",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"LEO UHRE JAKOBSEN",1);
     boxes++;
-    boxWithTextCenterAligned(middlex,firstboxY+boxes*9,"JACOB HELLUM",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"JACOB HELLUM",1);
     boxes++;
-    boxWithTextCenterAligned(middlex,firstboxY+boxes*9,"BACK",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+boxes*9,"BACK",1);
 }
 
 void selectInCreditsAndHowToPlay(){
@@ -388,17 +368,12 @@ void selectInCreditsAndHowToPlay(){
 
 }
 
-void loadPause(){
-    uint8_t x = 211, y = 56, firstboxY = 20;
+void loadPause(){       //draws the pause screen
     clrscr();
-    box(1,1,x,y,1);
-
-    uint8_t middlex = (211 - 1 )/2; //105
-
-    boxWithTextCenterAligned(middlex, 5,"GAME PAUSED", 1);
-
-    boxWithTextCenterAligned(middlex,firstboxY,"RESUME GAME",1);
-    boxWithTextCenterAligned(middlex,firstboxY+2*9,"MAIN MENU",1);
+    box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN, 5,"GAME PAUSED", 1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX,"RESUME GAME",1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN,Y_OF_FIRST_BOX+2*9,"MAIN MENU",1);
 }
 
 void selectInPause(gameHandler_t *game){
@@ -474,11 +449,13 @@ void selectInPause(gameHandler_t *game){
                         game->currentLevel = 0;
                     }
                     flagPause+=2;
+                    box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
                     break;
 
                 case 0x20:                  //'p'
                     clrscr();
                     flagPause+=2;
+                    box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
                     break;
 
                 default: break;
@@ -496,7 +473,7 @@ void nextLevel(gameHandler_t *game){
     char str[] = "YOUR CURRENT LEVEL  ";
     str[19] = 64+game->currentLevel;    //converts 1,2,3... to A,B,C...
 
-    boxWithTextCenterAligned(MIDDLE_OF_SCREEN, 22, str, 1);
+    boxWithTextCenterAligned(MIDDLE_OF_SCREEN, Y_OF_FIRST_BOX+2, str, 1);
     while(nextLevelFlag == 1){
         if(readControls() == 0x10){
             nextLevelFlag++;
@@ -504,11 +481,7 @@ void nextLevel(gameHandler_t *game){
         }
     }
     box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
-
-    //gotoxy(1,1);
-    //printf("your current level is %d", game->currentLevel);
 }
-
 
 void gameOver(gameHandler_t *game){
 
