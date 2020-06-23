@@ -19,14 +19,10 @@ void nuke_update(nuke_t *nuke, enemy_t *enemies, uint8_t numEnemies, spaceship_t
 		return;
 	}
 	if(!nuke->alive) {
-		gotoxy(nuke->x >> 14, nuke->y >> 14);
-		printf(" ");
+		nuke_aim_render(*nuke, 1);
 		nuke->x = (ADC1_1_read() / 23 + 2) << 14;
 		nuke->y = (ADC1_2_read() / 78 + 2) << 14;
-		gotoxy(nuke->x >> 14, nuke->y >> 14);
-		fgcolor(1);//red
-		printf("+");
-		fgcolor(15);//white
+		nuke_aim_render(*nuke, 0);
 	}
 	if (nuke->alive && *nukeCount) {
 		nuke->alive = 0;
@@ -64,18 +60,22 @@ void nuke_update(nuke_t *nuke, enemy_t *enemies, uint8_t numEnemies, spaceship_t
 	*/
 }
 
-void nuke_render(nuke_t nuke) {
+void nuke_aim_render(nuke_t nuke, uint8_t rm) {
 	//draw nuke on screen
 	uint8_t i, j;
-	char bomb[3][3] = {	{' ', 196, ' '},
-						{'/', '+', '\\'},
-						{196, 196, 196} };
+
+	char crosshair[3][3] = {	{218, 196, 191},
+                                {179, '+', 179},
+                                {192, 196, 217} };
+    fgcolor(1);//red
 	for (i = 0; i < 3; i++) {
 		for (j = 0; j < 3; j++) {
 			gotoxy((nuke.x >> 14) - 1 + i, (nuke.y >> 14) - 1 + j);
-			printf("%c", bomb[j][i]);
+			if (!rm) printf("%c", crosshair[j][i]);
+			else printf(" ");
 		}
 	}
+    fgcolor(15);//white
 }
 
 uint8_t nukeBoundsCheck(nuke_t nuke) {

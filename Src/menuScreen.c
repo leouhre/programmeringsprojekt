@@ -1,5 +1,7 @@
 #include "menuScreen.h"
 
+#define CLIP_SIZE 5
+
 void gameInit(gameHandler_t *game){
     game->difficulty = 5;
     game->mode = 1;
@@ -507,4 +509,31 @@ void gameOver(gameHandler_t *game){
     game->currentLevel = 0;
 }
 
+void levelInit(gameHandler_t *game, spaceship_t *sh, nuke_t *n, homing_t *h, uint8_t *numEnemies, enemy_t *enemies, powerup_t *powerups, enemyBullet_t *enemyBullets, bullet_t *playerBullet){
+    uint8_t i;
+    if(game->currentLevel==0){
+                spaceship_init(sh, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+                gameInit(game);
+                selectInMenu(game);
+                nextLevel(game);
+            }
+            sh->bullet_type = 0;
+            n->alive = 0;
+            h->alive = 0;
 
+
+            *numEnemies = game->currentLevel + (game->difficulty/2);
+
+	        for (i = 0; i < CLIP_SIZE; i++) {
+                playerBullet[i].alive = 0;
+            }
+
+            for (i = 0; i < *numEnemies; i++) {
+                enemy_init(&enemies[i], 2 + (rand() % SCREEN_WIDTH-10), 2 + (rand() % SCREEN_HEIGHT-10), &enemyBullets[i], 3);
+            }
+
+
+            for (i = 0; i < 5; i++) {
+                powerups[i].alive = 0;
+            }
+}

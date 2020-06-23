@@ -13,6 +13,7 @@ void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y)
 
 void spaceship_update(uint8_t input,spaceship_t *sh)
 {
+    if(!input)return; //doesnt update if there is no input from the user
     uint8_t i, j;
 
     for(i=0; i<3; i++)
