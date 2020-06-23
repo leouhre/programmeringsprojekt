@@ -13,7 +13,6 @@ void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y)
 
 void spaceship_update(uint8_t input,spaceship_t *sh)
 {
-
     uint8_t i, j;
 
     for(i=0; i<3; i++)
@@ -30,11 +29,36 @@ void spaceship_update(uint8_t input,spaceship_t *sh)
 
     if (0x01 & input)
     {
+        if(!spaceshipBoundsCheck(*sh)){//not hit anything
     	//move forward
-        sh->x += calccos(sh->angle) << 1;
-        sh->y += calcsin(sh->angle) << 1;
+            sh->x += calccos(sh->angle) << 1;
+            sh->y += calcsin(sh->angle) << 1;
+        }
+        else if (spaceshipBoundsCheck(*sh) & 0x01){ //hit left wall
+            if( (sh->angle & 0x1ff) <= 128 || (sh->angle & 0x1ff) >= 256+128){
+                sh->x += calccos(sh->angle) << 1;
+                sh->y += calcsin(sh->angle) << 1;
+            }
+        }
+        else if (spaceshipBoundsCheck(*sh) & 0x02){ //hit right wall
+            if( (sh->angle & 0x1ff) >= 128 && (sh->angle & 0x1ff) <= 256+128){
+                sh->x += calccos(sh->angle) << 1;
+                sh->y += calcsin(sh->angle) << 1;
+            }
+        }
+        else if (spaceshipBoundsCheck(*sh) & 0x04){ //hit bottom wall
+            if( (sh->angle & 0x1ff) >= 256 || (sh->angle & 0x1ff) == 0){
+                sh->x += calccos(sh->angle) << 1;
+                sh->y += calcsin(sh->angle) << 1;
+            }
+        }
+        else if (spaceshipBoundsCheck(*sh) & 0x08){ //hit top wall
+            if( (sh->angle & 0x1ff) <= 256){
+                sh->x += calccos(sh->angle) << 1;
+                sh->y += calcsin(sh->angle) << 1;
+            }
+        }
     }
-
     if (0x04 & input)
     {
     	//turn spaceship counter clockwise
@@ -56,8 +80,8 @@ void spaceship_update(uint8_t input,spaceship_t *sh)
     	//rotate aim clockwise
         sh->aim += 16;
     }
-}
 
+}
 void spaceshipAim_render(spaceship_t sh) {
 	gotoxy((sh.x + (calccos(sh.aim) << 3)) >> 14, (sh.y + (calcsin(sh.aim) << 3)) >> 14);
 	fgcolor(1);
@@ -318,6 +342,19 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
     }
 }
 
+
+uint8_t spaceshipBoundsCheck(spaceship_t sh) {
+	//returns true if the enemy is out of bounds.
+	// 0, 1, 2, 3 = left, right, bot, top
+	uint8_t val =0;
+	if((sh.x >> 14) < 5 )              val |= 0x01;
+	if((sh.x >> 14) > SCREEN_WIDTH-4)  val |= 0x02;
+
+	if((sh.y >> 14) > SCREEN_HEIGHT-4)  val |= 0x04;
+	if((sh.y >> 14) < 5)                val |= 0x08;
+
+	return val;
+}
 
 uint8_t spaceshipDead(spaceship_t *sh){
     uint8_t val = 0;

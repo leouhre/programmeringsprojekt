@@ -2,8 +2,11 @@
 #include <stdint.h>
 #include <string.h>
 
+
 #ifndef _ANSI_H_
 #define _ANSI_H_
+#define SCREEN_HEIGHT 56
+#define SCREEN_WIDTH 211
 
 void fgcolor(uint8_t foreground);
 void bgcolor(uint8_t background);
