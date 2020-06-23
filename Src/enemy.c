@@ -29,7 +29,7 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh, bu
 			if (enemies[k].hp < 1) {	//Dead enemies enter the if-statement one time to remove their 'corpse'.
 				enemies[k].alive = 0; 	//Health points are decreased in bulletEnemy_update() to avoid 'killing'
 				sh->score += 100;		//the bullet before hp is decreased. Score is increased when an enemy is killed.
-                if(tick % 2 == 1){
+                if(tick % 9 == 1){      //chance to spawn a powerup
                     powerup_spawn_random((enemies[k].x >> 14), (enemies[k].y >> 14), powerups, tick);
                 }
 			}

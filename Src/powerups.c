@@ -52,8 +52,14 @@ void powerup_render(powerup_t *powerups, spaceship_t *sh) { //draws the powerup 
     }
 }
 
-void powerup_spawn_random(uint32_t x, uint32_t y,powerup_t *powerups, uint32_t tick){//can spawn a random weapon or nothing
-    powerup_init(x, y, tick%3, powerups);
+void powerup_spawn_random(uint32_t x, uint32_t y,powerup_t *powerups, uint32_t tick){//spawn a random weapon
+    uint8_t type;
+    if(tick%10 > 3) { //this decides the chance. when called with tick%24 == 1 and 9% == 1 this becomes 3/5 for missile and 2/5 for nuke
+        type = 1; //missile
+    } else {
+        type = 2; //nuke
+    }
+    powerup_init(x, y, type, powerups);
 }
 
 
