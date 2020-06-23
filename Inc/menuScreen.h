@@ -6,6 +6,8 @@
 #include "entity_structs.h"
 #ifndef _MENUSCREEN_H_
 #define _MENUSCREEN_H_
+#define SCREEN_HEIGHT 56
+#define SCREEN_WIDTH 211
 
 void gameInit(gameHandler_t *game);
 
@@ -29,7 +31,7 @@ void selectInPause(gameHandler_t *game);
 
 void nextLevel(gameHandler_t *game);
 
-//void loadGame();
+void gameOver(gameHandler_t *game);
 
 
 #endif

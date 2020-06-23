@@ -317,3 +317,10 @@ void spaceship_sprite(spaceship_t sh, uint8_t n)
         }
     }
 }
+
+
+uint8_t spaceshipDead(spaceship_t *sh){
+    uint8_t val = 0;
+    if(sh->hp <= 0) val = 1;
+    return val;
+}

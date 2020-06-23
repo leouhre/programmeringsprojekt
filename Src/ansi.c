@@ -210,7 +210,7 @@ void boxWithText(uint8_t x, uint8_t y, char* s, uint16_t style){
     renderWord(s);
 }
 
-void boxWithTextInTheMiddleOfTheScreen(uint8_t middlex, uint8_t y, char* s, uint16_t style){
+void boxWithTextCenterAligned(uint8_t middlex, uint8_t y, char* s, uint16_t style){
 
     uint8_t wordLength=strlen(s);
 
