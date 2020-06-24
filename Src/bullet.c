@@ -92,7 +92,7 @@ void bullet_update(bullet_t *bullet, spaceship_t sh, enemy_t *enemies, uint8_t n
 */
 
 uint8_t boundsCheck(bullet_t bullet) {
-	return (bullet.x >> 14) > 209+1 || (bullet.y >> 14) > 54+1 || (bullet.x >> 14) < 2 || (bullet.y >> 14) < 2;
+	return (bullet.x >> 14) > SCREEN_WIDTH-1 || (bullet.y >> 14) > SCREEN_HEIGHT-1 || (bullet.x >> 14) < 2 || (bullet.y >> 14) < 2;
 }
 
 void bullet_render(bullet_t bullet) {

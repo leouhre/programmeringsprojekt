@@ -33,7 +33,7 @@ typedef struct {
     int32_t x, y, hp;
     uint8_t alive, stuck;
     vector_t direction;
-    enemyBullet_t gun;
+    enemyBullet_t *gun;
     //future updates;
     /*
     int32_t dmg, spd, sht_spd, acceleration, bullet style
@@ -48,7 +48,7 @@ typedef struct {
 
 typedef struct {
 	int32_t x, y, angle;
-	uint8_t locked, alive, count, exploded;
+	uint8_t locked, alive, cnt, exploded;
 	vector_t direction;
 }homing_t;
 
@@ -56,5 +56,10 @@ typedef struct {
     int32_t x, y;
     uint8_t type, alive;
 } powerup_t;
+
+typedef struct {
+	int32_t x, y;
+	uint8_t alive, exploded;
+} nuke_t;
 
 #endif

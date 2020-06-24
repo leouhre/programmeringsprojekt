@@ -5,6 +5,7 @@
 #include "entity_structs.h"
 #include "spaceship.h"
 #include "enemy.h"
+#include "ansi.h"
 #define CLIP_SIZE 5
 
 

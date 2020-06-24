@@ -6,6 +6,10 @@
 #include "math.h"
 #include "entity_structs.h"
 #include "spaceship.h"
+#include "ansi.h"
+
+#define HOMING_DIAMETER 5
+
 
 #ifndef _HOMING_H_
 #define _HOMING_H_
@@ -17,7 +21,6 @@ uint8_t homingEnemyDetection(homing_t *h, enemy_t *enemies, uint8_t numEnemies);
 uint8_t homingBoundsCheck(homing_t *h);
 uint8_t homingHit(homing_t *h, enemy_t e);
 void homingExplode(homing_t *h, enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh);
-void homingExplode_render(homing_t *h);
-void homingExplode_render2(homing_t *h);
+void homingExplode_render(homing_t *h, uint8_t rm);
 
 #endif
