@@ -41,7 +41,7 @@ void lcd_weapons_draw(uint8_t *buffer) { //draws the different weapons on the lc
 
     for(i = 0; i < 21; i++) { //print standard gun
         for(j = 0; j < 2; j++) {
-            buffer[256+j*128+32-21+i] = standard_gun[i][j];
+            buffer[256+j*128+32-21+i] = standard_gun[i][j]; //-21 is the width of the gun 32 is 1/4 of a line length
         }
     }
 
