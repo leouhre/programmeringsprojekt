@@ -17,7 +17,8 @@ uint8_t readControls() { //returns a value depending on what the input is
         txt_input[i] = buffer[i];
     }
 
-	switch (txt_input[0])
+
+	switch (txt_input[0]) //returns a byte with only one bit set to high for easy comparison
 	{
 		case('w'):
 			return 0x01;

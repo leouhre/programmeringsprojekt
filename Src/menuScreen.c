@@ -3,6 +3,7 @@
 #define CLIP_SIZE 5
 
 void gameInit(gameHandler_t *game){
+    //resets the games attributes
     game->difficulty = 5;
     game->mode = 1;
     game->currentLevel = 0;
@@ -112,22 +113,22 @@ while(flagMenu==1){
         }
     }
 
-        while(flagMenu==0){
+        while(flagMenu==0){ //loops until it recieves a valid user input
             switch(readControls()){
-               case 0x01:
+               case 0x01:   //w
                     if(select > 0){
                         select--;
                         flagMenu++;
                     }
                     break;
-                case 0x02:
+                case 0x02:  //s
                     if(select < 3){
                         select++;
                         flagMenu++;
                     }
 
                     break;
-                case 0x10:
+                case 0x10:  //
                     switch(select){
                         case 0:
                             clrscr();
@@ -313,7 +314,7 @@ void selectInOptions(gameHandler_t *game){
                     }
                     break;
 
-                case 0x10:                  //' '
+                case 0x10:              //' '
                     if(select == 2){
                         loadMenu();
                         flagOptions+=2;
