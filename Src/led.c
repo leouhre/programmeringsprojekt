@@ -37,6 +37,43 @@ void led_init() {
     GPIOC->ODR |= (0x0001 << 7); //Set pin PC7 to high color: green
 }
 
+void led_color(uint8_t color){
+    switch (color) {
+        case 0:
+            //LED off
+            GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
+            GPIOB->ODR |= (0x0001 << 4); //Set pin PB4 to high color: red
+            GPIOC->ODR |= (0x0001 << 7); //Set pin PC7 to high color: green
+            break;
+        case 1:
+            //green
+            GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
+            GPIOB->ODR |= (0x0001 << 4); //Set pin PB4 to high color: red
+            GPIOC->ODR &= ~(0x0001 << 7); //Set pin PC7 to low color: green
+            break;
+
+        case 2:
+            //red
+            GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
+            GPIOB->ODR &= ~(0x0001 << 4); //Set pin PB4 to low color: red
+            GPIOC->ODR |= (0x0001 << 7); //Set pin PC7 to high color: green
+            break;
+
+        case 3:
+            //yellow
+            GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
+            GPIOB->ODR &= ~(0x0001 << 4); //Set pin PB4 to low color: red
+            GPIOC->ODR &= ~(0x0001 << 7); //Set pin PC7 to low color: green
+            break;
+        default:
+            //all LED's off
+            GPIOA->ODR |= (0x0001 << 9); //Set pin PA9 to high color: blue
+            GPIOB->ODR |= (0x0001 << 4); //Set pin PB4 to high color: red
+            GPIOC->ODR |= (0x0001 << 7); //Set pin PC7 to high color: green
+            break;
+    }
+}
+/*
 void led_hp_update(spaceship_t sh) {
 	if (sh.hp < 1) {
 		GPIOB->ODR |= (0x0001 << 4); //Set pin PB4 to high color: red
@@ -63,3 +100,4 @@ void led_hp_update(spaceship_t sh) {
 		}
 	}
 }
+*/

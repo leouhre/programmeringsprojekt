@@ -11,6 +11,7 @@
 
 void led_enable();
 void led_init();
-void led_hp_update(spaceship_t sh);
+void led_color(uint8_t color);
+//void led_hp_update(spaceship_t sh);
 
 #endif

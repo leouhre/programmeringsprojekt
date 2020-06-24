@@ -357,8 +357,8 @@ uint8_t spaceshipBoundsCheck(spaceship_t sh) {
 	return val;
 }
 
-uint8_t spaceshipDead(spaceship_t *sh){
+uint8_t spaceshipDead(spaceship_t sh){
     uint8_t val = 0;
-    if(sh->hp <= 0) val = 1;
+    if(sh.hp <= 0) val = 1;
     return val;
 }
