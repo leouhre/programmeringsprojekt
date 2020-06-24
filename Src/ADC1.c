@@ -1,13 +1,4 @@
-/*
- * ADC1.c
- *
- *  Created on: 12 Jun 2020
- *      Author: leo
- */
-
 #include "ADC1.h"
-#include "30010_io.h"
-
 
 void ADC1_config() {
     RCC->AHBENR |= RCC_AHBPeriph_GPIOA;
@@ -24,8 +15,8 @@ void ADC1_config() {
 	GPIOA->PUPDR &= ~(0x00000003 << (1 * 2)); // Clear push/pull register
 	GPIOA->PUPDR |=  (0x00000002 << (1 * 2)); // Set push/pull register (0x00 - No pull, 0x01 - Pull-up, 0x02 - Pull-down)
 
-	RCC->CFGR2  &= ~RCC_CFGR2_ADCPRE12; // Clear ADC12 prescalerbits
-	RCC->CFGR2  |=  RCC_CFGR2_ADCPRE12_DIV6; // Set ADC12 prescalerto 6
+	RCC->CFGR2  &= ~RCC_CFGR2_ADCPRE12; // Clear ADC12 prescaler bits
+	RCC->CFGR2  |=  RCC_CFGR2_ADCPRE12_DIV6; // Set ADC12 prescaler to 6
 	RCC->AHBENR |=  RCC_AHBPeriph_ADC12; // Enable clock for ADC12
 
 	ADC1->CR    =  0x00000000; // Clear CR register
@@ -36,15 +27,16 @@ void ADC1_config() {
 	for(int i = 0 ; i < 1000 ; i++) {} // Wait for about 16microseconds
 
 	ADC1->CR |= 0x80000000; // Start ADC1 calibration
-	while (!(ADC1->CR & 0x80000000));// Wait for calibration to finish
+	while (!(ADC1->CR & 0x80000000)); // Wait for calibration to finish
 	for (int i = 0 ; i < 100 ; i++) {} // Wait for a little while
 
 	ADC1->CR |= 0x00000001; // Enable ADC1 (0x01 -Enable, 0x02 -Disable)
-	while (!(ADC1->ISR & 0x00000001));// Wait until ready
+	while (!(ADC1->ISR & 0x00000001)); // Wait until ready
 }
 
 uint16_t ADC1_1_read() {
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_1Cycles5);
+	// Read from channel 1, rank of meas. 1, sampling time 1.5 clock cycles
 
 	ADC_StartConversion(ADC1);// Start ADC read
 	while (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == 0);// Wait for ADC read
@@ -54,6 +46,7 @@ uint16_t ADC1_1_read() {
 
 uint16_t ADC1_2_read() {
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 1, ADC_SampleTime_1Cycles5);
+	// Read from channel 2, rank of meas. 1, sampling time 1.5 clock cycles
 
 	ADC_StartConversion(ADC1);// Start ADC read
 	while (ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC) == 0);// Wait for ADC read

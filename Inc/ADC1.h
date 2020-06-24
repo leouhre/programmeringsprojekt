@@ -1,11 +1,5 @@
-/*
- * ADC1.h
- *
- *  Created on: 12 Jun 2020
- *      Author: leo
- */
-
 #include <stdint.h>
+#include "30010_io.h"
 
 #ifndef ADC1_H_
 #define ADC1_H_

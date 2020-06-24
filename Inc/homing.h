@@ -13,6 +13,7 @@
 
 #ifndef _HOMING_H_
 #define _HOMING_H_
+// The homing_t is defined in entity_structs.h
 
 void homing_init(homing_t *h, spaceship_t sh);
 void homing_update(homing_t *h, enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh);

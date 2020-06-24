@@ -10,6 +10,7 @@
 
 #ifndef _NUKE_H_
 #define _NUKE_H_
+// The nuke_t is defined in entity_structs.h
 
 void nuke_init(nuke_t *nuke, spaceship_t sh);
 void nuke_update(nuke_t *nuke, enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh, uint8_t *nukeCount);

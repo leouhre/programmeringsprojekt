@@ -33,13 +33,10 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh, bu
 			if (enemies[k].hp < 1) {	//Dead enemies enter the if-statement one time to remove their 'corpse'.
 				enemies[k].alive = 0; 	//Health points are decreased in bulletEnemy_update() to avoid 'killing'
 				sh->score += 100;		//the bullet before hp is decreased. Score is increased when an enemy is killed.
-                if(tick % 9 == 1){      //chance to spawn a powerup
+                if(tick % 9 == 1){      //Chance to spawn a powerup
                     powerup_spawn_random((enemies[k].x >> 14), (enemies[k].y >> 14), powerups, tick);
                 }
 			}
-
-
-
 
 			if(enemyEnemyCollision(&enemies[k], k, enemies, numberOfEnemies)) { //'Stucks' current enemy if two enemies are too close to each other.
 				enemies[k].x += enemies[k].direction.x;							//New direction is given in enemyEnemyCollision().
@@ -117,7 +114,7 @@ uint8_t enemyEnemyCollision(enemy_t *enemy, uint8_t n, enemy_t *enemies, int8_t 
 		if(k != n && enemies[k].alive && !enemies[k].stuck) {
 			if(MAX((enemy->x >> 14), (enemies[k].x >> 14)) - MIN((enemy->x >> 14), (enemies[k].x >> 14)) <= 9 &&
 					MAX((enemy->y >> 14), (enemies[k].y >> 14)) - MIN((enemy->y >> 14), (enemies[k].y >> 14)) <= 9) {
-				enemy->direction = rotateVector2(enemies[k].direction, 512/8); 	//Current enemy gets stuck for 5 updates to move away from
+				enemy->direction = rotate_vector2(enemies[k].direction, 512/8); 	//Current enemy gets stuck for 5 updates to move away from
 				enemy->stuck = 5;												//the other enemy close by
 				count++;
 			}
@@ -128,64 +125,26 @@ uint8_t enemyEnemyCollision(enemy_t *enemy, uint8_t n, enemy_t *enemies, int8_t 
 
 uint8_t enemyBoundsCheck(enemy_t enemy) {
 	//returns true if the enemy is out of bounds.
-	uint16_t maxX = 200, maxY = 50;
-	return (enemy.x >> 14) > maxX || (enemy.y >> 14) > maxY || (enemy.x >> 14) < 3 || (enemy.y >> 14) < 3;
+	return (enemy.x >> 14) > SCREEN_WIDTH - 25 || (enemy.y >> 14) > SCREEN_HEIGHT - 15 || (enemy.x >> 14) < 25 || (enemy.y >> 14) < 15;
 }
-
-/*
-void bulletEnemy_init(enemy_t *enemy) {
-	//initializes an enemy's bullet
-	enemy->gun.x = enemy->x;
-	enemy->gun.y = enemy->y;
-	enemy->gun.direction = rotateVector2(enemy->direction, 8 - rand() % 16);
-	enemy->gun.alive = 1;
-}
-*/
 
 void bulletEnemy_init(enemy_t *enemy) {
 	//initializes an enemy's bullet
     uint8_t i;
-    for(i = 0; i < CLIP_SIZE; i++) { // find an empty space in array of bullets
+    for(i = 0; i < CLIP_SIZE; i++) { // finds an empty space in array of bullets
         if(!enemy->gun[i].alive){
             enemy->gun[i].alive = 1;
 
             enemy->gun[i].x =  enemy->x;
             enemy->gun[i].y = enemy->y;
 
-            enemy->gun[i].direction = rotateVector2(enemy->direction, 8 - rand() % 16);
+            enemy->gun[i].direction = rotate_vector2(enemy->direction, 8 - rand() % (512/32));
+            //adds a pseudo random 32nd of a circle angle to the enemy bullet
             return;
         }
 
     }
 }
-
-/*
-void bulletEnemy_update(enemy_t *enemies, uint8_t numEnemies, spaceship_t *sh) {
-	//moves the enemy's bullet forward and checks for hits.
-	uint8_t i, j;
-	for (i = 0; i < numEnemies; i++) {
-		for(j = 0; j < enemies[i].clipsize; j++) {
-			if (enemies[i].gun.alive) {
-				gotoxy(enemies[i].gun.x >> 14, enemies[i].gun.y >> 14);
-				printf(" ");
-
-				enemies[i].gun.x += enemies[i].gun.direction.x;
-				enemies[i].gun.y += enemies[i].gun.direction.y;
-
-				if (bulletEnemy_boundsCheck(enemies[i].gun) || playerHit(enemies[i].gun, sh)) {
-					gotoxy(enemies[i].gun.x >> 14, enemies[i].gun.y >> 14);
-					printf(" ");
-					enemies[i].gun.alive = 0;
-				} else {
-					gotoxy(enemies[i].gun.x >> 14, enemies[i].gun.y >> 14);
-					printf("o");
-				}
-
-			}
-		}
-	}
-}
-*/
 
 void bulletEnemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh) {
 	//moves the enemy's bullet forward and checks for hits.
