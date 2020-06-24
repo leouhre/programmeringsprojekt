@@ -112,18 +112,18 @@ uint8_t bulletEnemyCollision(enemy_t *enemy, bullet_t bullet, spaceship_t *sh) {
 
 uint8_t enemyEnemyCollision(enemy_t *enemy, uint8_t n, enemy_t *enemies, int8_t numberOfEnemies) {
 	//Returns true if two enemies are 9 'pixels' or closer to each other. Also changes the direction of the current enemy.
-	uint8_t k, count = 0;
+	uint8_t k, cnt = 0;
 	for(k = 0; k < numberOfEnemies; k++) {
 		if(k != n && enemies[k].alive && !enemies[k].stuck) {
 			if(MAX((enemy->x >> 14), (enemies[k].x >> 14)) - MIN((enemy->x >> 14), (enemies[k].x >> 14)) <= 9 &&
 					MAX((enemy->y >> 14), (enemies[k].y >> 14)) - MIN((enemy->y >> 14), (enemies[k].y >> 14)) <= 9) {
 				enemy->direction = rotateVector2(enemies[k].direction, 512/8); 	//Current enemy gets stuck for 5 updates to move away from
 				enemy->stuck = 5;												//the other enemy close by
-				count++;
+				cnt++;
 			}
 		}
 	}
-	return count > 0;
+	return cnt > 0;
 }
 
 uint8_t enemyBoundsCheck(enemy_t enemy) {

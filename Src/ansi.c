@@ -135,7 +135,7 @@ void box(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t style){
     int width;
     int height;
 
-    if(style>0){
+    if(style>0){ //chooses what characters to represent each element of the box depending on the style
         cornertl=201;
         cornertr=187;
         cornerbl=200;
@@ -153,25 +153,25 @@ void box(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t style){
         lineh = 196;
     }
 
-    if(x1<1||x2<1||y1<1||y2<1){
+    if(x1<1||x2<1||y1<1||y2<1){ //sets coords to 1 if one is negative
         x1=1;
         x2=1;
         y1=1;
         y2=1;
     }
 
-    if(x1>x2){
+    if(x1>x2){ //swaps the x1 and x2 if x1 is biggest
         int dummy=x1;
         x1=x2;
         x2=dummy;
     }
-    if(y1>y2){
+    if(y1>y2){ //swaps the y1 and y2 if y1 is biggest
         int dummy=y1;
         y1=y2;
         y2=dummy;
     }
 
-    width  = x2-x1;
+    width  = x2-x1; //claculates width and height of the box
     height = y2-y1;
 
 
@@ -201,7 +201,7 @@ void box(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t style){
 
 }
 
-void boxWithText(uint8_t x, uint8_t y, char* s, uint16_t style){
+void boxWithText(uint8_t x, uint8_t y, char* s, uint8_t style){
 
     uint8_t wordLength=strlen(s);
     box(x, y, x + (wordLength * 8) + 4, y + 8, style );
