@@ -4,7 +4,7 @@
 
 #define SCREEN_HEIGHT 56
 #define SCREEN_WIDTH 211
-#define MIDDLE_OF_SCREEN 105
+#define MIDDLE_OF_SCREEN SCREEN_WIDTH/2
 #define Y_OF_FIRST_BOX 20
 
 #ifndef _ANSI_H_

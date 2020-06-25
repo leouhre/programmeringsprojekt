@@ -461,7 +461,7 @@ void selectInPause(gameHandler_t *game){
                 case 0x20:                  //'p'
                     clrscr();
                     flagPause+=2;
-                    box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
+                    //box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
                     break;
 
                 default: break;
@@ -486,7 +486,7 @@ void nextLevel(gameHandler_t *game){
             clrscr();
         }
     }
-    box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
+    //box(1,1,SCREEN_WIDTH,SCREEN_HEIGHT,1);
 }
 
 void gameOver(gameHandler_t *game){
@@ -513,28 +513,27 @@ void gameOver(gameHandler_t *game){
 void levelInit(gameHandler_t *game, spaceship_t *sh, nuke_t *n, homing_t *h, uint8_t *numEnemies, enemy_t enemies[MAX_ENEMIES], powerup_t *powerups, enemyBullet_t enemyBullets[MAX_ENEMIES][CLIP_SIZE], bullet_t playerBullet[CLIP_SIZE]){
     uint8_t i;
     if(game->currentLevel==0){
-                spaceship_init(sh, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
-                gameInit(game);
-                selectInMenu(game);
-                nextLevel(game);
-            }
-            sh->bullet_type = 0;
-            n->alive = 0;
-            h->alive = 0;
+		spaceship_init(sh, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
+		gameInit(game);
+		selectInMenu(game);
+		nextLevel(game);
+	}
+	sh->bullet_type = 0;
+	n->alive = 0;
+	h->alive = 0;
+
+	*numEnemies = game->currentLevel + (game->difficulty/2);
+
+	for (i = 0; i < CLIP_SIZE; i++) {
+		playerBullet[i].alive = 0;
+	}
+
+	for (i = 0; i < *numEnemies; i++) {
+		enemy_init(&enemies[i], 20 + (rand() % SCREEN_WIDTH - 20), 10 + (rand() % SCREEN_HEIGHT - 10), enemyBullets[i], ENEMY_MAX_HP);
+	}
 
 
-            *numEnemies = game->currentLevel + (game->difficulty/2);
-
-	        for (i = 0; i < CLIP_SIZE; i++) {
-                playerBullet[i].alive = 0;
-            }
-
-            for (i = 0; i < *numEnemies; i++) {
-                enemy_init(&enemies[i], 2 + (rand() % SCREEN_WIDTH-10), 2 + (rand() % SCREEN_HEIGHT-10), enemyBullets[i], 3);
-            }
-
-
-            for (i = 0; i < 5; i++) {
-                powerups[i].alive = 0;
-            }
+	for (i = 0; i < 5; i++) {
+		powerups[i].alive = 0;
+	}
 }

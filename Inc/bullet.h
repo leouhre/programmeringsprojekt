@@ -16,6 +16,5 @@
 void bullet_init(bullet_t *bullet, spaceship_t sh);
 void bullet_update(bullet_t *bullet, spaceship_t *sh, enemy_t *enemy, uint8_t numberOfEnemies);
 uint8_t boundsCheck(bullet_t bullet);
-void bullet_render(bullet_t bullet);
 
 #endif

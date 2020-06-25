@@ -187,9 +187,10 @@ void box(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, uint8_t style){
     //bottomline print
     gotoxy(x1,y2);
         printf("%c",cornerbl);
-    for(int i=0; i<=width-2;i++)
+    for(int i=0; i<=width-2;i++) {
         printf("%c",lineh);
-        printf("%c",cornerbr);
+    }
+	printf("%c",cornerbr);
 
     //side print
     for(int i=1;i<height;i++){

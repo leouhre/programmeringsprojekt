@@ -11,7 +11,7 @@ void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y)
     sh->score = 0;
 }
 
-void spaceship_update(uint8_t input,spaceship_t *sh)
+void spaceship_update(uint8_t input,spaceship_t *sh) //OBS. player hp is decreased in playerHit() in enemy.c
 {
     if(!input)return; //doesnt update if there is no input from the user
     uint8_t i, j;

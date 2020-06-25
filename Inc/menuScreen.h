@@ -8,8 +8,7 @@
 #include "enemy.h"
 #include "math.h"
 #define MAX_ENEMIES 32
-
-
+#define ENEMY_MAX_HP 3
 
 #ifndef _MENUSCREEN_H_
 #define _MENUSCREEN_H_

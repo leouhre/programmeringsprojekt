@@ -11,10 +11,10 @@ void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t enemyBullet[
 
     enemy->hp = hp;
     enemy->alive = 1;
-    //memcpy(enemy->gun, enemyBullet, CLIP_SIZE);
     enemy->gun = enemyBullet;
-    for(i=0; i < CLIP_SIZE; i++)
+    for(i=0; i < CLIP_SIZE; i++) {
         enemy->gun[i].alive= 0;
+    }
 
     enemy->stuck = 0;
 }
@@ -39,8 +39,9 @@ void enemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *sh, bu
                 }
 			}
 
-			if(enemyEnemyCollision(&enemies[k], k, enemies, numberOfEnemies)) { //'Stucks' current enemy if two enemies are too close to each other.
-				enemies[k].x += enemies[k].direction.x;							//New direction is given in enemyEnemyCollision().
+			if(enemyEnemyCollision(&enemies[k], k, enemies, numberOfEnemies) && !enemyBoundsCheck(enemies[k])) {
+				//'Stucks' current enemy if two enemies are too close to each other. New direction is given in enemyEnemyCollision().
+				enemies[k].x += enemies[k].direction.x;
 				enemies[k].y += enemies[k].direction.y;
 			} else if (enemies[k].stuck && !enemyBoundsCheck(enemies[k])) {		//A stuck enemy continues in the given 'stuck' direction
 				enemies[k].x += enemies[k].direction.x;							//except if out of bounds.
@@ -161,8 +162,6 @@ void bulletEnemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *
 
 				if (bulletEnemy_boundsCheck(enemies[i].gun[j]) || playerHit(enemies[i].gun[j], sh)) {
 					// OBS! Player hp is decreased in the playerHit() function
-					gotoxy(enemies[i].gun[j].x >> 14, enemies[i].gun[j].y >> 14);
-					printf(" ");
 					enemies[i].gun[j].alive = 0;
 				} else {
 					gotoxy(enemies[i].gun[j].x >> 14, enemies[i].gun[j].y >> 14);
@@ -175,7 +174,7 @@ void bulletEnemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *
 
 uint8_t bulletEnemy_boundsCheck(enemyBullet_t bullet) {
 	//returns true if bullet leaves the area.
-	return (bullet.x >> 14) > 209 || (bullet.y >> 14) > 54 || (bullet.x >> 14) < 3|| (bullet.y >> 14) < 3;
+	return (bullet.x >> 14) > SCREEN_WIDTH - 3 || (bullet.y >> 14) > SCREEN_HEIGHT - 3 || (bullet.x >> 14) < 3|| (bullet.y >> 14) < 3;
 }
 
 uint8_t playerHit(enemyBullet_t bullet, spaceship_t *sh) {
