@@ -7,6 +7,7 @@
 #include "spaceship.h"
 #include "enemy.h"
 #include "math.h"
+#define MAX_ENEMIES 32
 
 
 
@@ -38,6 +39,6 @@ void nextLevel(gameHandler_t *game);
 
 void gameOver(gameHandler_t *game);
 
-void levelInit(gameHandler_t *game, spaceship_t *sh, nuke_t *n, homing_t *h, uint8_t *numEnemies, enemy_t *enemies, powerup_t *powerups,enemyBullet_t *enemyBullets, bullet_t *playerBullet);
+void levelInit(gameHandler_t *game, spaceship_t *sh, nuke_t *n, homing_t *h, uint8_t *numEnemies, enemy_t enemies[MAX_ENEMIES], powerup_t *powerups,enemyBullet_t enemyBullets[MAX_ENEMIES][CLIP_SIZE], bullet_t playerBullet[CLIP_SIZE]);
 
 #endif

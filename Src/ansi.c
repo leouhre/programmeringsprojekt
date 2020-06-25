@@ -70,8 +70,9 @@ void clreol() {
     printf("%c[K", ESC);
 }
 
-void hideCursor(){
-    printf("%c[?25l",ESC);
+void showCursor(uint8_t show){
+	if(show) printf("%c[?25h",ESC);
+	else printf("%c[?25l",ESC);
 }
 
 void gotoxy(uint8_t x, uint8_t y) {

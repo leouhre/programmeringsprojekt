@@ -17,7 +17,7 @@ void resetbgcolor();
 void clrscr();
 void clreol();
 void gotoxy(uint8_t x, uint8_t y);
-void hideCursor();
+void showCursor(uint8_t show);
 void moveDown(uint8_t y);
 void moveUp(uint8_t y);
 void moveBack(uint8_t x);

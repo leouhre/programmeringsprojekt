@@ -1,6 +1,6 @@
 #include "enemy.h"
 
-void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t *enemyBullet, uint8_t hp) {
+void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t enemyBullet[CLIP_SIZE], uint8_t hp) {
 	//initializes an enemy according to level difficulty
 	uint8_t i;
     enemy->x = (x << 14);
@@ -11,6 +11,7 @@ void enemy_init(enemy_t *enemy, int32_t x, int32_t y, enemyBullet_t *enemyBullet
 
     enemy->hp = hp;
     enemy->alive = 1;
+    //memcpy(enemy->gun, enemyBullet, CLIP_SIZE);
     enemy->gun = enemyBullet;
     for(i=0; i < CLIP_SIZE; i++)
         enemy->gun[i].alive= 0;
@@ -115,7 +116,7 @@ uint8_t enemyEnemyCollision(enemy_t *enemy, uint8_t n, enemy_t *enemies, int8_t 
 			if(MAX((enemy->x >> 14), (enemies[k].x >> 14)) - MIN((enemy->x >> 14), (enemies[k].x >> 14)) <= 9 &&
 					MAX((enemy->y >> 14), (enemies[k].y >> 14)) - MIN((enemy->y >> 14), (enemies[k].y >> 14)) <= 9) {
 				enemy->direction = rotate_vector2(enemies[k].direction, 512/8); 	//Current enemy gets stuck for 5 updates to move away from
-				enemy->stuck = 5;												//the other enemy close by
+				enemy->stuck = 5;													//the other enemy close by
 				cnt++;
 			}
 		}
@@ -152,13 +153,14 @@ void bulletEnemy_update(enemy_t *enemies, uint8_t numberOfEnemies, spaceship_t *
     for (i = 0; i < numberOfEnemies; i++) {
     	for(j = 0; j < CLIP_SIZE; j++) {
 			if (enemies[i].gun[j].alive) {
-				gotoxy(enemies[i].gun[j].x >> 14, enemies[i].gun[j].y >> 14);
+				gotoxy((enemies[i].gun[j].x >> 14), (enemies[i].gun[j].y >> 14));
 				printf(" ");
 
 				enemies[i].gun[j].x += enemies[i].gun[j].direction.x;
 				enemies[i].gun[j].y += enemies[i].gun[j].direction.y;
 
 				if (bulletEnemy_boundsCheck(enemies[i].gun[j]) || playerHit(enemies[i].gun[j], sh)) {
+					// OBS! Player hp is decreased in the playerHit() function
 					gotoxy(enemies[i].gun[j].x >> 14, enemies[i].gun[j].y >> 14);
 					printf(" ");
 					enemies[i].gun[j].alive = 0;

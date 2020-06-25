@@ -1,6 +1,8 @@
 #include <stdint.h>
 #include "math.h"
 
+#define CLIP_SIZE 5
+
 #ifndef _ENTITY_STRUCTS_H_
 #define _ENTITY_STRUCTS_H_
 
@@ -24,7 +26,7 @@ typedef struct {
 
 typedef struct {
     int32_t x, y;
-    uint8_t bullet_type, alive;
+    uint8_t alive;
     vector_t direction;
 
 } enemyBullet_t;
@@ -42,7 +44,7 @@ typedef struct {
 
 typedef struct {
     int32_t x, y, angle;
-    uint8_t bullet_type, alive;
+    uint8_t alive;
 
 } bullet_t;
 

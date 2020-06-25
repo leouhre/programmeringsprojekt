@@ -365,7 +365,7 @@ void selectInCreditsAndHowToPlay(){
     renderLetter('p');
     gotoxy(105+26-4,22+27);
     renderLetter('q');
-    //kan dette gøres med en interrupt?
+    //kan dette gï¿½res med en interrupt?
 
     while(flagCredits == 1){
         if(readControls() == 0x10)
@@ -510,7 +510,7 @@ void gameOver(gameHandler_t *game){
     game->currentLevel = 0;
 }
 
-void levelInit(gameHandler_t *game, spaceship_t *sh, nuke_t *n, homing_t *h, uint8_t *numEnemies, enemy_t *enemies, powerup_t *powerups, enemyBullet_t *enemyBullets, bullet_t *playerBullet){
+void levelInit(gameHandler_t *game, spaceship_t *sh, nuke_t *n, homing_t *h, uint8_t *numEnemies, enemy_t enemies[MAX_ENEMIES], powerup_t *powerups, enemyBullet_t enemyBullets[MAX_ENEMIES][CLIP_SIZE], bullet_t playerBullet[CLIP_SIZE]){
     uint8_t i;
     if(game->currentLevel==0){
                 spaceship_init(sh, 0, SCREEN_WIDTH/2, SCREEN_HEIGHT/2);
@@ -530,7 +530,7 @@ void levelInit(gameHandler_t *game, spaceship_t *sh, nuke_t *n, homing_t *h, uin
             }
 
             for (i = 0; i < *numEnemies; i++) {
-                enemy_init(&enemies[i], 2 + (rand() % SCREEN_WIDTH-10), 2 + (rand() % SCREEN_HEIGHT-10), &enemyBullets[i], 3);
+                enemy_init(&enemies[i], 2 + (rand() % SCREEN_WIDTH-10), 2 + (rand() % SCREEN_HEIGHT-10), enemyBullets[i], 3);
             }
 
 

@@ -6,7 +6,7 @@ void spaceship_init(spaceship_t *sh, int32_t direction, int32_t x, int32_t y)
     sh->y = (y << 14);
     sh->angle=direction;
     sh->hp = 15;
-    sh->aim = direction;
+    sh->aim = 288;
     sh->bullet_type = 0;
     sh->score = 0;
 }
